@@ -17,12 +17,17 @@ import {
 import { Overview } from "@/components/Overview"
 import { RecentContracts } from "@/components/RecentContracts"
 
+import useConfig from '../hooks/useConfig'
+
 export const metadata: Metadata = {
   title: "Contract Browser",
   description: "The one stop shop for browsing and managing smart contracts",
 }
 
 export default function DashboardPage() {
+
+  var network = useConfig().network
+
   return (
     <>
         <div className="flex-1 space-y-4 p-8 pt-6">
@@ -47,7 +52,7 @@ export default function DashboardPage() {
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                      Total Contracts on Mainnet
+                      Total Contracts on {network}
                     </CardTitle>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +121,7 @@ export default function DashboardPage() {
                   <CardContent>
                     <div className="text-2xl font-bold">3,555,222</div>
                     <p className="text-xs text-muted-foreground">
-                      Online
+                      Tracking {network}
                     </p>
                   </CardContent>
                 </Card>
@@ -151,7 +156,7 @@ export default function DashboardPage() {
                   <CardHeader>
                     <CardTitle>Overview</CardTitle>
                     <CardDescription>
-                      There were 265 contracts deployed this month.
+                      There were 265 contracts deployed this month on {network}.
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="pl-2">
@@ -162,7 +167,7 @@ export default function DashboardPage() {
                   <CardHeader>
                     <CardTitle>Recent Contracts</CardTitle>
                     <CardDescription>
-                      There were 23 contracts deployed today.
+                      There were 23 contracts deployed today on {network}.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
