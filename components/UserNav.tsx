@@ -15,11 +15,13 @@ import {
 
 import * as fcl from '@onflow/fcl'
 import useCurrentUser from '../hooks/useCurrentUser'
+import useConfig from '../hooks/useConfig'
 import ConnectionLight from "./ui/ConnectionLight"
 
 export function UserNav() {
 
   const user = useCurrentUser()
+  const network = useConfig().network
 
   return (
     <DropdownMenu>
@@ -40,6 +42,15 @@ export function UserNav() {
             <p className="text-sm font-medium leading-none">You are logged in as</p>
             <p className="text-xs leading-none text-muted-foreground">
             { user?.addr }
+            </p>
+          </div>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuLabel className="font-normal">
+          <div className="flex flex-col space-y-1">
+            <p className="text-sm font-medium leading-none">Current network</p>
+            <p className="text-xs capitalize leading-none text-muted-foreground">
+            { network }
             </p>
           </div>
         </DropdownMenuLabel>
