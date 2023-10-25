@@ -2,11 +2,15 @@ import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { ModeToggle } from "./ui/ModeToggle"
+import { Badge } from "./ui/badge"
+import useConfig from '../hooks/useConfig'
 
 export function Navbar({
   className,
   ...props
 }: React.HTMLAttributes<HTMLElement>) {
+
+  var network = useConfig().network
 
   return (
     <nav
@@ -15,7 +19,10 @@ export function Navbar({
     >
       <Link href="/" className="text-sm space-x-3 flex font-medium transition-colors hover:text-primary">
         <Image src="/icon.png" alt="logo" width="30" height="30" className="inline" /> 
-        <span className="text-lg">Contract Browser</span>
+        <div className="flex-row">
+          <span className="text-lg">Contract Browser</span>
+          <Badge className="ml-2">{network}</Badge>
+        </div>
       </Link>
 
       {/* <Link
