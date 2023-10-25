@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { ModeToggle } from "./ui/ModeToggle"
 
@@ -12,10 +13,12 @@ export function Navbar({
       className={cn("flex items-center space-x-4 lg:space-x-6", className)}
       {...props}
     >
-      <Link href="/" className="text-sm font-medium transition-colors hover:text-primary">
-        Contract Browser
+      <Link href="/" className="text-sm space-x-3 flex font-medium transition-colors hover:text-primary">
+        <Image src="/icon.png" alt="logo" width="30" height="30" className="inline" /> 
+        <span className="text-lg">Contract Browser</span>
       </Link>
-      <Link
+
+      {/* <Link
         href="/"
         className="text-sm font-medium underline transition-colors hover:text-primary"
       >
@@ -38,7 +41,7 @@ export function Navbar({
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
         Settings
-      </Link>
+      </Link> */}
       <ModeToggle />
     </nav>
   )

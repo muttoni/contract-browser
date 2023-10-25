@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button"
-import { MoveUpRight } from "lucide-react"
+import { MoveUpRight, ChevronDown } from "lucide-react"
 import Link from "next/link"
 import {
   DropdownMenu,
@@ -15,6 +15,7 @@ import {
 
 import * as fcl from '@onflow/fcl'
 import useCurrentUser from '../hooks/useCurrentUser'
+import ConnectionLight from "./ui/ConnectionLight"
 
 export function UserNav() {
 
@@ -26,15 +27,13 @@ export function UserNav() {
 {!user.loggedIn && 
   <Button onClick={fcl.authenticate}>Connect Wallet</Button>
 }
-{user.loggedIn && 
-  (
+{user.loggedIn && (
+    <>
     <DropdownMenuTrigger asChild>
       <Button>
-        { user?.addr }
+        <ConnectionLight status="online"/><span className="w-2"></span> { user?.addr } <ChevronDown className="h-4 w-4 ml-1" />
       </Button>
     </DropdownMenuTrigger>
-  )
-}
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
@@ -69,6 +68,9 @@ export function UserNav() {
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
+      </>
+)}
     </DropdownMenu>
+  
   )
 }
