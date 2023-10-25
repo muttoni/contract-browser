@@ -1,5 +1,7 @@
 
 import { Button } from "@/components/ui/button"
+import { MoveUpRight } from "lucide-react"
+import Link from "next/link"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -44,10 +46,14 @@ export function UserNav() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
+          <Link target="_blank" href={"https://flowview.app/account/" + user?.addr}>
           <DropdownMenuItem>
-            Account
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+            Your account
+            <DropdownMenuShortcut>
+              <MoveUpRight className="h-4 w-4 mr-1" />
+            </DropdownMenuShortcut>
           </DropdownMenuItem>
+          </Link>
           <DropdownMenuItem>
             Manage your contracts
             <DropdownMenuShortcut>⇧⌘C</DropdownMenuShortcut>
