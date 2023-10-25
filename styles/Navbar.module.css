@@ -1,0 +1,17 @@
+.navbar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 1em;
+  display: flex;
+  justify-content: right;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.address {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+}
