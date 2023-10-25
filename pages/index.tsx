@@ -150,6 +150,9 @@ export default function DashboardPage() {
                 <Card className="col-span-4">
                   <CardHeader>
                     <CardTitle>Overview</CardTitle>
+                    <CardDescription>
+                      There were 265 contracts deployed this month.
+                    </CardDescription>
                   </CardHeader>
                   <CardContent className="pl-2">
                     <Overview />
@@ -159,7 +162,7 @@ export default function DashboardPage() {
                   <CardHeader>
                     <CardTitle>Recent Contracts</CardTitle>
                     <CardDescription>
-                      There were 265 contracts deployed this month.
+                      There were 23 contracts deployed today.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
