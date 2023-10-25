@@ -11,7 +11,7 @@ export default function DefaultLayout({ children }) {
       enableSystem
       disableTransitionOnChange
     >
-      <main>
+      <main className="container mx-auto">
         <div className="flex-col p-8 md:flex">
           <div className="border-b">
             <div className="flex h-16 items-center">
