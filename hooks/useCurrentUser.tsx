@@ -1,6 +1,6 @@
 "use client"
 import * as fcl from '@onflow/fcl'
-import { CurrentUser, Account } from '@onflow/typedefs'
+import { CurrentUser } from '@onflow/typedefs'
 import { useEffect, useState } from 'react'
 
 export default function useCurrentUser(): CurrentUser {

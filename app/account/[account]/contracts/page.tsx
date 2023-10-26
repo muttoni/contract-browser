@@ -2,10 +2,15 @@
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Plus } from "lucide-react"
+import ContractsTable from "@/components/ContractsTable"
 
-export default function ContractsPage() {
+
+export default function ContractsPage({ account }) {
+
   return (
-    <div className="space-y-6">
+    <>
+    {Object.keys(account?.contractNames || {}).length > 0 ? (
+      <div className="space-y-6">
       <div className="flex align-middle items-center justify-between">
       <div>
         <h3 className="text-lg font-medium">Contracts</h3>
@@ -16,7 +21,14 @@ export default function ContractsPage() {
       <Button size="sm"><Plus className="h-4 w-4 me-2" /> Deploy a new contract</Button>
       </div>
       <Separator />
-
+      <ContractsTable contracts={account?.contractNames} />
     </div>
+    ) : (
+    <div className="w-full h-full flex-col items-center">
+      <p className="text-center w-full py-8">This account has no contracts yet.</p>
+      <Button size="sm" variant="outline" className="block flex mx-auto"><Plus className="h-4 w-4 me-2" /> Deploy a new contract</Button>
+    </div>
+    )}
+    </>
   )
 }

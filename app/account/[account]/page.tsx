@@ -1,15 +1,27 @@
+"use client"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
+import FlowLogo from '@/components/ui/FlowLogo'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Progress } from '@/components/ui/progress'
+import { formatFlowBalance, storageCapacity, formatStorageSize } from '@/lib/utils'
+import { useAccount } from 'hooks/useAccount'
+import { useNetworkForAddress } from 'hooks/useNetwork'
+import { Disc, Eye, Key, Plus, Text } from 'lucide-react'
+import { useParams } from 'next/navigation'
+import Link from "next/link"
 
-function AccountPage({ Component, pageProps }) {
+function AccountPage({}) {
+  const account = useAccount(useParams().account)
+  const network = useNetworkForAddress(useParams().account)
+
   return (
 <>
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                      Total Contracts on 
+                      Flow Balance
                     </CardTitle>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -25,86 +37,82 @@ function AccountPage({ Component, pageProps }) {
                     </svg>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">3,255</div>
-                    <p className="text-xs text-muted-foreground">
-                      +20.1% from last month
-                    </p>
+                    <div className="text-2xl mb-2 font-bold flex items-center space-x-2">
+                      <FlowLogo size={24} />
+                      <span>{formatFlowBalance(account.flowBalance)}</span>
+                    </div>
+                    <Link href="/tokens">
+                      <Button size="sm" className="h-7" disabled={Object.keys(account.contracts || {}).length < 1} variant="outline">
+                        <Eye className="h-4 w-4 me-2" />
+                        View all tokens
+                      </Button>
+                      </Link>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                      Unique deploying addresses
+                      Contracts Deployed
                     </CardTitle>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      className="h-4 w-4 text-muted-foreground"
-                    >
-                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                      <circle cx="9" cy="7" r="4" />
-                      <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-                    </svg>
+                    <Text className="h-4 w-4 text-muted-foreground" />
+                    
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">+2350</div>
-                    <p className="text-xs text-muted-foreground">
-                      +180.1% from last month
-                    </p>
+                    <div className="text-2xl font-bold flex items-center">
+                      {Object.keys(account.contracts || {}).length}
+                    </div>
+                    <div className="flex mt-2">
+                      <Link href="/contracts">
+                      <Button size="sm" className="h-7" disabled={Object.keys(account.contracts || {}).length < 1} variant="outline">
+                        <Eye className="h-4 w-4 me-2" />
+                        View
+                      </Button>
+                      </Link>
+                      <Button size="sm" className="h-7" variant="outline">
+                        <Plus className="h-4 w-4 me-2" /> 
+                        Deploy
+                      </Button>
+                    </div>
+                    
                   </CardContent>
                 </Card>
                 <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Block Height</CardTitle>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      className="h-4 w-4 text-muted-foreground"
-                    >
-                      <rect width="20" height="14" x="2" y="5" rx="2" />
-                      <path d="M2 10h20" />
-                    </svg>
+                  <CardHeader className="flex flex-row items-stretch items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Available Storage ({(100 - storageCapacity(account?.storage).percentage).toFixed(0)}%)</CardTitle>
+                    <Disc className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">3,555,222</div>
-                    <p className="text-xs text-muted-foreground">
-
+                    <Progress value={100-storageCapacity(account?.storage).percentage} className="mt-2 h-3" />
+                    <p className="text-xs mt-2 text-muted-foreground">
+                      {formatStorageSize(storageCapacity(account?.storage).capacity - storageCapacity(account?.storage).used) } of {formatStorageSize(storageCapacity(account?.storage).capacity)} free
                     </p>
+                    <Link href="/tokens">
+                      <Button size="sm" className="h-7" disabled={Object.keys(account.contracts || {}).length < 1} variant="outline">
+                        <Eye className="h-4 w-4 me-2" />
+                        Inspect storage
+                      </Button>
+                      </Link>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                      Active Now
+                      Keys
                     </CardTitle>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      className="h-4 w-4 text-muted-foreground"
-                    >
-                      <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-                    </svg>
+                    <Key className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">+573</div>
-                    <p className="text-xs text-muted-foreground">
-                      +201 since last hour
-                    </p>
+                  <div className="text-2xl font-bold">{Object.keys(account?.keys || {} ).length}</div>
+                  <div className="flex mt-2">
+                      <Button size="sm" className="h-7" disabled={Object.keys(account.keys || {}).length < 1} variant="outline">
+                        <Eye className="h-4 w-4 me-2" />
+                        View
+                      </Button>
+                      <Button size="sm" className="h-7" variant="outline">
+                        <Plus className="h-4 w-4 me-2" /> 
+                        Add
+                      </Button>
+                    </div>
                   </CardContent>
                 </Card>
     </div>

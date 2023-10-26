@@ -3,7 +3,7 @@ import { Navbar } from '@/components/Navbar'
 import { Search } from '@/components/Search'
 import { UserNav } from '@/components/UserNav'
 import { ThemeProvider } from '@/components/ThemeProvider'
-
+import { RecoilRoot } from 'recoil'
 import '../styles/globals.css'
 
 // Import FCL config
@@ -19,6 +19,7 @@ export default function RootLayout({
       <body
         className={"min-h-screen bg-background font-sans antialiased"}
       >
+    <RecoilRoot>
       <ThemeProvider
         attribute="class"
         defaultTheme="system"
@@ -38,6 +39,7 @@ export default function RootLayout({
         {children}
       </main>
     </ThemeProvider>
+        </RecoilRoot>
         </body>
       </html>
   )
