@@ -1,8 +1,10 @@
+"use client"
 import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { ModeToggle } from "./ui/ModeToggle"
 import { Badge } from "./ui/badge"
+import { NetworkSelect } from "./NetworkSelect"
 import useConfig from '../hooks/useConfig'
 
 export function Navbar({
@@ -14,16 +16,16 @@ export function Navbar({
 
   return (
     <nav
-      className={cn("flex items-center space-x-4 lg:space-x-6", className)}
+      className={cn("flex items-center space-x-2 lg:space-x-4", className)}
       {...props}
     >
       <Link href="/" className="text-sm space-x-3 flex font-medium transition-colors hover:text-primary">
-        <Image src="/icon.png" alt="logo" width="30" height="30" className="inline" /> 
-        <div className="flex-row">
-          <span className="text-lg">Contract Browser</span>
-          <Badge className="ml-2">{network}</Badge>
-        </div>
+        <Image src="/icon.png" alt="logo" className="h-7 w-7" width="256" height="256" /> 
+        <span className="text-lg">Contract Browser</span>
       </Link>
+          {/* <Badge className="ml-2">{network}</Badge> */}
+          <NetworkSelect />
+
 
       {/* <Link
         href="/"

@@ -1,3 +1,4 @@
+"use client"
 import * as fcl from '@onflow/fcl'
 import { useEffect, useState } from 'react'
 

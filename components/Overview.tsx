@@ -54,6 +54,7 @@ const data = [
 ]
 
 export function Overview() {
+  
   return (
     <ResponsiveContainer width="100%" height={350}>
       <BarChart data={data}>
@@ -71,7 +72,9 @@ export function Overview() {
           axisLine={false}
           tickFormatter={(value) => `${value}`}
         />
-        <Bar dataKey="total" fill="#adfa1d" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="total" style={{
+          fill: "green"
+        }} radius={[4, 4, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>
   )

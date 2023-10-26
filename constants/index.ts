@@ -8,3 +8,9 @@ export const BLOCK_EXPLORER_URLS = {
   'testnet': 'https://testnet.flowdiver.io',
   'mainnet': 'https://flowdiver.io'
 }
+
+export const NETWORKS = [
+  "local",
+  "testnet",
+  "mainnet"
+]

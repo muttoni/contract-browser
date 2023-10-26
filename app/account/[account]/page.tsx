@@ -1,58 +1,15 @@
-import { Metadata } from "next"
-import Image from "next/image"
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
-import { Overview } from "@/components/Overview"
-import { RecentContracts } from "@/components/RecentContracts"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 
-import useConfig from '../hooks/useConfig'
-
-export const metadata: Metadata = {
-  title: "Contract Browser",
-  description: "The one stop shop for browsing and managing smart contracts",
-}
-
-export default function DashboardPage() {
-
-  var network = useConfig().network
-
+function AccountPage({ Component, pageProps }) {
   return (
-    <>
-        <div className="flex-1 space-y-4 p-8 pt-6">
-          <div className="flex items-center justify-between space-y-2">
-            <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
-          </div>
-          <Tabs defaultValue="overview" className="space-y-4">
-            <TabsList>
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="analytics" disabled>
-                Dependencies
-              </TabsTrigger>
-              <TabsTrigger value="reports" disabled>
-                Code Snippets
-              </TabsTrigger>
-              <TabsTrigger value="notifications" disabled>
-                Transactions
-              </TabsTrigger>
-            </TabsList>
-            <TabsContent value="overview" className="space-y-4">
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+<>
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                      Total Contracts on {network}
+                      Total Contracts on 
                     </CardTitle>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -121,7 +78,7 @@ export default function DashboardPage() {
                   <CardContent>
                     <div className="text-2xl font-bold">3,555,222</div>
                     <p className="text-xs text-muted-foreground">
-                      Tracking {network}
+
                     </p>
                   </CardContent>
                 </Card>
@@ -150,34 +107,10 @@ export default function DashboardPage() {
                     </p>
                   </CardContent>
                 </Card>
-              </div>
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-                <Card className="col-span-4">
-                  <CardHeader>
-                    <CardTitle>Overview</CardTitle>
-                    <CardDescription>
-                      There were 265 contracts deployed this month on {network}.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="pl-2">
-                    <Overview />
-                  </CardContent>
-                </Card>
-                <Card className="col-span-3">
-                  <CardHeader>
-                    <CardTitle>Recent Contracts</CardTitle>
-                    <CardDescription>
-                      There were 23 contracts deployed today on {network}.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <RecentContracts />
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-          </Tabs>
-        </div>
-    </>
+    </div>
+</>
+
   )
 }
+
+export default AccountPage
