@@ -30,12 +30,12 @@ export function areAddressesEqual(address1, address2){
   return withPrefix(address1) === withPrefix(address2)
 }
 
-function cleanAddress(addr) {
+export function cleanAddress(addr : string, withPrefix: boolean = true) {
   var address = addr.replace(/^0x/, "")
   while (address.length<16){
     address = "0" + address
   }
-  address = "0x" + address
+  if(withPrefix) address = "0x" + address
   return address
 }
 
@@ -58,6 +58,12 @@ export function storageCapacity(storage): {used: number, capacity: number, perce
     percentage : ((used / capacity) * 100)
   }
 }
+export function getContractName(uuid) {
+  return uuid.split(".")[2]
+}
+export function getContractAddress(uuid) {
+  return "0x" + uuid.split(".")[1]
+}
 
 export function formatStorageSize(input: number): string {
   const kb = 1024
@@ -73,6 +79,34 @@ export function formatStorageSize(input: number): string {
   } else {
     return `${(input / gb).toFixed(2)} GB`
   }
+}
+
+export function timeSince(date) {
+
+  var seconds = Math.floor((new Date() - date) / 1000);
+
+  var interval = seconds / 31536000;
+
+  if (interval > 1) {
+    return Math.floor(interval) + " years";
+  }
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    return Math.floor(interval) + " months";
+  }
+  interval = seconds / 86400;
+  if (interval > 1) {
+    return Math.floor(interval) + " days";
+  }
+  interval = seconds / 3600;
+  if (interval > 1) {
+    return Math.floor(interval) + " hours";
+  }
+  interval = seconds / 60;
+  if (interval > 1) {
+    return Math.floor(interval) + " minutes";
+  }
+  return Math.floor(seconds) + " seconds";
 }
 
 export function absoluteUrl(path: string) {

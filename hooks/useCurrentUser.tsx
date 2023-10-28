@@ -1,22 +1,23 @@
-"use client"
-import * as fcl from '@onflow/fcl'
-import { CurrentUser } from '@onflow/typedefs'
-import { useEffect, useState } from 'react'
+import {useEffect} from "react"
+import {atom, useRecoilState} from "recoil"
+import * as fcl from "@onflow/fcl"
 
-export default function useCurrentUser(): CurrentUser {
-  const [user, setUser] = useState<CurrentUser>({
-    addr: null,
-    cid: null,
-    expiresAt: null,
-    f_type: null,
-    f_vsn: null,
-    loggedIn: false,
-    services: []
-  })
+export const currentUser = atom({
+  key: "CURRENT_USER",
+  default: {addr: null, cid: null, loggedIn: false},
+})
 
-  useEffect(() => {
-    fcl.currentUser.subscribe(setUser)
-  }, [])
+export function useCurrentUser() {
+  const [$data, setData] = useRecoilState(currentUser)
+  useEffect(() => fcl.currentUser().subscribe(setData), [setData])
+
+  const user = {
+    logIn: fcl.logIn,
+    logOut: fcl.unauthenticate,
+    signUp: fcl.signUp,
+    changeUser: fcl.reauthenticate,
+    ...$data,
+  }
 
   return user
 }

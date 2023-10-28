@@ -21,8 +21,8 @@ export default function CodeEditor({prefix="", type="", index=0, code = "", onCh
 
   return (
     <Editor
-      height="100%"
       language="cadence"
+      className="max-h-screen"
       theme="vs-dark"
       value={code}
       onChange={onChange}

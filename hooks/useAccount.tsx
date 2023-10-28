@@ -8,15 +8,14 @@ import { useEffect, useState } from "react"
 export const IDLE = "IDLE"
 export const PROCESSING = "PROCESSING"
 
-// this is gross need to fix this in fcl
-function ready() {
-  return new Promise(resolve => {
-    setTimeout(resolve,100)
-  })
-}
+// // this is gross need to fix this in fcl
+// function ready() {
+//   return new Promise(resolve => {
+//     setTimeout(resolve,100)
+//   })
+// }
 
 async function fetchAccount(address) {
-  await ready()
   return address == null ? Promise.resolve(null) : fcl.account(address)
 }
 
@@ -43,8 +42,6 @@ export function useAccount(address) {
  
   useEffect(()=>{
     if (!$data) return 
-
-    
 
     fcl
     .query({
@@ -131,9 +128,10 @@ export function useAccount(address) {
 
   return {
     account,
-    keys: account.keys,
-    contracts: account.contracts, 
-    contractNames:  Object.keys(account.contracts),
+    address,
+    keys: account.keys || [],
+    contracts: account.contracts || {}, 
+    contractNames:  Object.keys(account?.contracts || {}),
     flowBalance: account.balance,
     storage: account.storage
   }
