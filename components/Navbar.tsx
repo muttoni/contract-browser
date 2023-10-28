@@ -5,14 +5,14 @@ import { cn } from "@/lib/utils"
 import { ModeToggle } from "./ui/ModeToggle"
 import { Badge } from "./ui/badge"
 import { NetworkSelect } from "./NetworkSelect"
-import useConfig from '../hooks/useConfig'
+import { getNetwork } from '../hooks/useNetwork'
 
 export function Navbar({
   className,
   ...props
 }: React.HTMLAttributes<HTMLElement>) {
 
-  var network = useConfig().network
+  var network = getNetwork().network
 
   return (
     <nav

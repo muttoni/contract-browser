@@ -1,9 +1,9 @@
 "use client"
 
 import * as React from "react"
-import useConfig from "hooks/useConfig"
 import { type SelectTriggerProps } from "@radix-ui/react-select"
 import { NETWORKS } from "@/constants/index"
+import { useNetwork, getNetwork } from "hooks/useNetwork"
 
 import { cn } from "@/lib/utils"
 import {
@@ -15,12 +15,14 @@ import {
 } from "@/components/ui/select"
 
 export function NetworkSelect({ className }: SelectTriggerProps) {
-
-  let network = useConfig().network; 
+  
+  let network = getNetwork().network; 
   return (
     <Select
       value={network}
-      onValueChange={() =>{}}
+      onValueChange={() =>{
+        useNetwork(network)
+      }}
     >
       <SelectTrigger
         className={cn(

@@ -6,10 +6,11 @@ import { useEffect, useState } from "react";
 import { Skeleton } from "./ui/skeleton";
 
 export default function({ network }) {
-  const [ recentContracts, setRecentContracts ] = useState(null as unknown as ContractsListResponseType | null | undefined)
+
+  const [ topContracts, setTopContracts ] = useState(null as unknown as ContractsListResponseType | null | undefined)
 
   async function getData(): Promise<ContractsListResponseType> {
-    const res = await fetch(`${window.location}/api/contract/recent?network=${network}`)
+    const res = await fetch(`${window.location}/api/contract/top?network=${network}`)
   
     if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
@@ -20,20 +21,21 @@ export default function({ network }) {
 
   useEffect(() => {
     getData().then((data) => {
-      setRecentContracts(data)
+      setTopContracts(data)
     })
   }, [network])
 
-  return recentContracts && recentContracts.contract.data.length ? (
+  return topContracts && topContracts.contract.data.length ? (
     <Table>
       <TableHeader>
         <TableRow>
           <TableHead className="">Contract name</TableHead>
           <TableHead className="w-[100px]">Address</TableHead>
+          <TableHead className="w-auto text-right">Used By</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {recentContracts.contract.data.map((contract) => (
+        {topContracts.contract.data.map((contract) => (
           <TableRow key={contract.uuid}>
             <TableCell className="font-medium w-full">
             <Link href={`/${contract.uuid}`}>
@@ -43,6 +45,11 @@ export default function({ network }) {
             <TableCell className="font-medium w-full">
             <Link href={`/account/${getContractAddress(contract.uuid)}`}>
               {getContractAddress(contract.uuid)}
+            </Link>
+            </TableCell>
+            <TableCell className="font-medium w-full text-right">
+            <Link href={`/${contract.uuid}/dependants`}>
+              {contract.dependants_count}
             </Link>
             </TableCell>
           </TableRow>
@@ -55,11 +62,15 @@ export default function({ network }) {
       <TableRow>
         <TableHead className="">Contract name</TableHead>
         <TableHead className="">Address</TableHead>
+        <TableHead className="">Used By</TableHead>
       </TableRow>
     </TableHeader>
     <TableBody>
-      {!recentContracts && [...Array(10)].map(() => (
+      {!topContracts && [...Array(10)].map(() => (
         <TableRow>
+          <TableCell className="font-medium w-full">
+            <Skeleton className="h-6 w-full"></Skeleton>
+          </TableCell>
           <TableCell className="font-medium w-full">
             <Skeleton className="h-6 w-full"></Skeleton>
           </TableCell>

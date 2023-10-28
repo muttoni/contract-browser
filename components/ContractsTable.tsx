@@ -9,21 +9,19 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-export function ContractsTable({ contracts }) {
+export function ContractsTable({ contracts, names = true, addresses = false }) {
   return (
     <Table>
-      <TableCaption>A list of your recent contracts.</TableCaption>
+      <TableCaption>{contracts.length} contracts deployed on this account.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">Contract Name</TableHead>
-          <TableHead>Cadence Code</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {Object.entries(contracts).map(([name, code] : [string, string]) => (
-          <TableRow key={name}>
-            <TableCell className="font-medium">{name}</TableCell>
-            <TableCell>{code}</TableCell>
+        {contracts.map((contract : string) => (
+          <TableRow key={contract}>
+            <TableCell className="font-medium">{contract}</TableCell>
           </TableRow>
         ))}
       </TableBody>

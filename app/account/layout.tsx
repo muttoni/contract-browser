@@ -1,55 +1,70 @@
 "use client"
-import useCurrentUser from "hooks/useCurrentUser"
+import { useCurrentUser } from "@/hooks/useCurrentUser"
 import { Separator } from "@/components/ui/separator"
 import { SidebarNav } from "@/components/AccountSideBar"
 import { useParams } from "next/navigation"
+import { useNetworkForAddress } from "@/hooks/useNetwork"
+import { Badge } from "@/components/ui/badge"
+import { cn } from "@/lib/utils"
 
-interface AccountLayoutProps {
-  children: React.ReactNode
-}
-
-export default function AccountLayout({ children }: AccountLayoutProps) {
+export default function AccountLayout({ children }) {
 
   const user = useCurrentUser()
   const params = useParams()
+  const network = useNetworkForAddress(params.address)
 
   const sidebarNavItems = [
     {
       title: "Overview",
-      href: "/account/" + params.account,
+      type: "parent",
+      href: "/account/" + params.address,
     },
     {
       title: "Contracts",
-      href: "/account/" + params.account + "/contracts",
+      type: "parent",
+      href: "/account/" + params.address + "/contracts",
+    },
+
+    {
+      title: "Deploy",
+      type: "sub",
+      href: "/account/" + params.address + "/contracts/deploy",
     },
     {
       title: "Tokens",
-      href: "/account/" + params.account + "/tokens",
+      type: "parent",
+      href: "/account/" + params.address + "/tokens",
     },
     {
       title: "Storage",
-      href: "/account/" + params.account + "/storage",
+      type: "parent",
+      href: "/account/" + params.address + "/storage",
     },
     {
       title: "Keys",
-      href: "/account/" + params.account + "/keys",
+      type: "parent",
+      href: "/account/" + params.address + "/keys",
     },
     {
       title: "Settings",
-      href: "/account/" + params.account + "/settings",
+      type: "parent",
+      href: "/account/" + params.address + "/settings",
     },
   ]
 
   return (
 
-    <div className="space-y-6 p-10 pb-16">
+    <div className="space-y-6 p-10 pb-16 h-full flex-1">
       <div className="space-y-0.5">
-        <h2 className="text-2xl font-bold tracking-tight">Account</h2>
+        <h2 className="text-2xl items-center flex gap-2 font-bold tracking-tight">
+          Account <span className="text-muted-foreground">{params.address}</span>
+          <Badge variant="secondary" className={cn("capitalize", network === 'testnet' ? "bg-orange-400" : "bg-green-400")}>{network}</Badge>
+        </h2>
         <p className="text-muted-foreground">
           {
-            params.account === user?.addr ? 
+            params.address === user?.addr ? 
             "Inspect and manage your account, contracts and keys." : 
-            `Viewing the account of ${params.account}. Login with this account to access all features.`
+            `Viewing the account of ${params.address}. Login with this account to access all features.`
           }
         </p>
       </div>
