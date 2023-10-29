@@ -10,7 +10,6 @@ export const BLOCK_EXPLORER_URLS = {
 }
 
 export const NETWORKS = [
-  "local",
   "testnet",
   "mainnet"
 ]

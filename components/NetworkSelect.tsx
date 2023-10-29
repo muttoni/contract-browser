@@ -1,9 +1,7 @@
 "use client"
 
-import * as React from "react"
-import { type SelectTriggerProps } from "@radix-ui/react-select"
 import { NETWORKS } from "@/constants/index"
-import { useNetwork, getNetwork } from "hooks/useNetwork"
+import { useSearchParams } from 'next/navigation'
 
 import { cn } from "@/lib/utils"
 import {
@@ -14,29 +12,32 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-export function NetworkSelect({ className }: SelectTriggerProps) {
-  
-  let network = getNetwork().network; 
+export function NetworkSelect({ className }) {
+  const searchParams = useSearchParams()
+  const network = searchParams.get("network") || "mainnet"
+
+  const handleValueChange = (value) => {
+    window.location.href = `${window.location}?network=${value}`
+  }
+
   return (
     <Select
       value={network}
-      onValueChange={() =>{
-        useNetwork(network)
-      }}
+      onValueChange={handleValueChange}
     >
       <SelectTrigger
         className={cn(
-          "h-7 w-[145px] text-xs [&_svg]:h-4 [&_svg]:w-4 capitalize",
+          "h-7 w-[90px] md:w-[145px] text-xs [&_svg]:h-4 [&_svg]:w-4 capitalize",
           className
         )}
       >
-        <span className="text-muted-foreground">Network: </span>
+        <span className="text-muted-foreground hidden md:inline-block">Network: </span>
         <SelectValue placeholder={network} />
       </SelectTrigger>
       <SelectContent>
-        {NETWORKS.map((network) => (
-          <SelectItem key={network} value={network} className="text-xs capitalize">
-            {network}
+        {NETWORKS.map((_network) => (
+          <SelectItem key={_network} value={_network} className="text-xs capitalize">
+            {_network}
           </SelectItem>
         ))}
       </SelectContent>

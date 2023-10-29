@@ -54,11 +54,11 @@ export default function AccountLayout({ children }) {
 
   return (
 
-    <div className="space-y-6 p-10 pb-16 h-full flex-1">
+    <div className="space-y-6 pt-4 pb-16 h-full flex-1">
       <div className="space-y-0.5">
         <h2 className="text-2xl items-center flex gap-2 font-bold tracking-tight">
           Account <span className="text-muted-foreground">{params.address}</span>
-          <Badge variant="secondary" className={cn("capitalize", network === 'testnet' ? "bg-orange-400" : "bg-green-400")}>{network}</Badge>
+          <Badge className={cn("capitalize text-sm", network === 'testnet' ? "bg-orange-400 text-orange-800" : "bg-green-400 text-green-800")}>{network}</Badge>
         </h2>
         <p className="text-muted-foreground">
           {

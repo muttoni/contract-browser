@@ -27,13 +27,12 @@ export default function Page() {
   const [ network, setNetwork ] = useState("mainnet")
 
   async function getData(): Promise<StatusResponseType> {
-    const res = await fetch(`${window.location}/api/status?network=${network}`)
-  
+    const res = await fetch(`${window.location.origin + window.location.pathname.replace(/\/+$/, "")}/api/status?network=${network}`)
     if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
       throw new Error('Failed to fetch data')
     }
-   
+
     return res.json() 
   }
 
@@ -44,7 +43,7 @@ export default function Page() {
   }, [network])
 
   return (
-        <div className="flex-1 space-y-4 p-8 pt-6">
+        <div className="flex-1 space-y-4 md:pt-6">
           <div className="flex items-center justify-between space-y-2">
             <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
           </div>
@@ -67,7 +66,7 @@ export default function Page() {
 function Dashboard({ network, status }) {
   return (
     <>
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">
