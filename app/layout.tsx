@@ -5,9 +5,7 @@ import { UserNav } from '@/components/UserNav'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { RecoilRoot } from 'recoil'
 import '../styles/globals.css'
-
-// Import FCL config
-import '../config/fcl'
+//import '../config/fcl'
 
 export default function RootLayout({ 
   children 
@@ -18,7 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         suppressHydrationWarning={true}
-        className={"min-h-screen bg-background font-sans antialiased"}
+        className={"min-h-screen w-full bg-background font-sans antialiased"}
       >
       <RecoilRoot>
         <ThemeProvider
@@ -27,14 +25,16 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className="container min-h-screen flex flex-col">
-          <div className="flex-col p-8 md:flex">
+          <main className="container px-4 md:px-8 lg:px-16 min-h-screen w-full flex flex-col">
+          <div className="flex-col py-8 md:flex">
             <div className="flex items-center">
-              <Navbar className="me-6" />
-              <Search />
+              <Navbar className="" />
               <div className="ml-auto flex items-center space-x-4">
                 <UserNav />
               </div>
+            </div>
+            <div className="flex flex-1 w-full pt-8">
+            <Search /> 
             </div>
           </div>
           {children}

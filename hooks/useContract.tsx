@@ -1,5 +1,6 @@
 import { ContractResponseType } from "@/lib/types"
 import { useState, useEffect } from "react"
+import { getContractAddress, getNetworkFromAddress } from "@/lib/utils"
 
 export function useContract(uuid: string, network?: string) {
   console.log("CALLED")
@@ -7,7 +8,7 @@ export function useContract(uuid: string, network?: string) {
   const [ contract, setContract ] = useState(null)
 
   async function getData() {
-    const path = `${process.env.NEXT_PUBLIC_BASE_DOMAIN}/api/contract/${uuid}?network=${network || "mainnet"}`
+    const path = `${process.env.NEXT_PUBLIC_BASE_DOMAIN}/api/contract/${uuid}?network=${getNetworkFromAddress(getContractAddress(uuid)) || "mainnet"}`
     const res = await fetch(path)
   
     if (!res.ok) {

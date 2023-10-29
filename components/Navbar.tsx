@@ -16,16 +16,17 @@ export function Navbar({
 
   return (
     <nav
-      className={cn("flex items-center space-x-2 lg:space-x-4", className)}
+      className={cn("flex space-x-2 items-center md:space-x-4", className)}
       {...props}
     >
-      <Link href="/" className="text-sm space-x-3 flex font-medium transition-colors hover:text-primary">
-        <Image src="/icon.png" alt="logo" className="h-7 w-7" width="256" height="256" /> 
-        <span className="text-lg">Contract Browser</span>
+      <Link href="/" className="flex items-center text-sm space-x-3 font-medium transition-colors hover:text-primary">
+        <Image src="/icon.png" alt="logo" className="object-contain max-w-[32px] min-w-[32px] h-[32px] md:h-[42px] md:w-auto" width="256" height="256" /> 
+        <span className="text-lg hidden sm:inline-block leading-tight">Contract Browser</span>
       </Link>
           {/* <Badge className="ml-2">{network}</Badge> */}
-          <NetworkSelect />
 
+      <NetworkSelect />
+      <ModeToggle />
 
       {/* <Link
         href="/"
@@ -51,7 +52,6 @@ export function Navbar({
       >
         Settings
       </Link> */}
-      <ModeToggle />
     </nav>
   )
 }

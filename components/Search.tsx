@@ -1,13 +1,16 @@
 import { Input } from "@/components/ui/input"
+import { SearchIcon } from "lucide-react"
 
 export function Search() {
   return (
-    <div className="flex-grow">
-      <Input
-        type="search"
-        placeholder="Search..."
-        className="md:w-[100px] lg:w-[300px]"
-      />
-    </div>
+<>
+  <Input
+      type="search"
+      placeholder="Search..."
+      className="w-full h-14 text-lg"
+    />
+  <SearchIcon className="h-8 w-8 text-muted-foreground ml-[-45px] mt-[10px]" />
+</>
+
   )
 }

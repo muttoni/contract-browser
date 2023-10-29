@@ -42,7 +42,7 @@ export default function({ network }) {
               {getContractName(contract.uuid)}
             </Link>
             </TableCell>
-            <TableCell className="font-medium w-full">
+            <TableCell className="font-medium w-full font-mono">
             <Link href={`/account/${getContractAddress(contract.uuid)}`}>
               {getContractAddress(contract.uuid)}
             </Link>
@@ -66,16 +66,16 @@ export default function({ network }) {
       </TableRow>
     </TableHeader>
     <TableBody>
-      {!topContracts && [...Array(10)].map(() => (
-        <TableRow>
+      {!topContracts && [...Array(10)].map((i) => (
+        <TableRow key={i}>
           <TableCell className="font-medium w-full">
-            <Skeleton className="h-6 w-full"></Skeleton>
+            <Skeleton className="h-5 w-full"></Skeleton>
           </TableCell>
           <TableCell className="font-medium w-full">
-            <Skeleton className="h-6 w-full"></Skeleton>
+            <Skeleton className="h-5 w-full"></Skeleton>
           </TableCell>
           <TableCell className="font-medium w-full">
-            <Skeleton className="h-6 w-full"></Skeleton>
+            <Skeleton className="h-5 w-full"></Skeleton>
           </TableCell>
         </TableRow>
       ))}

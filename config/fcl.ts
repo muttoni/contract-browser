@@ -8,8 +8,7 @@ console.log('Dapp running on network:', flowNetwork)
 
 config({
   'flow.network': flowNetwork,
-  'accessNode.api': ACCESS_NODE_URLS[flowNetwork],
-  'discovery.wallet': `https://fcl-discovery.onflow.org/${flowNetwork}/authn`,
-  'app.detail.icon': 'https://avatars.githubusercontent.com/u/62387156?v=4',
-  'app.detail.title': 'FCL Next Scaffold'
+  'accessNode.api': ACCESS_NODE_URLS[flowNetwork]
 }).load({ flowJSON })
+
+export default config

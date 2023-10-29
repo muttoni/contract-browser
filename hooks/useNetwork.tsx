@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react"
-import * as fcl from "@onflow/fcl"
+// import * as fcl from "@onflow/fcl"
+import config from "@/config/fcl"
 import { getNetworkFromAddress } from "@/lib/utils"
 
 export function getNetworkConfig(network){
   const networkConfig = {
     "testnet":{
-    "app.detail.title":"Contract Browser",
+    "flow.network": "testnet",
+    "app.detail.title":"Contract Browser Testnet",
     "app.detail.icon": "https://contractbrowser.com/favicon.png",
     "accessNode.api": "https://rest-testnet.onflow.org",
     "discovery.wallet": "https://fcl-discovery.onflow.org/testnet/authn",
@@ -13,12 +15,12 @@ export function getNetworkConfig(network){
     "0xLockedTokens": "0x95e019a17d0e23d7",
     "0xFungibleToken": "0x9a0766d93b6608b7",
     "0xNonFungibleToken": "0x631e88ae7f1d7c20",
-
     "0xFUSD": "0xe223d8a629e49c68",
     "0xMetadataViews":  "0x631e88ae7f1d7c20",
     "0xFIND": "0xa16ab1d0abde3625",
   },
   "mainnet":{
+    "flow.network": "mainnet",
     "app.detail.title":"Contract Browser",
     "app.detail.icon": "https://contractbrowser.com/favicon.png",
     "accessNode.api": "https://rest-mainnet.onflow.org",
@@ -41,13 +43,21 @@ export function useNetworkForAddress(address){
   } else{
   network = getNetworkFromAddress(address)
   }
-  fcl.config(getNetworkConfig(network))
+  config(getNetworkConfig(network))
   return network
 }
 
-export function useNetwork(network){
-  fcl.config(getNetworkConfig(network))
-  return network
+export async function useNetwork(desiredNetwork: string = "mainnet"){
+  const [network, setNetwork] = useState<string|null>(null)
+  useEffect(() => {
+    async function getConfig() {
+      config(getNetworkConfig(network))
+      await config.get('flow.network')
+      setNetwork(desiredNetwork)
+    }
+    getConfig()
+  }, [network])
+  return { network, setNetwork }
 }
 
 
@@ -73,7 +83,7 @@ export function getNetwork(): { network: string | null } {
 
   useEffect(() => {
     async function getConfig() {
-      const flowNetwork = await fcl.config.get('flow.network')
+      const flowNetwork = await config.get('flow.network')
       setNetwork(flowNetwork)
     }
     getConfig()

@@ -59,10 +59,10 @@ export function storageCapacity(storage): {used: number, capacity: number, perce
   }
 }
 export function getContractName(uuid) {
-  return uuid.split(".")[2]
+  return uuid ? uuid.split(".")[2] : ''
 }
 export function getContractAddress(uuid) {
-  return "0x" + uuid.split(".")[1]
+  return uuid ? "0x" + uuid.split(".")[1] : ''
 }
 
 export function formatStorageSize(input: number): string {

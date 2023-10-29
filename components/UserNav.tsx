@@ -1,6 +1,9 @@
 
+//import config from "@/config/fcl"
+import * as fcl from "@onflow/fcl"
 import { Button } from "@/components/ui/button"
-import { ChevronDown, Cog, Plus, Eye, LogOut, ArrowLeftRight, LogIn } from "lucide-react"
+import { ChevronDown, Cog, Plus, Eye, LogOut, ArrowLeftRight, LogIn, UserCircle } from "lucide-react"
+
 import Link from "next/link"
 import {
   DropdownMenu,
@@ -19,9 +22,8 @@ import {
   DropdownMenuSubContent,
 } from "@/components/ui/dropdown-menu"
 
-import * as fcl from '@onflow/fcl'
 import { formatFlowBalance } from "@/lib/utils"
-import { useNetworkForAddress, useNetwork } from '@/hooks/useNetwork'
+import { useNetworkForAddress, getNetworkConfig } from '@/hooks/useNetwork'
 import { useCurrentUser } from '@/hooks/useCurrentUser'
 import { useAccount } from '@/hooks/useAccount'
 import ConnectionLight from "./ui/ConnectionLight"
@@ -31,28 +33,40 @@ import {
   AvatarImage,
   AvatarFallback
 } from "./ui/avatar"
+import { useEffect, useState } from "react"
+import { useSearchParams } from "next/navigation"
+
 
 export function UserNav() {
-
+  
   const user = useCurrentUser()
-  const network = user?.addr ? useNetworkForAddress(user?.addr) : null
+  const [network, setNetwork] = useState(user?.addr ? useNetworkForAddress(user?.addr) : "mainnet")
   const account = useAccount(user?.addr || null)
   const accountStorage = account?.storage
-
-  function changeNetwork(network) {
-    console.log(network)
-    fcl.unauthenticate()
-    useNetwork(network)
-    fcl.authenticate()
+  const searchParams = useSearchParams()
+  const networkParam = searchParams.get("network")
+  
+  function changeNetwork(desiredNetwork: string) {
+    fcl.config(getNetworkConfig(desiredNetwork))
+    setNetwork(desiredNetwork)
   }
+
+  useEffect(() => {
+    if(networkParam && networkParam !== network){
+      console.log("preferred network changing to", networkParam)
+      changeNetwork(networkParam)
+    } else {
+      changeNetwork(network)
+    }
+  })
 
   return (
     <DropdownMenu>
 
 {!user.loggedIn && 
-  <Button onClick={fcl.authenticate}>
+  <Button onClick={user.logIn}>
     <LogIn className="h-4 w-4 me-2" />
-    Connect Wallet
+    <span className="hidden md:inline-block">Connect Wallet</span>
   </Button>
 }
 {user.loggedIn && (
@@ -60,7 +74,13 @@ export function UserNav() {
     <DropdownMenuTrigger asChild>
       <Button variant="outline">
         <ConnectionLight status="online"/><span className="w-2"></span> 
-        { accountStorage && accountStorage?.find ? accountStorage?.find.name : user?.addr }
+        <span className="hidden md:inline-block">{ accountStorage && accountStorage?.find ? accountStorage?.find.name : user?.addr }</span>
+        {accountStorage && accountStorage?.find ? 
+        <Avatar className="h-6 w-6 me-2 md:hidden">
+          <AvatarImage src={accountStorage?.find.avatar} alt={accountStorage?.find.name} />
+        </Avatar>
+        : <UserCircle className="h-4 w-4 md:hidden" />
+        }
         <ChevronDown className="h-4 w-4 ml-1" />
       </Button>
     </DropdownMenuTrigger>
@@ -142,13 +162,13 @@ export function UserNav() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={fcl.reauthenticate}>
+        <DropdownMenuItem onClick={user.changeUser}>
           Switch Account
           <DropdownMenuShortcut>
           <ArrowLeftRight className="h-4 w-4 text-muted-foreground" />
           </DropdownMenuShortcut>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={fcl.unauthenticate}>
+        <DropdownMenuItem onClick={user.logOut}>
           Log out
           <DropdownMenuShortcut>
           <LogOut className="h-4 w-4 text-muted-foreground" />
