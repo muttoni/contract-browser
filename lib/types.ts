@@ -36,17 +36,6 @@ export type ContractResponseType = {
   };
 };
 
-export type ContractSearchResponseType = {
-  results: {
-    code: number;
-    data: {
-      dependants_count: number;
-      dependencies_count: number;
-      uuid: string;
-    }[];
-  };
-};
-
 export type StatusResponseType = {
   status: {
     code: number;
@@ -59,13 +48,16 @@ export type StatusResponseType = {
   };
 }
 
-export type ContractsListResponseType = {
-  contract: {
-    code: number;
-    data: {
-      dependants_count: number;
-      dependencies_count: number;
-      uuid: string;
-    }[];
-  };
-};
+export type Contract = {
+	dependants_count: number;
+	dependencies_count: number;
+	uuid: string;
+}
+
+export type ContractSearchResponseType = {
+	code: number;
+	data: {
+    contracts: Contract[],
+    total_contracts_count: number
+  }
+}

@@ -8,7 +8,7 @@ export function useContract(uuid: string, network?: string) {
   const [ contract, setContract ] = useState(null)
 
   async function getData() {
-    const path = `${process.env.NEXT_PUBLIC_BASE_DOMAIN}/api/contract/${uuid}?network=${getNetworkFromAddress(getContractAddress(uuid)) || "mainnet"}`
+    const path = `${process.env.NEXT_PUBLIC_BASE_DOMAIN}/api/contracts/${uuid}?network=${getNetworkFromAddress(getContractAddress(uuid)) || "mainnet"}`
     const res = await fetch(path)
   
     if (!res.ok) {

@@ -1,6 +1,8 @@
 "use client"
+import { Card } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { useAccount } from "hooks/useAccount"
+import { Key } from "lucide-react"
 import { useParams } from "next/navigation"
 
 const fmtCurve = i =>
@@ -22,22 +24,21 @@ const fmtHash = i =>
     const keys = account?.keys ? account?.keys: []
   
     return (
-        <Box sx={{marginLeft: 1, padding: "5px"}}>
+        <>
           {(keys || []).map(key => (
-            <Group title={key.publicKey} icon="key" key={key.index}>
+            <Card title={key.publicKey} key={key.index}>
+              <Key className="h-4 w-4 text-muted-foreground" />
               {key.revoked && (
-                <Item icon="folder-times">
-                  <Bad>REVOKED</Bad>
-                </Item>
+                <span className="text-red-600">REVOKED</span>
               )}
-              <Item icon="hashtag">KeyId: {key.index}</Item>
-              <Item icon="weight-hanging">Weight: {key.weight}/1000</Item>
-              <Item icon="wave-sine">Curve: {fmtCurve(key.signAlgo)}</Item>
-              <Item icon="blender">Hash: {fmtHash(key.hashAlgo)}</Item>
-              <Item icon="dna">Sequence Number: {key.sequenceNumber}</Item>
-            </Group>
+              <p className="hashtag">KeyId: {key.index}</p>
+              <p className="weight-hanging">Weight: {key.weight}/1000</p>
+              <p className="wave-sine">Curve: {fmtCurve(key.signAlgo)}</p>
+              <p className="blender">Hash: {fmtHash(key.hashAlgo)}</p>
+              <p className="dna">Sequence Number: {key.sequenceNumber}</p>
+            </Card>
           ))}
-        </Box>
+        </>
     )
   }
 
