@@ -21,17 +21,12 @@ export default function ContractLayout({ children }) {
       href: "/" + contractId,
     },
     {
-      title: "Code",
-      type: "parent",
-      href: "/" + contractId + "/code",
-    },
-    {
       title: "Used by",
       type: "parent",
       href: "/" + contractId + "/dependants",
     },
     {
-      title: "Events",
+      title: "History",
       type: "parent",
       href:"/" + contractId + "/events",
     }
@@ -57,7 +52,7 @@ export default function ContractLayout({ children }) {
       </div>
       <Separator className="my-6" />
       <div className="flex flex-col flex-1 space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
-        <aside className="-mx-4 lg:w-1/5">
+        <aside className="lg:w-1/5">
           <SidebarNav items={sidebarNavItems} />
         </aside>
         {children}

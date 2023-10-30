@@ -162,6 +162,10 @@ export function getNetworkFromAddress(address){
   return result;
 }
 
+export function getCleanLocation(window) {
+  return window?.location?.origin + window?.location?.pathname?.replace(/\/+$/, "")
+}
+
 export function isValidAddressForNetwork({
   address,
   network
@@ -194,3 +198,24 @@ export function isValidAddressForNetwork({
 
 	return (parity === BigInt(0)) && (codeWord === BigInt(0))
 }
+
+export function debounce(func, wait, immediate = false) {
+  var timeout;
+
+    return (...args) => {
+      var context = this;
+
+      var later = function() {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+
+      var callNow = immediate && !timeout;
+
+      clearTimeout(timeout);
+
+      timeout = setTimeout(later, wait);
+
+      if (callNow) func.apply(context, args);
+    };
+};

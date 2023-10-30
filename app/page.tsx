@@ -1,5 +1,6 @@
 "use client"
-import { Suspense, useEffect, useState } from "react"
+import { Suspense, useEffect, useRef, useState } from "react"
+import CountUp from "react-countup"
 import {
   Card,
   CardContent,
@@ -9,25 +10,29 @@ import {
 } from "@/components/ui/card"
 
 import { StatusResponseType } from "@/lib/types"
-import { formatNumber } from "@/lib/utils"
+import { formatNumber, timeSince } from "@/lib/utils"
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import RecentContracts from "@/components/RecentContracts"
-import TopContracts from "@/components/TopContracts"
+import RecentContractsTable from "@/components/tables/RecentContractsTable"
+import TopContractsTable from "@/components/tables/TopContractsTable"
 import { Skeleton } from "@/components/ui/skeleton"
+import ConnectionLight from "@/components/ui/ConnectionLight"
+import Link from "next/link"
+import { Hourglass, Star, Trophy } from "lucide-react"
 
 
 
 export default function Page() {
   const [ status, setStatus ] = useState(null as unknown as StatusResponseType | null | undefined)
   const [ network, setNetwork ] = useState("mainnet")
+  const [ updatedStart, setUpdatedStart ] = useState(0)
 
   async function getData(): Promise<StatusResponseType> {
-    const res = await fetch(`${window.location.origin + window.location.pathname.replace(/\/+$/, "")}/api/status?network=${network}`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_DOMAIN}/api/status?network=${network}`)
     if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
       throw new Error('Failed to fetch data')
@@ -35,6 +40,34 @@ export default function Page() {
 
     return res.json() 
   }
+
+  function useInterval(callback, delay) {
+    const savedCallback = useRef();
+  
+    // Remember the latest callback.
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+  
+    // Set up the interval.
+    useEffect(() => {
+      function tick() {
+        savedCallback.current();
+      }
+      if (delay !== null) {
+        let id = setInterval(tick, delay);
+        return () => clearInterval(id);
+      }
+    }, [delay]);
+  }
+
+  useInterval(() => {
+    let currentBlockHeight = status?.status?.data?.synced_height || 0
+    getData().then((data) => {
+      setUpdatedStart(currentBlockHeight)
+      setStatus(data)
+    })
+  }, 5000)
 
   useEffect(() => {
     getData().then((data) => {
@@ -53,17 +86,17 @@ export default function Page() {
               <TabsTrigger value="testnet" onClick={() => setNetwork("testnet")}>Testnet</TabsTrigger>
             </TabsList>
             <TabsContent value="mainnet" className="space-y-4">
-              <Dashboard network="mainnet" status={status}/>
+              <Dashboard network="mainnet" status={status} updatedStart={updatedStart}/>
             </TabsContent>
             <TabsContent value="testnet" className="space-y-4">
-              <Dashboard network="testnet" status={status}/>
+              <Dashboard network="testnet" status={status} updatedStart={updatedStart}/>
             </TabsContent>
           </Tabs>
         </div>
   )
 }
 
-function Dashboard({ network, status }) {
+function Dashboard({ network, status, updatedStart }) {
   return (
     <>
     <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
@@ -139,7 +172,7 @@ function Dashboard({ network, status }) {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{status?.status?.data?.synced_height}</div>
+          <div className="text-2xl font-bold"><CountUp start={updatedStart} end={status?.status?.data?.synced_height} /></div>
           <p className="text-xs text-muted-foreground">
             Blocks on {network}
           </p>
@@ -148,7 +181,7 @@ function Dashboard({ network, status }) {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">
-            Active Now
+            Status
           </CardTitle>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -164,34 +197,43 @@ function Dashboard({ network, status }) {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">+573</div>
+          <div className="text-2xl flex items-center gap-3 font-bold">
+            <ConnectionLight status={status?.status?.data ? "online" : "connecting"}/>
+            {status?.status?.data ? "Online" : "Connecting"}
+          </div>
           <p className="text-xs text-muted-foreground">
-            +201 since last hour
+            last synced {timeSince(new Date(status?.status?.data?.last_sync_at + "Z"), new Date()) || "-"} ago
           </p>
         </CardContent>
       </Card>
     </div>
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-      <Card className="col-span-4">
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
+      <Card className="md:col-span-3">
         <CardHeader>
-          <CardTitle>Top Contracts</CardTitle>
+          <CardTitle className="flex flex-row items-center justify-between">
+            <span>Top Contracts</span>
+            <Trophy className="h-5 w-5 text-muted-foreground" />
+          </CardTitle>
           <CardDescription>
-            The most depended on contracts on {network}.
+            The most depended on contracts on {network}. <Link href="/top" className="text-primary font-bold">View all &rarr;</Link>
           </CardDescription>
         </CardHeader>
         <CardContent className="">
-          <TopContracts network={network} />
+          <TopContractsTable network={network} />
         </CardContent>
       </Card>
-      <Card className="col-span-3">
+      <Card className="md:col-span-3">
         <CardHeader>
-          <CardTitle>Recent Contracts</CardTitle>
+          <CardTitle className="flex flex-row items-center justify-between">
+            <span>Recent Contracts</span>
+            <Hourglass className="h-5 w-5 text-muted-foreground" />
+          </CardTitle>
           <CardDescription>
-            The most recently deployed contracts on {network}.
+            The most recently deployed contracts on {network}. <Link href="/recent" className="text-primary font-bold">View all &rarr;</Link>
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <RecentContracts network={network} />
+          <RecentContractsTable network={network} />
         </CardContent>
       </Card>
     </div>

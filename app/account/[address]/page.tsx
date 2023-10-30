@@ -9,6 +9,7 @@ import { useAccount } from 'hooks/useAccount'
 import { Disc, Eye, Key, Plus, Text } from 'lucide-react'
 import { useParams, usePathname } from 'next/navigation'
 import Link from "next/link"
+import { useNetworkForAddress } from '@/hooks/useNetwork'
 
 function AccountPage({}) {
   const account = useAccount(useParams().address)

@@ -15,8 +15,8 @@ export async function GET(request: Request) {
     }
   };
 
-  const res = await fetch(`${process.env.API_DOMAIN}/api/v1/contracts/search?network=${network}&keyword=${query}&offset=${offset}&limit=${limit}`, options)
+  const res = await fetch(`${process.env.API_DOMAIN}/api/v2/contracts/search?network=${network}&keyword=${query}&offset=${offset}&limit=${limit}`, options)
   const results : ContractSearchResponseType = await res.json()
-  return Response.json({ results })
+  return Response.json(results)
 }
 

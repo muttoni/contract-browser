@@ -1,9 +1,11 @@
 "use client"
 
 import { NETWORKS } from "@/constants/index"
+import { useNetwork } from "@/hooks/useNetwork"
 import { useSearchParams } from 'next/navigation'
 
-import { cn } from "@/lib/utils"
+import { cn, getCleanLocation, getNetworkFromAddress } from "@/lib/utils"
+import { useCurrentUser } from "@/hooks/useCurrentUser"
 import {
   Select,
   SelectContent,
@@ -11,13 +13,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useEffect, useState } from "react"
 
 export function NetworkSelect({ className }) {
+
+  // NEEDS REFACTORING
+  const [ network, setNetwork ] = useState(null)
   const searchParams = useSearchParams()
-  const network = searchParams.get("network") || "mainnet"
+  const user = useCurrentUser()
+  let userNetwork;
+
+  if(user?.addr) {
+    userNetwork = getNetworkFromAddress(user?.addr)
+  }
+  useNetwork(userNetwork || searchParams.get("network") || "mainnet").then((r) => setNetwork(r.network))
 
   const handleValueChange = (value) => {
-    window.location.href = `${window.location}?network=${value}`
+    window.location.href = `${getCleanLocation(window)}?network=${value}`
   }
 
   return (

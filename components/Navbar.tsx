@@ -25,7 +25,7 @@ export function Navbar({
       </Link>
           {/* <Badge className="ml-2">{network}</Badge> */}
 
-      <NetworkSelect />
+      {/* <NetworkSelect /> */}
       <ModeToggle />
 
       {/* <Link
