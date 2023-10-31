@@ -4,7 +4,7 @@ import FlowLogo from '@/components/ui/FlowLogo'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
-import { formatFlowBalance, storageCapacity, formatStorageSize } from '@/lib/utils'
+import { formatFlowBalance, storageCapacity, formatStorageSize, cleanAddress } from '@/lib/utils'
 import { useAccount } from 'hooks/useAccount'
 import { Disc, Eye, Key, Plus, Text } from 'lucide-react'
 import { useParams, usePathname } from 'next/navigation'
@@ -12,7 +12,9 @@ import Link from "next/link"
 import { useNetworkForAddress } from '@/hooks/useNetwork'
 
 function AccountPage({}) {
-  const account = useAccount(useParams().address)
+  const address = cleanAddress(useParams().address)
+  const network = useNetworkForAddress(address)
+  const account = useAccount(address)
   const path = usePathname()
 
   return (

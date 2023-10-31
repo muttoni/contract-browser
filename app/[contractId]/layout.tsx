@@ -21,6 +21,11 @@ export default function ContractLayout({ children }) {
       href: "/" + contractId,
     },
     {
+      title: "Code",
+      type: "parent",
+      href:"#code",
+    },
+    {
       title: "Used by",
       type: "parent",
       href: "/" + contractId + "/dependants",
@@ -41,7 +46,8 @@ export default function ContractLayout({ children }) {
         </h2>
         <p className="text-muted-foreground">
           <Link href={`/account/${getContractAddress(contractId)}`}><span className="text-2xl tracking-tight font-bold text-muted-foreground">by {getContractAddress(contractId)}</span></Link>
-          <span className="ms-2 text-xs">
+          <br/>
+          <span className="text-xs">
           {
             getContractAddress(contractId) === user?.addr ? 
             "You own this contract, so you can update it." : 

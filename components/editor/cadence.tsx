@@ -127,8 +127,8 @@ export default function configureCadence(monaco) {
         { include: "@whitespace" },
 
         // delimiters and operators
-        [/[()[]]/, "@brackets"],
-        [/[<>](?!@symbols)/, "@brackets"],
+        [/[{}()\[\]]/, '@brackets'],
+        [/[<>](?!@symbols)/, '@brackets'],
         [
           /@symbols/,
           {

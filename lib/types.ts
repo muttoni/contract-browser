@@ -1,22 +1,18 @@
 export type DependantsResponseType = {
-  contract: {
-    code: number,
-    data: {
-      dependants: any[],
-      total_dependants_count: number,
-      uuid: string
-    }
+  code: number,
+  data: {
+    dependants: any[],
+    total_dependants_count: number,
+    uuid: string
   }
 }
 
 export type DependenciesResponseType = {
-  dependants: {
-    code: number;
-    data: {
-      dependencies: string[];
-      total_dependants_count: number;
-      uuid: string;
-    };
+  code: number;
+  data: {
+    dependencies: string[];
+    total_dependants_count: number;
+    uuid: string;
   };
 };
 
@@ -60,4 +56,17 @@ export type ContractSearchResponseType = {
     contracts: Contract[],
     total_contracts_count: number
   }
+}
+
+export type DeploymentsResponseType = {
+  code: number;
+  data: {
+    deployments: {
+      block_height: number;
+      block_timestamp: string;
+      tx_id: string;
+      type: string;
+    }[];
+    total_deployments_count: number;
+  };
 }

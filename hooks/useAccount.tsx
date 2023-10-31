@@ -2,8 +2,9 @@
 
 import {atomFamily, selectorFamily, useRecoilState} from "recoil"
 import * as fcl from "@onflow/fcl"
-import {withPrefix} from "@/lib/utils"
+import {getNetworkFromAddress, withPrefix} from "@/lib/utils"
 import { useEffect, useState } from "react"
+import { getNetworkConfig } from "./useNetwork"
 
 export const IDLE = "IDLE"
 export const PROCESSING = "PROCESSING"
@@ -35,10 +36,17 @@ export const fsm = atomFamily({
 
 export function useAccount(address) {
 
+  if(!address) return;
+
+  const network = getNetworkFromAddress(address)
+  fcl.config(getNetworkConfig(network))
+
   address = withPrefix(address)
   const [$data, setData] = useRecoilState(data(address))
   const [$status, setStatus] = useRecoilState(fsm(address))
   const [storage, setStorage] = useState(null)
+
+  
  
   useEffect(()=>{
     if (!$data) return 

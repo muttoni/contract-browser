@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
-// import * as fcl from "@onflow/fcl"
-import config from "@/config/fcl"
+import * as fcl from "@onflow/fcl"
+// import config from "@/config/fcl"
 import { getNetworkFromAddress } from "@/lib/utils"
 
 export function getNetworkConfig(network){
@@ -43,7 +43,7 @@ export function useNetworkForAddress(address){
   } else{
   network = getNetworkFromAddress(address)
   }
-  config(getNetworkConfig(network))
+  fcl.config(getNetworkConfig(network))
   return network
 }
 
@@ -51,8 +51,8 @@ export async function useNetwork(desiredNetwork: string = "mainnet"){
   const [network, setNetwork] = useState<string|null>(null)
   useEffect(() => {
     async function getConfig() {
-      config(getNetworkConfig(network))
-      await config.get('flow.network')
+      fcl.config(getNetworkConfig(network))
+      await fcl.config.get('flow.network')
       setNetwork(desiredNetwork)
     }
     getConfig()
@@ -83,7 +83,7 @@ export function getNetwork(): { network: string | null } {
 
   useEffect(() => {
     async function getConfig() {
-      const flowNetwork = await config.get('flow.network')
+      const flowNetwork = await fcl.config.get('flow.network')
       setNetwork(flowNetwork)
     }
     getConfig()

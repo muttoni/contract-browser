@@ -7,10 +7,10 @@ interface SkeletonTableProps {
   numCols: number;
 }
 
-const SkeletonTable: React.FC<SkeletonTableProps> = ({ numRows, numCols }) => {
+const SkeletonTable: React.FC<SkeletonTableProps> = ({ numRows, numCols, topRow, bottomRow }) => {
   return (
     <div className="rounded-md border mb-2 p-2">
-    <Skeleton className='w-full h-10 mb-2' />
+    {topRow && <Skeleton className='w-full h-10 mb-2' />}
     <Table>
       <TableHeader>
         <TableRow>
@@ -33,7 +33,7 @@ const SkeletonTable: React.FC<SkeletonTableProps> = ({ numRows, numCols }) => {
         ))}
       </TableBody>
     </Table>
-    <Skeleton className='w-full h-10 mt-2' />
+    {bottomRow && <Skeleton className='w-full h-10 mt-2' />}
     </div>
   );
 };
