@@ -30,14 +30,14 @@ export default function ContractsPage({  }) {
       </div>
       {user?.addr === account?.address &&  <Link href={"/account/" + address + "/contracts/deploy"}><Button size="sm"><Plus className="h-4 w-4 me-2" /> Deploy a new contract</Button></Link> }
       </div>
-      <Separator />
+      {/* <Separator /> */}
       <Table>
         <TableCaption>{`${account?.contractNames?.length} contracts deployed on this account.`}</TableCaption>
-        <TableHeader>
+        {/* <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">Contract name</TableHead>
           </TableRow>
-        </TableHeader>
+        </TableHeader> */}
         <TableBody>
           {account?.contractNames.map((contract : string) => (
             <TableRow key={contract}>

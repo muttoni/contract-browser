@@ -1,5 +1,6 @@
-import { DependenciesResponseType } from "@/lib/types";
-import { getNetworkFromAddress, getContractAddress } from "@/lib/utils";
+
+import { DeploymentsResponseType } from "@/lib/types";
+import { getContractAddress, getNetworkFromAddress } from "@/lib/utils";
 
 export async function GET(
   request: Request,
@@ -17,7 +18,7 @@ export async function GET(
     }
   };
 
-  const res = await fetch(`${process.env.API_DOMAIN}/api/v1/contracts/${uuid}/dependencies?network=${network}`, options)
-  const dependencies : DependenciesResponseType = await res.json()
-  return Response.json(dependencies)
+  const res = await fetch(`${process.env.API_DOMAIN}/api/v2/contracts/${uuid}/deployments?network=${network}`, options)
+  const dependants : DeploymentsResponseType = await res.json()
+  return Response.json(dependants)
 }

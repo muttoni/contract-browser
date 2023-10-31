@@ -1,5 +1,6 @@
 
 import { DependantsResponseType } from "@/lib/types";
+import { getNetworkFromAddress, getContractAddress } from "@/lib/utils";
 
 export async function GET(
   request: Request,
@@ -7,7 +8,8 @@ export async function GET(
   ) {
 
   const { searchParams } = new URL(request.url)
-  const network = searchParams.get('network')
+  const network = searchParams.get('network') || getNetworkFromAddress(getContractAddress(params.uuid))
+
   const uuid = params.uuid
 
   const options = {
@@ -19,5 +21,5 @@ export async function GET(
 
   const res = await fetch(`${process.env.API_DOMAIN}/api/v1/contracts/${uuid}/dependants?network=${network}`, options)
   const dependants : DependantsResponseType = await res.json()
-  return Response.json({ dependants })
+  return Response.json(dependants)
 }

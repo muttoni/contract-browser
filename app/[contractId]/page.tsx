@@ -76,6 +76,8 @@ export default function ContractPage() {
         </CardContent>
       </Card>
     </div>
+    <div id="code"></div>
+
     <div className="flex gap-2">
       <CopyToClipboard text={contract?.code}>
       <Button size="sm" variant="outline" onClick={() => setContractCopied(true)}>

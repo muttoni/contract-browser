@@ -19,6 +19,7 @@ export default function CodeEditor({prefix="", type="", index=0, code = "", onCh
   useEffect(() => {
     if (!monaco) return
     configureCadence(monaco)
+    console.log("theme", theme)
     monaco.editor.defineTheme('cb', {
       base: `${theme === 'light' ? "vs" : "vs-dark"}`,
       inherit: true,
@@ -33,6 +34,7 @@ export default function CodeEditor({prefix="", type="", index=0, code = "", onCh
   return (
     <Editor
       language="cadence"
+      theme="cb"
       className="max-h-screen border rounded-lg overflow-hidden"
       options={{
         fontSize: 14,
