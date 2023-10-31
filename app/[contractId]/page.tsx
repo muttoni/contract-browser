@@ -8,7 +8,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { useContract } from "@/hooks/useContract"
 import { useParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { getContractAddress } from "@/lib/utils";
+import { calculateStringSizeInBytes, formatStorageSize, getContractAddress } from "@/lib/utils";
 import Link from "next/link"
 import { Skeleton } from "@/components/ui/skeleton"
 
@@ -74,7 +74,7 @@ export default function ContractPage() {
         <CardContent>
           <div className="text-2xl font-bold">{contract?.code?.split("\n").length}</div>
           <p className="text-xs text-muted-foreground">
-            lines of code
+            lines of code (<span className="text-muted-foreground">{formatStorageSize(calculateStringSizeInBytes(contract?.code))}</span>)
           </p>
         </CardContent>
       </Card>
