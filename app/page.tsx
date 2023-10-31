@@ -52,7 +52,10 @@ export default function Page() {
     // Set up the interval.
     useEffect(() => {
       function tick() {
-        savedCallback.current();
+        if(typeof savedCallback?.current === "function") {
+          // @ts-ignore
+          savedCallback.current();
+        }
       }
       if (delay !== null) {
         let id = setInterval(tick, delay);
@@ -202,7 +205,7 @@ function Dashboard({ network, status, updatedStart }) {
             {status?.status?.data ? "Online" : "Connecting"}
           </div>
           <p className="text-xs text-muted-foreground">
-            last synced {timeSince(new Date(status?.status?.data?.last_sync_at + "Z"), new Date()) || "-"} ago
+            last synced {timeSince(new Date(status?.status?.data?.last_sync_at + "Z")) || "-"} ago
           </p>
         </CardContent>
       </Card>
