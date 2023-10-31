@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function formatDate(input: string | number): string {
+export function formatDate(input: string | number | Date): string {
   const date = new Date(input)
   return date.toLocaleDateString("en-US", {
     month: "long",
@@ -44,7 +44,7 @@ export function formatNumber(input: number): string {
 }
 
 export function formatFlowBalance(input: number): string {
-  return (parseFloat(input || 0) / 10e7).toLocaleString("en-US", {
+  return (parseFloat(input.toString() || "0") / 10e7).toLocaleString("en-US", {
     minimumFractionDigits: 2,
   })
 }
@@ -80,8 +80,8 @@ export function formatStorageSize(input: number): string {
     return `${(input / gb).toFixed(2)} GB`
   }
 }
-export function timeSince(date) {
-  var seconds = Math.floor((new Date() - date) / 1000);
+export function timeSince(date: Date) {
+  var seconds = Math.floor((new Date() as any - +date) / 1000);
   var interval = seconds / 31536000;
 
   if (interval >= 1) {

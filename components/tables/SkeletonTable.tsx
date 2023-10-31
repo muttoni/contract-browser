@@ -5,9 +5,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 interface SkeletonTableProps {
   numRows: number;
   numCols: number;
+  topRow?: boolean;
+  bottomRow?: boolean;
 }
 
-const SkeletonTable: React.FC<SkeletonTableProps> = ({ numRows, numCols, topRow, bottomRow }) => {
+const SkeletonTable: React.FC<SkeletonTableProps> = ({ numRows, numCols, topRow = false, bottomRow = false }) => {
   return (
     <div className="rounded-md border mb-2 p-2">
     {topRow && <Skeleton className='w-full h-10 mb-2' />}
