@@ -9,7 +9,13 @@ export const currentUser = atom({
 
 export function useCurrentUser() {
   const [$data, setData] = useRecoilState(currentUser)
-  useEffect(() => fcl.currentUser().subscribe(setData), [setData])
+
+  useEffect(() => {
+    const subscription = fcl.currentUser().subscribe(setData);
+    return () => {
+      (subscription as any).unsubscribe();
+    };
+  }, [setData]);
 
   const user = {
     logIn: fcl.logIn,

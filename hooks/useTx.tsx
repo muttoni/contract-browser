@@ -1,5 +1,6 @@
 import {useState} from "react"
 import * as fcl from "@onflow/fcl"
+import { TransactionStatus } from "@onflow/typedefs"
 
 export const IDLE = "IDLE"
 export const PROCESSING = "PROCESSING"
@@ -17,7 +18,13 @@ export const EXPIRED = "EXPIRED"
 
 const sleep = (ms = 3000) => new Promise(r => setTimeout(r, ms))
 
-const statusKeys = txStatus => {
+type TxStatusType = {
+  status: number,
+  error: string,
+  label: string,
+}
+
+const statusKeys = (txStatus: TransactionStatus) => {
   switch (txStatus.status) {
     case 0:
       return UNKNOWN
@@ -88,7 +95,11 @@ export function useTx(fns = [], opts = {} as TxOptionsType) {
       // eslint-disable-next-line
       setDetails(details => ({...details, txId}))
 
-      var unsub = fcl.tx(txId).subscribe(txStatus => {
+      interface CustomTransactionStatus extends TransactionStatus {
+        label: string
+      }
+
+      var unsub = fcl.tx(txId).subscribe((txStatus: CustomTransactionStatus) => {
         txStatus.label = statusKeys(txStatus)
         setTxStatus(statusKeys(txStatus))
         // eslint-disable-next-line
