@@ -10,17 +10,20 @@ import { useParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { getContractAddress } from "@/lib/utils";
 import Link from "next/link"
+import { Skeleton } from "@/components/ui/skeleton"
 
 
 export default function ContractPage() {
   const [contractCopied, setContractCopied] = useState(false)
   const [importCopied, setImportCopied] = useState(false)
-  const contractId = useParams().contractId
+  const contractId = useParams().contractId as string
   const contract = useContract(contractId)
 
   return (
-    <div className="flex-1 space-y-4 ps-4">
+    <>
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
+      {contract && contract.name ? 
+      <>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">
@@ -75,6 +78,14 @@ export default function ContractPage() {
           </p>
         </CardContent>
       </Card>
+      </>:
+      <>
+      <Skeleton className="flex h-36 w-full"></Skeleton>
+      <Skeleton className="flex h-36 w-full"></Skeleton>
+      <Skeleton className="flex h-36 w-full"></Skeleton>
+      <Skeleton className="flex h-36 w-full"></Skeleton>
+      </>
+      }
     </div>
     <div id="code"></div>
 
@@ -103,13 +114,14 @@ export default function ContractPage() {
         View Account
       </Button>
       </Link>
+      <Link href={`/${contract?.uuid}/dependants`}>
       <Button size="sm" variant="outline">
         <Network className="h-4 w-4 me-2" />
         View Dependencies
       </Button>
-
+      </Link>
     </div>
-    <CodeEditor code={contract?.code} />
-  </div>
+    {contract && contract.code ? <CodeEditor className={"min-h-[400px]"} code={contract?.code} /> : <Skeleton className="min-h-[400px] w-full" />}
+  </>
   )
 }
