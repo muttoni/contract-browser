@@ -133,6 +133,7 @@ export function useContract(uuid: string) {
     name: string,
     address: string,
     code: string,
+    events: any[]
     dependants_count: number,
     dependencies_count: number,
     deploymentsObject?: {

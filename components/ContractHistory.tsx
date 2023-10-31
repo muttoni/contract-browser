@@ -51,7 +51,10 @@ function ContractTimeline({deployments}) {
           {deployment.type === "added" && <span className="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300 ml-3">Deployment</span>}
           {i === 0 && <span className="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ml-3">Latest</span>}
         </h3>
-        <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{timeSince(new Date(deployment.block_timestamp))} ago on {formatDate(new Date(deployment.block_timestamp))}</time>
+        <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{timeSince(new Date(`${deployment.block_timestamp}`))} ago on {formatDate(new Date(`${deployment.block_timestamp}`))}</time>
+
+
+
         <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
           Contract was {deployment.type} at block height: 
           <Link href={`https://flowdiver.io/${deployment.tx_id}`}>
