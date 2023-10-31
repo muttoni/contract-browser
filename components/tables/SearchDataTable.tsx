@@ -24,7 +24,7 @@ interface DataTableProps<TData, TValue, Function> {
   onClick?: Function
 }
 
-export default function SearchDataTable<TData, TValue, Function>({
+export default function SearchDataTable<TData, TValue, Function extends React.MouseEventHandler<HTMLTableCellElement>>({
   columns,
   data,
   onClick
@@ -35,6 +35,7 @@ export default function SearchDataTable<TData, TValue, Function>({
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    filterFns: undefined
   })
 
   return (
