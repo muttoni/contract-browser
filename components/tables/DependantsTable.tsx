@@ -4,7 +4,7 @@ import { DataTable } from "@/components/tables/DataTable";
 import SkeletonTable from "@/components/tables/SkeletonTable";
 import { useContract } from "@/hooks/useContract";
 
-export default function ({ uuid, limit = 10 } : {
+export default function DependantsTable({ uuid, limit = 10 } : {
   uuid: string,
   limit?: number
 }) {

@@ -3,7 +3,7 @@ import TopContractsTable from "@/components/tables/TopContractsTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react"
 
-export default function () {
+export default function TopContracts() {
   const [ network, setNetwork ] = useState("mainnet")
 
   return (

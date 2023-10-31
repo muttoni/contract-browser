@@ -40,7 +40,7 @@ import { useSearchParams } from "next/navigation"
 export function UserNav() {
   
   const user = useCurrentUser()
-  const [network, setNetwork] = useState(user?.addr ? useNetworkForAddress(user?.addr) : "mainnet")
+  const [network, setNetwork] = useState(useNetworkForAddress(user?.addr) || "mainnet")
   const account = useAccount(user?.addr || null)
   const accountStorage = account?.storage
   const searchParams = useSearchParams()
