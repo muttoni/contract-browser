@@ -46,9 +46,10 @@ export default function CodeEditor ({ mustBeAuthedToViewCode = false}) {
       },
     }
   )
- 
+
   const saveContract = () => {
     // prettier-ignore
+    // @ts-ignore
     exec([
       fcl.arg(name, t.String),
       fcl.arg(Buffer.from(code, "utf8").toString("hex"), t.String)
@@ -56,7 +57,8 @@ export default function CodeEditor ({ mustBeAuthedToViewCode = false}) {
 
     toast({
       title: "Deploying contract...",
-      description: `txStatus ${txStatus} \n details ${details.txId}`
+      // @ts-ignore
+      description: `txStatus ${txStatus} \n details ${details && details.txId}`
     })
   }
   
@@ -103,8 +105,10 @@ export default function CodeEditor ({ mustBeAuthedToViewCode = false}) {
           <Alert>
               <RocketIcon className="h-4 w-4" />
               <AlertTitle>Deploying</AlertTitle>
-              <AlertDescription>
-              txStatus {txStatus} | details ${details.txId}
+              <AlertDescription> 
+                {/* 
+                // @ts-ignore */}
+                txStatus {txStatus} | details ${details.txId}
               </AlertDescription>
             </Alert>
           }
