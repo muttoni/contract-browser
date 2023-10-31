@@ -11,7 +11,7 @@ export default function AccountLayout({ children }) {
 
   const user = useCurrentUser()
   const params = useParams()
-  const address = cleanAddress(params.address)
+  const address = cleanAddress(params.address as string)
   const network = useNetworkForAddress(address)
 
   const sidebarNavItems = [
