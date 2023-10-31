@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import Editor,  { useMonaco } from "@monaco-editor/react";
 import configureCadence from "./cadence"
 import { useTheme } from "next-themes"
+import { cn } from '@/lib/utils';
 
 function setEditorReadOnly(readOnly) {
   return (editor, monaco)=>{
@@ -11,7 +12,7 @@ function setEditorReadOnly(readOnly) {
   }
 }
 
-export default function CodeEditor({prefix="", type="", index=0, code = "", onChange = null, name = "RAWR", lang="cadence" }) {
+export default function CodeEditor({className, prefix="", type="", index=0, code = "", onChange = null, name = "RAWR", lang="cadence" }) {
   const monaco  = useMonaco();
   const { theme } = useTheme();
 
@@ -35,8 +36,8 @@ export default function CodeEditor({prefix="", type="", index=0, code = "", onCh
     <Editor
       language="cadence"
       theme="cb"
-      className="max-h-screen border rounded-lg overflow-hidden"
-      options={{
+      className={cn("max-h-screen border rounded-lg overflow-hidden ", className)}
+      options={{ 
         fontSize: 14,
         padding: {
           top: 16,

@@ -12,7 +12,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 
 export default function ContractsPage({  }) {
 
-  const address = useParams().address
+  const address = useParams().address as string
   const account = useAccount(address)
   const user = useCurrentUser()
 

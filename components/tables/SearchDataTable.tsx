@@ -18,15 +18,17 @@ import {
 
 import { DataTablePagination } from "./DataTablePagination"
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData, TValue, Function> {
   columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  data: TData[],
+  onClick?: Function
 }
 
-export default function DataTable<TData, TValue>({
+export default function DataTable<TData, TValue, Function>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+  onClick
+}: DataTableProps<TData, TValue, Function>) {
 
   const table = useReactTable({
     data,
@@ -65,7 +67,7 @@ export default function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id} onClick={onClick}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}

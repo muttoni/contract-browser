@@ -8,6 +8,9 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
 
+import { Breadcrumb } from "flowbite-react"
+import { Home, HomeIcon } from "lucide-react"
+
 export default function ContractLayout({ children }) {
   
   const { contractId } = useParams()
@@ -23,7 +26,7 @@ export default function ContractLayout({ children }) {
     {
       title: "Code",
       type: "parent",
-      href:"#code",
+      href: "/" + contractId + "/#code",
     },
     {
       title: "Used by",
@@ -61,7 +64,9 @@ export default function ContractLayout({ children }) {
         <aside className="lg:w-1/5">
           <SidebarNav items={sidebarNavItems} />
         </aside>
+        <div className="flex-1 space-y-4 ps-4">
         {children}
+        </div>
       </div>
     </div>
   )

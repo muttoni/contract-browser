@@ -18,15 +18,45 @@ import {
   getFilteredRowModel,
   getSortedRowModel,
   useReactTable,
+  FilterFn
 } from "@tanstack/react-table"
 
-import { Input } from "@/components/ui/input"
+import { DebouncedInput } from "@/components/ui/DebouncedInput"
+
+import {
+  RankingInfo,
+  rankItem,
+} from '@tanstack/match-sorter-utils'
+
 import { DataTablePagination } from "./DataTablePagination"
 
+declare module '@tanstack/table-core' {
+  interface FilterFns {
+    fuzzy: FilterFn<unknown>
+  }
+  interface FilterMeta {
+    itemRank: RankingInfo
+  }
+}
+
+const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+  // Rank the item
+  const itemRank = rankItem(row.getValue(columnId), value)
+
+  // Store the itemRank info
+  addMeta({
+    itemRank,
+  })
+
+  // Return if the item should be filtered in/out
+  return itemRank.passed
+}
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  filterColumn?: string
+
 }
  
 export function DataTable<TData, TValue>({
@@ -37,6 +67,8 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
+
+  const [globalFilter, setGlobalFilter] = React.useState('')
 
   const table = useReactTable({
     data,
@@ -50,20 +82,23 @@ export function DataTable<TData, TValue>({
     state: {
       sorting,
       columnFilters,
+      globalFilter,
     },
+    filterFns: {
+      fuzzy: fuzzyFilter,
+    },
+    onGlobalFilterChange: setGlobalFilter,
+    globalFilterFn: fuzzyFilter,
   })
  
   return (
     <div>
       <div className={`flex items-center pb-4 ${data.length <= 10 ? "hidden" : ""}`}>
-        <Input
-          placeholder="Filter contracts..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => {
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          }
-          className="max-w-sm"
+        <DebouncedInput
+          value={globalFilter ?? ''}
+          onChange={value => setGlobalFilter(String(value))}
+          className="p-2 font-lg shadow border border-block"
+          placeholder="Search all columns..."
         />
       </div>
       <div className="rounded-md border mb-2">

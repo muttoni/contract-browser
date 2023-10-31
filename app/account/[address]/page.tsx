@@ -12,7 +12,7 @@ import Link from "next/link"
 import { useNetworkForAddress } from '@/hooks/useNetwork'
 
 function AccountPage({}) {
-  const address = cleanAddress(useParams().address)
+  const address = cleanAddress(useParams().address as string)
   const network = useNetworkForAddress(address)
   const account = useAccount(address)
   const path = usePathname()
