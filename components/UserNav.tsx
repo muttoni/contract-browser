@@ -40,19 +40,21 @@ import { useSearchParams } from "next/navigation"
 export function UserNav() {
   
   const user = useCurrentUser()
-  const [network, setNetwork] = useState('')
-  const account = useAccount(user?.addr || null)
+  const [network, setNetwork] = useState("mainnet")
+  const account = useAccount(user?.addr || "0x11ca36743554b4b0")
   const accountStorage = account?.storage
   const searchParams = useSearchParams()
   const networkParam = searchParams.get("network")
   
   function changeNetwork(desiredNetwork: string) {
+    //fcl.unauthenticate()
     fcl.config(getNetworkConfig(desiredNetwork))
     setNetwork(desiredNetwork)
+    //fcl.authenticate()
   }
 
   useEffect(() => {
-    fcl.config.get('flow.network').then(setNetwork)
+    //fcl.config.get('flow.network').then(setNetwork)
 
     if(networkParam && networkParam !== network){
       console.log("preferred network changing to", networkParam)

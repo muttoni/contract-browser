@@ -12,7 +12,7 @@ function setEditorReadOnly(readOnly) {
   }
 }
 
-export default function CodeEditor({className, prefix="", type="", index=0, code = "", onChange = null, name = "RAWR", lang="cadence" }) {
+export default function CodeEditor({prefix="", type="", index=0, code = "", onChange = null, name = "RAWR", lang="cadence", className="" }) {
   const monaco  = useMonaco();
   const { theme } = useTheme();
 
