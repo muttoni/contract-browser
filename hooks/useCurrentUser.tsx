@@ -11,10 +11,7 @@ export function useCurrentUser() {
   const [$data, setData] = useRecoilState(currentUser)
 
   useEffect(() => {
-    const subscription = fcl.currentUser().subscribe(setData);
-    return () => {
-      (subscription as any).unsubscribe();
-    };
+    fcl.currentUser().subscribe(setData);
   }, [setData]);
 
   const user = {

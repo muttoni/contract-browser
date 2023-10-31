@@ -221,3 +221,7 @@ export function debounce(func, wait, immediate = false) {
       if (callNow) func.apply(context, args);
     };
 };
+
+export function calculateStringSizeInBytes(str: string): number {
+  return new Blob([str]).size;
+}
