@@ -3,7 +3,7 @@ import TopContractsTable from "@/components/tables/TopContractsTable";
 import RecentContractsTable from "@/components/tables/RecentContractsTable";
 
 
-export default function () {
+export default function TestPage() {
 
   return (
     <div className="">
