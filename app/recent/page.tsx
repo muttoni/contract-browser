@@ -3,7 +3,7 @@ import RecentContractsTable from "@/components/tables/RecentContractsTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react"
 
-export default function () {
+export default function RecentContracts() {
   const [ network, setNetwork ] = useState("mainnet")
 
   return (

@@ -24,7 +24,7 @@ interface DataTableProps<TData, TValue, Function> {
   onClick?: Function
 }
 
-export default function DataTable<TData, TValue, Function>({
+export default function SearchDataTable<TData, TValue, Function>({
   columns,
   data,
   onClick

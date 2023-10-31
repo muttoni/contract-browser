@@ -23,7 +23,7 @@ async function getData(network: string, limit : number = 10): Promise<Contract[]
 }
 
 
-export default function ({ network, limit = 10 }) {
+export default function TopContractsTable({ network, limit = 10 }) {
   const [data, setData] = useState(null as unknown as Contract[] | null | undefined)
 
   useEffect(() => {

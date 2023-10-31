@@ -35,7 +35,7 @@ function ContractTimeline({deployments}) {
     <>
     <ol className="relative ms-2 pt-2 border-l">
       {deployments && deployments.length && deployments.sort((a, b) => new Date(b.block_timestamp).getTime() - new Date(a.block_timestamp).getTime()).map((deployment, i) => (
-      <li className="mb-10 ml-6 ps-3">            
+      <li className="mb-10 ml-6 ps-3" key={deployment.tx_id}>            
         {deployment.type === "added" ? 
           <span className="absolute flex items-center justify-center w-8 h-8 bg-green-100 rounded-full -left-4 ring-8 ring-white dark:ring-gray-900 dark:bg-green-900">
             <FilePlus2 className="w-4 h-4  text-green-800 dark:text-green-300" />
