@@ -3,7 +3,6 @@ import { useState, useEffect } from "react"
 import { getContractAddress, getNetworkFromAddress } from "@/lib/utils"
 
 export function useContract(uuid: string) {
-  console.log("CALLED")
 
   const [ contract, setContract ] = useState(null)
 

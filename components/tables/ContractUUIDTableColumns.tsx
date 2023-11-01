@@ -15,6 +15,7 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import Link from "next/link"
 import { getContractAddress, getContractName } from "@/lib/utils"
 import AddressBadge from "@/components/ui/AddressBadge"
+import ContractBadge from "@/components/ui/ContractBadge"
 
 export const columns: ColumnDef<string>[] = [
   {
@@ -33,8 +34,7 @@ export const columns: ColumnDef<string>[] = [
       )
     },
     cell: ({ row }) => {
-      const name: string = getContractName(row.original)
-      return <Link href={`/${row.original}`} className="">{name}</Link>
+      return <ContractBadge uuid={`${row.original}`} />
     }
   },
   {

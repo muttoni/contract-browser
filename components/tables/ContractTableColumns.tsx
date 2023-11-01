@@ -34,8 +34,7 @@ export const columns: ColumnDef<Contract>[] = [
       )
     },
     cell: ({ row }) => {
-      const name: string = row.getValue("name")
-      return <ContractBadge uuid={`${row.original.uuid}`} className="" />
+      return <ContractBadge uuid={`${row.original.uuid}`} />
     }
   },
   {
