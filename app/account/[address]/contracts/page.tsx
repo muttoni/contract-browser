@@ -14,7 +14,7 @@ export default function ContractsPage({  }) {
     <>
       <APIContractsTable action="ownedBy" address={address} limit={200} />
       {contracts && contracts.length > 0 &&
-        <p className="text-sm text-muted-foreground">There are {contracts.length} contracts deployed to this account. <br/><span className="text-xs">Note: If the number doesn't match with the items in the table, please contact us.</span></p>
+        <p className="text-sm text-muted-foreground">There are {contracts.length} contracts deployed to this account. <br/><span className="text-xs">Note: If the number doesn&apos;t match with the items in the table, please contact us.</span></p>
       }
     </>
   )
