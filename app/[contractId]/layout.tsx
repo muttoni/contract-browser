@@ -64,7 +64,7 @@ export default function ContractLayout({ children }) {
         <aside className="lg:w-1/5">
           <SidebarNav items={sidebarNavItems} />
         </aside>
-        <div className="flex-1 space-y-4 ps-4">
+        <div className="flex-1 space-y-4 lg:ps-4">
         {children}
         </div>
       </div>

@@ -1,23 +1,23 @@
 import { useState, useEffect, useCallback, useRef } from "react"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
 
-import { cn, debounce } from "@/lib/utils"
+import { cn, debounce, getContractAddress } from "@/lib/utils"
 import {ContractSearchResponseType } from "@/lib/types"
 
-import Loading from "./ui/Loading"
-import { Clock, Info, SearchIcon } from "lucide-react"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardHeader } from "./ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
+import useOutsideClick from "@/hooks/useOutsideClick"
 
 import SearchDataTable from "./tables/SearchDataTable"
-import SkeletonTable from "./tables/SkeletonTable"
 import { columns } from "./tables/SearchContractTableColumns"
 
-import { Separator } from "./ui/separator"
+import { Clock, Info, SearchIcon } from "lucide-react"
 
-import useOutsideClick from "@/hooks/useOutsideClick"
+import Loading from "@/components/ui/Loading"
+import { Input } from "@/components/ui/input"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Separator } from "@/components/ui/separator"
+import ContractBadge from "@/components/ui/ContractBadge"
+import AddressBadge from "@/components/ui/AddressBadge"
 
 export function Search() {
 
@@ -108,8 +108,8 @@ export function Search() {
       {/* <Loading className={cn("w-6 h-6 absolute left-4 top-4", loading ? "": "hidden")} /> */}
       <Input
           type="search"
-          placeholder="Search contracts, addresses and more"
-          className="w-full h-14 text-lg ps-14"
+          placeholder="Search contracts, addresses and code"
+          className="w-full h-10 md:h-14 md:text-lg ps-14"
           onFocus={() => setShowSearchWindow(true)}
           value={query}
           onChange={(e) => { setQuery(e.target.value)}}
@@ -117,7 +117,7 @@ export function Search() {
 
       {showSearchWindow && (recentContracts?.length || query.length > 2) ? (
       <>
-      <Card className="max-h-[80vh] shadow-lg absolute overflow-auto w-full top-[50px] z-10 px-2 rounded-t-none">
+      <Card className="max-h-[80vh] shadow-lg absolute overflow-auto w-full top-[38px] md:top-[50px] z-10 px-2 rounded-t-none">
       {recentContracts?.length > 0 && 
         <>
           <ul className="text-sm py-1 max-h-[150px] overflow-auto">
@@ -125,11 +125,10 @@ export function Search() {
             recentContracts.map((recentContract) => {
               if (recentContracts) {
                 return (
-                  <li key={recentContract} className="flex items-center py-1 ps-3 text-muted-foreground hover:bg-muted rounded">
-                    <Clock className="h-4 w-4 me-4" />
-                    <Link href={`/${recentContract}`} onClick={() => setShowSearchWindow(false)}>
-                      {recentContract}
-                    </Link>
+                  <li key={recentContract} className="flex items-center gap-2 py-1 ps-3 text-muted-foreground hover:bg-muted rounded">
+                    <Clock className="h-4 w-4 me-2" />
+                    <AddressBadge address={getContractAddress(recentContract)} />
+                    <ContractBadge uuid={recentContract} />
                   </li>
                 )
               }
@@ -140,13 +139,13 @@ export function Search() {
         </>
         }
         {query.length > 2 && <>
-          <CardHeader className="pt-3 pb-2">
+          <CardHeader className="px-2 pt-3 pb-2">
             <h3 className="text font-bold flex items-center justify-between">
               <span>Search Results</span>
-              <span className="text-muted-foreground">{(contractResultsMainnet?.data?.total_contracts_count || 0) + (contractResultsTestnet?.data?.total_contracts_count || 0)} total results</span>
+              <span className="text-muted-foreground font-normal text-sm">{(contractResultsMainnet?.data?.total_contracts_count || 0) + (contractResultsTestnet?.data?.total_contracts_count || 0)} total results</span>
             </h3>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-2">
             <Tabs defaultValue="mainnet" className="space-y-4">
               <div className="flex">
               <TabsList>
@@ -163,7 +162,7 @@ export function Search() {
               <TabsContent value="mainnet" className="space-y-4">
               <h3 className="text-sm uppercase font-bold flex items-center justify-between mt-4 mb-2">
                   <span>Mainnet Contracts</span>
-                  <span className="text-muted-foreground">{contractResultsMainnet?.data?.total_contracts_count || 0} results</span>
+                  <span className="text-muted-foreground font-normal text-sm lowercase">{contractResultsMainnet?.data?.total_contracts_count || 0} results</span>
                 </h3>
                 {contractResultsMainnet && contractResultsMainnet?.data?.contracts?.length && contractResultsMainnet?.data?.contracts?.length  > 0 ?
                 <SearchDataTable onClick={() => setShowSearchWindow(false)} data={contractResultsMainnet?.data?.contracts} columns={columns}/>

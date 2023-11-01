@@ -2,7 +2,6 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 
-import { Contract } from "@/lib/types"
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
@@ -15,6 +14,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import Link from "next/link"
 import { getContractAddress, getContractName } from "@/lib/utils"
+import AddressBadge from "@/components/ui/AddressBadge"
 
 export const columns: ColumnDef<string>[] = [
   {
@@ -45,9 +45,7 @@ export const columns: ColumnDef<string>[] = [
       const address: string = getContractAddress(row.original)
   
       return (
-        <Link href={`/account/${getContractAddress(row.original)}`}>
-          <div className="font-mono">{address}</div>
-        </Link>
+        <AddressBadge address={address} />
       )
     }
   },

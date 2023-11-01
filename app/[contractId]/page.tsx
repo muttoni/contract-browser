@@ -89,7 +89,7 @@ export default function ContractPage() {
     </div>
     <div id="code"></div>
 
-    <div className="flex gap-2">
+    <div className="grid gap-2 grid-cols-2 md:grid-cols-4">
       <CopyToClipboard text={contract?.code}>
       <Button size="sm" variant="outline" onClick={() => setContractCopied(true)}>
         {contractCopied ?
@@ -109,13 +109,13 @@ export default function ContractPage() {
       </Button>
       </CopyToClipboard>
       <Link href={`/account/${getContractAddress(contract?.uuid)}`}>
-      <Button size="sm" variant="outline">
+      <Button size="sm" variant="outline" className="w-full">
         <Wallet className="h-4 w-4 me-2" />
         View Account
       </Button>
       </Link>
       <Link href={`/${contract?.uuid}/dependants`}>
-      <Button size="sm" variant="outline">
+      <Button size="sm" variant="outline" className="w-full">
         <Network className="h-4 w-4 me-2" />
         View Dependencies
       </Button>
