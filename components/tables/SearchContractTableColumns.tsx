@@ -2,16 +2,16 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import { Contract } from "@/lib/types"
-import Link from "next/link"
-import { getContractAddress, getContractName } from "@/lib/utils"
+import { getContractAddress } from "@/lib/utils"
+import AddressBadge from "@/components/ui/AddressBadge"
+import ContractBadge from "../ui/ContractBadge"
 
 export const columns: ColumnDef<Contract>[] = [
   {
     accessorKey: "name",
     header: "Name",
     cell: ({ row }) => {
-      const name: string = getContractName(row.original.uuid)
-      return <Link href={`/${row.original.uuid}`} className="">{name}</Link>
+      return <ContractBadge uuid={`${row.original.uuid}`} className="" />
     }
   },
   {
@@ -21,9 +21,7 @@ export const columns: ColumnDef<Contract>[] = [
       const address: string = getContractAddress(row.original.uuid)
   
       return (
-        <Link href={`/account/${getContractAddress(row.original.uuid)}`}>
-          <div className="font-mono">{address}</div>
-        </Link>
+        <AddressBadge address={address} />
       )
     }
   },

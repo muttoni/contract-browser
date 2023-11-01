@@ -26,14 +26,14 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <main className="container px-4 md:px-8 lg:px-16 min-h-screen w-full flex flex-col">
-          <div className="flex-col py-8 md:flex">
+          <div className="flex-col py-2 md:py-4 md:flex">
             <div className="flex items-center">
               <Navbar className="" />
               <div className="ml-auto flex items-center space-x-4">
                 <UserNav />
               </div>
             </div>
-            <div className="flex flex-1 w-full pt-8">
+            <div className="flex flex-1 w-full pt-3 lg:pt-5">
             <Search /> 
             </div>
           </div>

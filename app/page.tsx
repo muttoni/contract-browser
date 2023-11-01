@@ -79,23 +79,23 @@ export default function Page() {
   }, [network])
 
   return (
-        <div className="flex-1 space-y-4 md:pt-6">
-          <div className="flex items-center justify-between space-y-2">
-            <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
-          </div>
-          <Tabs defaultValue="mainnet" className="space-y-4">
-            <TabsList>
-              <TabsTrigger value="mainnet" onClick={() => setNetwork("mainnet")}>Mainnet</TabsTrigger>
-              <TabsTrigger value="testnet" onClick={() => setNetwork("testnet")}>Testnet</TabsTrigger>
-            </TabsList>
-            <TabsContent value="mainnet" className="space-y-4">
-              <Dashboard network="mainnet" status={status} updatedStart={updatedStart}/>
-            </TabsContent>
-            <TabsContent value="testnet" className="space-y-4">
-              <Dashboard network="testnet" status={status} updatedStart={updatedStart}/>
-            </TabsContent>
-          </Tabs>
-        </div>
+    <div className="flex-1 pt-2 md:pt-4">
+      <Tabs defaultValue="mainnet" className="space-y-4">
+      <div className="flex md:flex-col items-center justify-between md:justify-start md:items-start md:gap-y-2">
+        <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
+        <TabsList>
+          <TabsTrigger value="mainnet" onClick={() => setNetwork("mainnet")}>Mainnet</TabsTrigger>
+          <TabsTrigger value="testnet" onClick={() => setNetwork("testnet")}>Testnet</TabsTrigger>
+        </TabsList>
+      </div>
+        <TabsContent value="mainnet" className="space-y-4">
+          <Dashboard network="mainnet" status={status} updatedStart={updatedStart}/>
+        </TabsContent>
+        <TabsContent value="testnet" className="space-y-4">
+          <Dashboard network="testnet" status={status} updatedStart={updatedStart}/>
+        </TabsContent>
+      </Tabs>
+    </div>
   )
 }
 
@@ -211,8 +211,8 @@ function Dashboard({ network, status, updatedStart }) {
       </Card>
     </div>
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
-      <Card className="md:col-span-3">
-        <CardHeader>
+      <Card className="md:col-span-3 overflow-auto border-none md:border-solid shadow-none md:shadow-sm">
+        <CardHeader className="px-0 pb-4 md:pb-6 md:px-6">
           <CardTitle className="flex flex-row items-center justify-between">
             <span>Top Contracts</span>
             <Trophy className="h-5 w-5 text-muted-foreground" />
@@ -221,13 +221,13 @@ function Dashboard({ network, status, updatedStart }) {
             The most depended on contracts on {network}. <Link href="/top" className="text-primary font-bold">View all &rarr;</Link>
           </CardDescription>
         </CardHeader>
-        <CardContent className="">
+        <CardContent className="px-0 md:px-6 pb-0 md:pb-6">
           <TopContractsTable network={network} />
         </CardContent>
       </Card>
-      <Card className="md:col-span-3">
-        <CardHeader>
-          <CardTitle className="flex flex-row items-center justify-between">
+      <Card className="md:col-span-3 overflow-auto border-none md:border-solid shadow-none md:shadow-sm">
+        <CardHeader className="px-0 pb-4 md:pb-6 md:px-6">
+          <CardTitle className="flex items-center justify-between">
             <span>Recent Contracts</span>
             <Hourglass className="h-5 w-5 text-muted-foreground" />
           </CardTitle>
@@ -235,7 +235,7 @@ function Dashboard({ network, status, updatedStart }) {
             The most recently deployed contracts on {network}. <Link href="/recent" className="text-primary font-bold">View all &rarr;</Link>
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-0 md:px-6 pb-0 md:pb-6">
           <RecentContractsTable network={network} />
         </CardContent>
       </Card>

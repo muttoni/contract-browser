@@ -1,17 +1,13 @@
 
-import { columns } from "@/components/tables/ContractUUIDTableColumns"
-import { DataTable } from "@/components/tables/DataTable";
-import { useContract } from "@/hooks/useContract";
-import { Timeline } from "flowbite-react";
-import { Button } from "./ui/button";
 import Link from "next/link";
-import { timeSince, formatDate } from "@/lib/utils";
 import { FilePlus2 } from "lucide-react";
-  
+import { Button } from "@/components/ui/button";
+import { timeSince, formatDate } from "@/lib/utils";
+
+import { useContract } from "@/hooks/useContract";
+
 export default function ContractHistory({uuid}) {
   const contract = useContract(uuid)
-
-  console.log("ContractHistory", uuid, contract)
 
   return (
   <div className="w-full">

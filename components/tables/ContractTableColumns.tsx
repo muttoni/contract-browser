@@ -15,6 +15,8 @@ import { Button } from "@/components/ui/button"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import Link from "next/link"
 import { getContractAddress, getContractName } from "@/lib/utils"
+import AddressBadge from "@/components/ui/AddressBadge"
+import ContractBadge from "@/components/ui/ContractBadge"
 
 export const columns: ColumnDef<Contract>[] = [
   {
@@ -33,19 +35,17 @@ export const columns: ColumnDef<Contract>[] = [
     },
     cell: ({ row }) => {
       const name: string = row.getValue("name")
-      return <Link href={`/${row.original.uuid}`} className="">{name}</Link>
+      return <ContractBadge uuid={`${row.original.uuid}`} className="" />
     }
   },
   {
     accessorKey: "address",
     header: "Address",
     cell: ({row}) => {
-      const address: string = row.getValue("address")
+      const address: string = getContractAddress(row.original.uuid)
   
       return (
-        <Link href={`/account/${getContractAddress(row.original.uuid)}`}>
-          <div className="font-mono">{address}</div>
-        </Link>
+        <AddressBadge address={address} />
       )
     }
   },

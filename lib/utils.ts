@@ -65,6 +65,13 @@ export function getContractAddress(uuid) {
   return uuid ? "0x" + uuid.split(".")[1] : ''
 }
 
+export function ellipsify(str, maxLength = 35) {
+  if (str.length > maxLength) {
+    return str.substr(0, Math.floor(maxLength * 0.66)) + '...' + str.substr(str.length- Math.floor(maxLength * 0.33), str.length);
+  }
+  return str;
+}
+
 export function formatStorageSize(input: number): string {
   const kb = 1024
   const mb = kb * 1024
