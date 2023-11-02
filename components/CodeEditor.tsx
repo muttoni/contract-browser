@@ -32,7 +32,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { getVerifiedContractAddressByName } from '@/lib/official-contracts'
+import { getVerifiedContractAddressByName } from '@/lib/verified-contracts'
 
 export default function CodeEditor ({ mustBeAuthedToViewCode = false}) {
   const [code, setCode] = useState(Array.from({length: 12}, _ => "\n").join(""))

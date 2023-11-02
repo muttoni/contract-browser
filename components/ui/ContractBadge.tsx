@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { cn, getContractAddress, getContractName, getNetworkFromAddress, ellipsify } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { isVerified } from "@/lib/official-contracts";
+import { isVerified } from "@/lib/verified-contracts";
 import { VerifiedBadge } from "./VerifiedBadge";
 
 export default function ContractBadge({ uuid, className }: { uuid: string, className?: string }) {

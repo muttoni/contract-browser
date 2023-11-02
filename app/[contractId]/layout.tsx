@@ -9,8 +9,8 @@ import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
 import AddressBadge from "@/components/ui/AddressBadge"
 import { CaretRightIcon } from "@radix-ui/react-icons"
-import { BadgeCheck } from "lucide-react"
-import { isVerified } from "@/lib/official-contracts"
+import { BadgeCheck, BadgeHelp } from "lucide-react"
+import { isVerified } from "@/lib/verified-contracts"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import { VerifiedBadge } from "@/components/ui/VerifiedBadge"
 
@@ -48,7 +48,7 @@ export default function ContractLayout({ children }) {
       <div className="space-y-1">
         <h2 className="text-3xl items-center flex gap-2 font-bold tracking-tight">
           <span className="">{getContractName(contractId)}</span>
-          {isVerified(contractId as string) && <VerifiedBadge size={6}/>}
+          {isVerified(contractId as string) ? <VerifiedBadge size={6}/> : <NotVerifiedBadge />}
         </h2>
         <div className="flex items-center">
           <Badge className={cn("rounded-sm h-6 text-xs font-mono font-light uppercase", `${network === 'testnet' ? "border-orange-600 bg-orange-400 hover:bg-orange-400 text-orange-800" : "border-green-600 bg-green-400 hover:bg-green-400 text-green-800"}`)}>{network}</Badge>
@@ -73,5 +73,22 @@ export default function ContractLayout({ children }) {
         </div>
       </div>
     </div>
+  )
+}
+
+const NotVerifiedBadge = () => {
+  return (
+    <HoverCard>
+      <HoverCardTrigger>
+        <BadgeHelp className="h-6 w-6 text-muted" />
+      </HoverCardTrigger>
+      <HoverCardContent className="flex flex-col space-y-2">
+        <div className="text-sm font-bold">This contract is not verified.</div>
+        <div className="text-sm text-muted-foreground font-normal">Be mindful you are sourcing from the correct account.</div>
+        <Link target="_blank" href="https://github.com/muttoni/contract-browser-new/blob/main/lib/official-contracts.ts" className="text-sm text-blue-600 hover:underline">
+          Verify your contract
+        </Link>
+      </HoverCardContent>
+    </HoverCard>
   )
 }
