@@ -18,17 +18,11 @@ import {
 
 import { DataTablePagination } from "./DataTablePagination"
 
-interface DataTableProps<TData, TValue, Function> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[],
-  onClick?: Function
-}
-
-export default function SearchDataTable<TData, TValue, Function extends React.MouseEventHandler<HTMLTableCellElement>>({
+export default function SearchDataTable ({
   columns,
   data,
-  onClick
-}: DataTableProps<TData, TValue, Function>) {
+  onRowClick = (e) => {}
+}) {
 
   const table = useReactTable({
     data,
@@ -40,9 +34,9 @@ export default function SearchDataTable<TData, TValue, Function extends React.Mo
 
   return (
     <div>
-      <div className="rounded-md border mb-2">
+      <div className="rounded mb-2">
         <Table>
-          <TableHeader>
+          {/* <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -59,16 +53,17 @@ export default function SearchDataTable<TData, TValue, Function extends React.Mo
                 })}
               </TableRow>
             ))}
-          </TableHeader>
+          </TableHeader> */}
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={() => onRowClick(row.original)} 
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} onClick={onClick}>
+                    <TableCell key={cell.id} className="py-2">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}

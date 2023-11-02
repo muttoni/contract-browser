@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 
 import { cn, debounce, getContractAddress } from "@/lib/utils"
 import {ContractSearchResponseType } from "@/lib/types"
@@ -18,6 +18,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Separator } from "@/components/ui/separator"
 import ContractBadge from "@/components/ui/ContractBadge"
 import AddressBadge from "@/components/ui/AddressBadge"
+import Link from "next/link"
 
 export function Search() {
 
@@ -35,8 +36,8 @@ export function Search() {
   const [ offset, setOffset ] = useState(0)
   const [ limit, setLimit ] = useState(50)
   
-  const router = useRouter()
-  
+  const pathName = usePathname()
+
   const containerComponentRef = useRef()
   const handleOutsideClick = () => {
     setShowSearchWindow(false)
@@ -99,7 +100,13 @@ export function Search() {
     return () => {
       setLoading(false)
     }
+
   }, [query, offset, limit])
+
+  useEffect(() => {
+    setShowSearchWindow(false)
+  }, [pathName])
+   
 
   return (
     <>
@@ -128,11 +135,13 @@ export function Search() {
               .filter((recentContract) => recentContract.toLowerCase().includes(query.toLocaleLowerCase()))
               .map((recentContract) => {
                 return (
+                  <Link href={"/" + recentContract}>
                   <li key={recentContract} className="flex items-center gap-2 py-1 ps-3 text-muted-foreground hover:bg-muted rounded">
                     <Clock className="h-4 w-4 me-2" />
-                    <AddressBadge address={getContractAddress(recentContract)} />
+                    <AddressBadge address={getContractAddress(recentContract)} colorBasedOnNetwork={true} />
                     <ContractBadge uuid={recentContract} />
                   </li>
+                  </Link>
                 )
               })
             }
@@ -141,8 +150,8 @@ export function Search() {
         </>
         }
         {query.length > 2 && <>
-          <CardHeader className="px-2 pt-3 pb-2">
-            <h3 className="text font-bold flex items-center justify-between">
+          <CardHeader className="px-2 pb-2">
+            <h3 className="text font-bold flex text-sm items-center justify-between">
               <span>Search Results</span>
               <span className="text-muted-foreground font-normal text-sm">{(contractResultsMainnet?.data?.total_contracts_count || 0) + (contractResultsTestnet?.data?.total_contracts_count || 0)} total results</span>
             </h3>
@@ -167,7 +176,7 @@ export function Search() {
                   <span className="text-muted-foreground font-normal text-sm lowercase">{contractResultsMainnet?.data?.total_contracts_count || 0} results</span>
                 </h3>
                 {contractResultsMainnet && contractResultsMainnet?.data?.contracts?.length && contractResultsMainnet?.data?.contracts?.length  > 0 ?
-                <SearchDataTable onClick={() => setShowSearchWindow(false)} data={contractResultsMainnet?.data?.contracts} columns={columns}/>
+                <SearchDataTable data={contractResultsMainnet?.data?.contracts} columns={columns}/>
                 : <div className={cn("text-sm block pt-4 pb-8 text-muted-foreground", loadingMainnetResults ? "hidden" : "")}>No results.</div>
                 }
               </TabsContent>
@@ -177,7 +186,7 @@ export function Search() {
                   <span className="text-muted-foreground">{contractResultsTestnet?.data?.total_contracts_count || 0} results</span>
                 </h3>
                 {contractResultsTestnet && contractResultsTestnet?.data?.contracts?.length && contractResultsTestnet?.data?.contracts?.length  > 0 ?
-                <SearchDataTable onClick={() => setShowSearchWindow(false)} data={contractResultsTestnet?.data?.contracts} columns={columns}/>
+                <SearchDataTable data={contractResultsTestnet?.data?.contracts} columns={columns}/>
                 : <div className={cn("text-sm block pt-4 pb-8 text-muted-foreground", loadingTestnetResults ? "hidden" : "")}>No results.</div>
                 }
               </TabsContent>
