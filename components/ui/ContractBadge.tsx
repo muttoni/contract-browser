@@ -3,8 +3,7 @@ import Link from "next/link";
 import { cn, getContractAddress, getContractName, getNetworkFromAddress, ellipsify } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { isVerified } from "@/lib/official-contracts";
-import { BadgeCheck } from "lucide-react";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "./hover-card";
+import { VerifiedBadge } from "./VerifiedBadge";
 
 export default function ContractBadge({ uuid, className }: { uuid: string, className?: string }) {
 
@@ -17,8 +16,8 @@ export default function ContractBadge({ uuid, className }: { uuid: string, class
     <Tooltip>
       <TooltipTrigger>
         <Link href={`/${uuid}`}>
-          <Badge variant="secondary" className={cn("font-mono rounded-sm", className)}>
-            {ellipsify(contractName, 30)}
+          <Badge variant="secondary" className={cn("font-mono rounded-sm text-sm bg-transparent", className)}>
+            <span className="me-1">{ellipsify(contractName, 30)}</span>
             {isVerified(uuid) && <VerifiedBadge/>}
           </Badge>
         </Link>
@@ -28,17 +27,5 @@ export default function ContractBadge({ uuid, className }: { uuid: string, class
       </TooltipContent>
     </Tooltip>
   </TooltipProvider>
-  )
-}
-
-const VerifiedBadge = () => {
-  return ( <HoverCard>
-            <HoverCardTrigger asChild>
-              <BadgeCheck className="h-4 px-0 text-purple-400" />
-            </HoverCardTrigger>
-            <HoverCardContent className="w-80 font-normal">
-              This contract is verified by Contract Browser.
-            </HoverCardContent>
-          </HoverCard>
   )
 }

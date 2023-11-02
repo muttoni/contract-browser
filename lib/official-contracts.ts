@@ -191,6 +191,15 @@ export function findContractByUUID(uuid: string, network:string = "mainnet") {
   return null
 }
 
+export function getVerifiedContractAddressByName(name: string, network:string = "mainnet") {
+  for (const [contractName, contract] of Object.entries(VERIFIED_CONTRACTS)) {
+    if (contractName === name) {
+      return contract.address[network]
+    }
+  }
+  return null
+}
+
 export function isVerified(uuid: string) {
   return findContractByUUID(uuid, "mainnet") !== null || findContractByUUID(uuid, "testnet") !== null
 }

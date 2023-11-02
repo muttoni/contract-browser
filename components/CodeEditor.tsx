@@ -32,6 +32,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { getVerifiedContractAddressByName } from '@/lib/official-contracts'
 
 export default function CodeEditor ({ mustBeAuthedToViewCode = false}) {
   const [code, setCode] = useState(Array.from({length: 12}, _ => "\n").join(""))
@@ -243,6 +244,11 @@ const ImportTableRow = ({imp, index, onChange, network}) => {
 
   async function getMostPopularContractByName(name, network, index) {
     setAutofilling(true)
+    const verifAddress = getVerifiedContractAddressByName(name, network)
+    if(verifAddress) {
+      setAutofilling(false)
+      return onChange(verifAddress, index)
+    }
     const url = `${process.env.NEXT_PUBLIC_BASE_DOMAIN}/api/search/contracts?network=${network}&query=${name}&offset=0&limit=1`
     const res = await fetch(url)
     const json : ContractSearchResponseType = await res.json()

@@ -16,7 +16,7 @@ export default function AddressBadge({ address, colorBasedOnNetwork = false, cla
     <Tooltip>
       <TooltipTrigger>
       <Link href={`/account/${address}`}>
-        <Badge variant="outline" className={cn("relative font-mono rounded-sm", 
+        <Badge variant="outline" className={cn("relative font-mono rounded-sm bg-transparent", 
           colorBasedOnNetwork && (network === 'mainnet' 
           ? 'bg-green-400 border-green-500 text-green-800' 
           : network === 'testnet' ? 'bg-orange-400 border-orange-500'
