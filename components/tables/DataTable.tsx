@@ -55,13 +55,14 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
-  filterColumn?: string
+  border?: boolean
 
 }
  
 export function DataTable<TData, TValue>({
   columns,
   data,
+  border = true
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -93,7 +94,7 @@ export function DataTable<TData, TValue>({
  
   return (
     <div>
-      <div className={`flex items-center pb-4 ${data.length <= 10 ? "hidden" : ""}`}>
+      <div className={`flex items-center mb-2 ${data.length <= 10 ? "hidden" : ""}`}>
         <DebouncedInput
           value={globalFilter ?? ''}
           onChange={value => setGlobalFilter(String(value))}
@@ -101,7 +102,7 @@ export function DataTable<TData, TValue>({
           placeholder="Search all columns..."
         />
       </div>
-      <div className="rounded-md border mb-2">
+      <div className={border ? "border rounded-md" : "border-0 rounded-none"}>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

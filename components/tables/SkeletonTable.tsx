@@ -7,11 +7,12 @@ interface SkeletonTableProps {
   numCols: number;
   topRow?: boolean;
   bottomRow?: boolean;
+  border?: boolean;
 }
 
-const SkeletonTable: React.FC<SkeletonTableProps> = ({ numRows, numCols, topRow = false, bottomRow = false }) => {
+const SkeletonTable: React.FC<SkeletonTableProps> = ({ numRows, numCols, topRow = false, bottomRow = false, border = true }) => {
   return (
-    <div className="rounded-md border mb-2 p-2">
+    <div className={border ? "border rounded-md" : "border-0 rounded-none"}>
     {topRow && <Skeleton className='w-full h-10 mb-2' />}
     <Table>
       <TableHeader>

@@ -68,13 +68,15 @@ async function getData(action?: QUERY_TYPE, network: string = "mainnet", limit :
 export default function APIContractsTable({
   action, 
   network, 
-  limit, 
-  address
+  limit = 10, 
+  address,
+  border = true
 } : { 
   action?: QUERY_TYPE, 
   network?: string, 
-  limit? : number | string, 
-  address? : string
+  limit? : number, 
+  address? : string,
+  border?: boolean
  }) {
   const [data, setData] = useState(null as unknown as Contract[] | null | undefined)
   const cols = [...columns]
@@ -90,12 +92,16 @@ export default function APIContractsTable({
     deleteByAccessorKey(cols, "dependencies_count")
   }
 
+  if(action === "recent") {
+    deleteByAccessorKey(cols, "dependants_count")
+  }
+
   return (
-    <div className="">
+    <div>
       {data ? 
-        data.length ? <DataTable columns={cols} data={data} /> 
+        data.length ? <DataTable columns={cols} data={data} border={border}/> 
         : <p className="py-6 text-center">No contracts {address ? " for this account ": ""} found.</p>
-      : !data && <SkeletonTable numCols={3} numRows={10} />}
+      : !data && <SkeletonTable numCols={3} numRows={10} border={border} topRow={limit > 10} bottomRow={limit > 10} />}
     </div>
   )
 }
