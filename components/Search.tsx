@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react"
 import { usePathname, useRouter } from "next/navigation"
 
-import { cn, debounce, getContractAddress } from "@/lib/utils"
+import { cn, debounce, getContractAddress, sansPrefix } from "@/lib/utils"
 import {ContractSearchResponseType } from "@/lib/types"
 
 import useOutsideClick from "@/hooks/useOutsideClick"
@@ -9,7 +9,7 @@ import useOutsideClick from "@/hooks/useOutsideClick"
 import SearchDataTable from "./tables/SearchDataTable"
 import { columns } from "./tables/SearchContractTableColumns"
 
-import { Clock, Info, SearchIcon } from "lucide-react"
+import { Clock, Eye, Info, SearchIcon } from "lucide-react"
 
 import Loading from "@/components/ui/Loading"
 import { Input } from "@/components/ui/input"
@@ -20,9 +20,11 @@ import ContractBadge from "@/components/ui/ContractBadge"
 import AddressBadge from "@/components/ui/AddressBadge"
 import Link from "next/link"
 
+import Router from "next/router"
+
 export function Search() {
 
-  
+  const router = useRouter()
   const [ query, setQuery ] = useState("")
   const [ network, setNetwork ] = useState("mainnet")
   const [ contractResultsMainnet, setContractResultsMainnet ] = useState({} as ContractSearchResponseType)
@@ -76,9 +78,10 @@ export function Search() {
     switch(true) {
       case /^(?:0x)?[0-9a-fA-F]{8,16}$/.test(query):
         // Account search
-        setLoading(false)
-        setQuery("")
-        return router.push(`/account/${query}`)
+        //setLoading(false)
+        //setQuery("")
+        //return router.push(`/account/${query}`)
+        break;
       case /^(?:A\.)?[0-9a-fA-F]{8,16}\.[\w-]+$/.test(query):
         // Contract search
         setLoading(false)
@@ -127,12 +130,22 @@ export function Search() {
       {showSearchWindow && (recentContracts?.length || query.length > 2) ? (
       <>
       <Card className="max-h-[80vh] shadow-lg absolute overflow-auto w-full top-[38px] md:top-[50px] z-10 px-2 rounded-t-none">
+      
+      {/^(?:0x)?[0-9a-fA-F]{8,16}$/.test(query) &&
+      <Link href={"/account/" + query}>
+      <div className="text-sm flex items-center gap-2 py-2 ps-3 text-muted-foreground hover:bg-muted rounded">
+        <Eye className="h-4 w-4 me-2" />
+        <AddressBadge address={query} colorBasedOnNetwork={true} className="text-sm" />
+      </div>
+      </Link>
+      }
+
       {recentContracts?.length > 0 && 
         <>
           <ul className="text-sm py-1 max-h-[150px] overflow-auto">
             {
             recentContracts
-              .filter((recentContract) => recentContract.toLowerCase().includes(query.toLocaleLowerCase()))
+              .filter((recentContract) => recentContract.toLowerCase().includes(sansPrefix(query, true).toLocaleLowerCase()))
               .map((recentContract) => {
                 return (
                   <Link href={"/" + recentContract}>

@@ -19,7 +19,8 @@ export default function AddressBadge({ address, colorBasedOnNetwork = false, cla
         <Badge variant="outline" className={cn("relative font-mono rounded-sm", 
           colorBasedOnNetwork && (network === 'mainnet' 
           ? 'bg-green-400 border-green-500 text-green-800' 
-          : 'bg-orange-400 border-orange-500')
+          : network === 'testnet' ? 'bg-orange-400 border-orange-500'
+          : '')
           , className)}>{address}</Badge>
       </Link>
       </TooltipTrigger>
