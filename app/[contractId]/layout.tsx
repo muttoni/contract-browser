@@ -54,7 +54,7 @@ export default function ContractLayout({ children }) {
             getContractAddress(contractId) === user?.addr ? 
             "You own this contract, so you can update it." : 
             `Login with the deploying account to modify this contract.`
-          </p> */}
+          </p> */ }
 
         </div>
       </div>
