@@ -1,4 +1,4 @@
-
+"use client"
 import { columns } from "@/components/tables/ContractUUIDTableColumns"
 import { DataTable } from "@/components/tables/DataTable";
 import SkeletonTable from "@/components/tables/SkeletonTable";
