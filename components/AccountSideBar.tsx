@@ -14,7 +14,6 @@ import {useCurrentUser} from "@/hooks/useCurrentUser"
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   items: {
     href: string
-    type: string
     title: string
   }[]
 }
@@ -38,15 +37,12 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
           href={item.href}
           className={cn(
             buttonVariants({ variant: "ghost" }),
+            "justify-start min-w-[120px]",
             pathname === item.href
               ? "bg-muted hover:bg-muted"
-              : "hover:bg-transparent hover:underline",
-            item.type === 'sub' && address !== userAddress
-              ? "hidden" : "",
-            "justify-start"
+              : "hover:bg-transparent hover:underline"
           )}
         >
-          {item.type === 'sub' ? (<><span className="w-2"></span> <Plus className="h-4 w-4 muted me-2" /></>) : ''}
           {item.title}
         </Link>
       ))}
