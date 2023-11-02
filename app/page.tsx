@@ -23,6 +23,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import ConnectionLight from "@/components/ui/ConnectionLight"
 import Link from "next/link"
 import { FileCode2, Hourglass, Star, Trophy } from "lucide-react"
+import APIContractsTable from "@/components/tables/APIContractsTable"
 
 
 
@@ -200,8 +201,8 @@ function Dashboard({ network, status, updatedStart }) {
       </Card>
     </div>
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
-      <Card className="md:col-span-3 overflow-auto border-none md:border-solid shadow-none md:shadow-sm">
-        <CardHeader className="px-0 md:py-4">
+      <Card className="md:col-span-3 overflow-auto border-none md:border-solid shadow-none md:shadow-sm"> {/* md:border-solid shadow-none md:shadow-sm */}
+        <CardHeader className="px-0 md:px-4">
           <CardTitle className="flex flex-row items-center justify-between">
             <span>Top Contracts</span>
             <Trophy className="h-5 w-5 text-muted-foreground" />
@@ -210,12 +211,12 @@ function Dashboard({ network, status, updatedStart }) {
             The most depended on contracts on {network}. <Link href="/top" className="text-primary font-bold">View all &rarr;</Link>
           </CardDescription>
         </CardHeader>
-        <CardContent className="px-0 md:py-4">
-          <TopContractsTable network={network} />
+        <CardContent className="px-0 py-3 md:px-3">
+          <APIContractsTable action="top" network={network} limit={50} border={false} />
         </CardContent>
       </Card>
-      <Card className="md:col-span-3 overflow-auto border-none md:border-solid shadow-none md:shadow-sm">
-        <CardHeader className="px-0 md:py-4">
+      <Card className="md:col-span-3 overflow-auto border-none  md:border-solid shadow-none md:shadow-sm">
+        <CardHeader className="px-0 md:px-4">
           <CardTitle className="flex items-center justify-between">
             <span>Recent Contracts</span>
             <Hourglass className="h-5 w-5 text-muted-foreground" />
@@ -224,8 +225,8 @@ function Dashboard({ network, status, updatedStart }) {
             The most recently deployed contracts on {network}. <Link href="/recent" className="text-primary font-bold">View all &rarr;</Link>
           </CardDescription>
         </CardHeader>
-        <CardContent className="px-0 md:py-4">
-          <RecentContractsTable network={network} />
+        <CardContent className="px-0 py-3 md:px-3">
+          <APIContractsTable action="recent" network={network} limit={50} border={false} />
         </CardContent>
       </Card>
     </div>

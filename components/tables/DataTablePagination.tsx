@@ -23,7 +23,7 @@ export function DataTablePagination<TData>({
   table,
 }: DataTablePaginationProps<TData>) {
   return (
-    <div className="flex items-center justify-between w-full">
+    <div className="flex items-center justify-between w-full mt-2">
       <div className="text-sm text-muted-foreground flex-1">
         <span className="hidden md:flex ps-2">{table.getFilteredRowModel().rows.length} total items</span>
       </div>

@@ -53,9 +53,13 @@ export default function AccountLayout({ children }) {
     <div className="space-y-6 pt-4 pb-16 h-full flex-1">
       <div className="space-y-0.5">
         <h2 className="text-2xl items-center flex gap-2 font-bold tracking-tight">
+
           Account <span className="text-muted-foreground">{address}</span>
-          <Badge className={cn("capitalize text-sm", network === 'testnet' ? "bg-orange-400 text-orange-800" : "bg-green-400 text-green-800")}>{network}</Badge>
-        </h2>
+          <Badge className={cn("rounded-sm h-6 font-mono font-light uppercase", `${network === 'testnet' ? "border-orange-600 bg-orange-400 hover:bg-orange-400 text-orange-800" : "border-green-600 bg-green-400 hover:bg-green-400 text-green-800"}`)}>{network}</Badge>
+          {address === user?.addr &&
+            <Badge className={cn("rounded-sm h-6 font-mono font-light uppercase whitespace-nowrap","border-blue-600 bg-blue-400 hover:bg-blue-400 text-blue-800")}>Current User</Badge>
+          }
+         </h2>
         <p className="text-muted-foreground">
           {
             address === user?.addr ? 
