@@ -85,7 +85,7 @@ export default function CodeEditor ({ mustBeAuthedToViewCode = false}) {
       const importNameToReplace = match[1]
       const importIndex = findImportIndexInMatches(importNameToReplace, newImports)
       console.log("importNameToReplace", match[1], "importIndex", importIndex)
-      if (importIndex !== -1) {
+      if (importIndex !== -1 && newImports[importIndex][4]) {
         console.log("replacing", match[0], "with", `import ${newImports[importIndex][1]} from ${newImports[importIndex][4]}`)
         newCode = newCode.replace(match[0], `import ${newImports[importIndex][1]} from ${newImports[importIndex][4]}`)
       }
