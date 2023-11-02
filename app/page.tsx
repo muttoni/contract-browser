@@ -83,7 +83,7 @@ export default function Page() {
     <div className="flex-1 pt-2 md:pt-4">
       <Tabs defaultValue="mainnet" className="space-y-4">
       <div className="flex md:flex-col items-center justify-between md:justify-start md:items-start md:gap-y-2">
-        <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
+        <h2 className="text-3xl font-bold tracking-tight hidden">Overview</h2>
         <TabsList>
           <TabsTrigger value="mainnet" onClick={() => setNetwork("mainnet")}>Mainnet</TabsTrigger>
           <TabsTrigger value="testnet" onClick={() => setNetwork("testnet")}>Testnet</TabsTrigger>
@@ -202,31 +202,31 @@ function Dashboard({ network, status, updatedStart }) {
     </div>
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
       <Card className="md:col-span-3 overflow-auto border-none md:border-solid shadow-none md:shadow-sm"> {/* md:border-solid shadow-none md:shadow-sm */}
-        <CardHeader className="px-0 md:px-4">
+        <CardHeader className="px-0 md:px-4 pb-2 md:pb-2">
           <CardTitle className="flex flex-row items-center justify-between">
             <span>Top Contracts</span>
             <Trophy className="h-5 w-5 text-muted-foreground" />
           </CardTitle>
           <CardDescription>
-            The most depended on contracts on {network}. <Link href="/top" className="text-primary font-bold">View all &rarr;</Link>
+            The most depended on contracts on {network}. <Link href="/top" className="text-primary font-bold whitespace-nowrap">View more &rarr;</Link>
           </CardDescription>
         </CardHeader>
         <CardContent className="px-0 py-3 md:px-3">
-          <APIContractsTable action="top" network={network} limit={50} border={false} />
+          <APIContractsTable action="top" network={network} limit={10} border={false} />
         </CardContent>
       </Card>
       <Card className="md:col-span-3 overflow-auto border-none  md:border-solid shadow-none md:shadow-sm">
-        <CardHeader className="px-0 md:px-4">
+        <CardHeader className="px-0 md:px-4 pb-2 md:pb-2">
           <CardTitle className="flex items-center justify-between">
             <span>Recent Contracts</span>
             <Hourglass className="h-5 w-5 text-muted-foreground" />
           </CardTitle>
           <CardDescription>
-            The most recently deployed contracts on {network}. <Link href="/recent" className="text-primary font-bold">View all &rarr;</Link>
+            The most recently deployed contracts on {network}. <Link href="/recent" className="text-primary font-bold whitespace-nowrap">View more &rarr;</Link>
           </CardDescription>
         </CardHeader>
         <CardContent className="px-0 py-3 md:px-3">
-          <APIContractsTable action="recent" network={network} limit={50} border={false} />
+          <APIContractsTable action="recent" network={network} limit={10} border={false} />
         </CardContent>
       </Card>
     </div>
