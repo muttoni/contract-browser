@@ -22,7 +22,7 @@ import TopContractsTable from "@/components/tables/TopContractsTable"
 import { Skeleton } from "@/components/ui/skeleton"
 import ConnectionLight from "@/components/ui/ConnectionLight"
 import Link from "next/link"
-import { Hourglass, Star, Trophy } from "lucide-react"
+import { FileCode2, Hourglass, Star, Trophy } from "lucide-react"
 
 
 
@@ -108,18 +108,7 @@ function Dashboard({ network, status, updatedStart }) {
           <CardTitle className="text-sm font-medium">
             Total Contracts
           </CardTitle>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            className="h-4 w-4 text-muted-foreground"
-          >
-            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-          </svg>
+          <FileCode2 className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <Suspense fallback={<Skeleton className="h-8 w-24" />}>
@@ -133,7 +122,7 @@ function Dashboard({ network, status, updatedStart }) {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">
-            Unique deploying addresses
+            Deployed Today
           </CardTitle>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -151,9 +140,9 @@ function Dashboard({ network, status, updatedStart }) {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">+2350</div>
+          <div className="text-2xl font-bold">26</div>
           <p className="text-xs text-muted-foreground">
-            +180.1% from last month
+            +180.1% from yesterday
           </p>
         </CardContent>
       </Card>
@@ -212,7 +201,7 @@ function Dashboard({ network, status, updatedStart }) {
     </div>
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
       <Card className="md:col-span-3 overflow-auto border-none md:border-solid shadow-none md:shadow-sm">
-        <CardHeader className="px-3 pb-4 md:pb-6 md:px-6">
+        <CardHeader className="px-0 md:py-4">
           <CardTitle className="flex flex-row items-center justify-between">
             <span>Top Contracts</span>
             <Trophy className="h-5 w-5 text-muted-foreground" />
@@ -221,12 +210,12 @@ function Dashboard({ network, status, updatedStart }) {
             The most depended on contracts on {network}. <Link href="/top" className="text-primary font-bold">View all &rarr;</Link>
           </CardDescription>
         </CardHeader>
-        <CardContent className="px-0 md:px-6 pb-0 md:pb-6">
+        <CardContent className="px-0 md:py-4">
           <TopContractsTable network={network} />
         </CardContent>
       </Card>
       <Card className="md:col-span-3 overflow-auto border-none md:border-solid shadow-none md:shadow-sm">
-        <CardHeader className="px-3 pb-4 md:pb-6 md:px-6">
+        <CardHeader className="px-0 md:py-4">
           <CardTitle className="flex items-center justify-between">
             <span>Recent Contracts</span>
             <Hourglass className="h-5 w-5 text-muted-foreground" />
@@ -235,7 +224,7 @@ function Dashboard({ network, status, updatedStart }) {
             The most recently deployed contracts on {network}. <Link href="/recent" className="text-primary font-bold">View all &rarr;</Link>
           </CardDescription>
         </CardHeader>
-        <CardContent className="px-0 md:px-6 pb-0 md:pb-6">
+        <CardContent className="px-0 md:py-4">
           <RecentContractsTable network={network} />
         </CardContent>
       </Card>

@@ -25,7 +25,7 @@ export default function CodeEditor({prefix="", type="", index=0, code = "", onCh
       base: `${theme === 'light' ? "vs" : "vs-dark"}`,
       inherit: true,
       colors: {
-        "editor.background": `${theme === 'light' ? "#ffffff" : "#0c0a09"}`,
+        "editor.background": `${theme === 'light' ? "#ffffff" : "#020815"}`,
       },
       rules: []
     });

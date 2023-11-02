@@ -18,6 +18,7 @@ export default function RootLayout({
         suppressHydrationWarning={true}
         className={"min-h-screen w-full bg-background font-sans antialiased"}
       >
+      <div className="absolute z-0 w-full h-full bg-gradient-to-b from-purple-950 to-transparent opacity-5 pointer-events-none"></div>
       <RecoilRoot>
         <ThemeProvider
           attribute="class"

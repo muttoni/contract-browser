@@ -46,9 +46,9 @@ export default function ContractLayout({ children }) {
           <span className="">{getContractName(contractId)}</span>
         </h2>
         <div className="flex items-center">
-          <Badge className={cn("rounded-sm h-6 text-base me-2 font-normal uppercase", `${network === 'testnet' ? "border-orange-500 bg-orange-400 hover:bg-orange-400 text-orange-800" : "border-green-500 bg-green-400 hover:bg-green-400 text-green-800"}`)}>{network}</Badge>
+          <Badge className={cn("rounded-sm h-6 text-xs font-mono font-light uppercase", `${network === 'testnet' ? "border-orange-600 bg-orange-400 hover:bg-orange-400 text-orange-800" : "border-green-600 bg-green-400 hover:bg-green-400 text-green-800"}`)}>{network}</Badge>
           <CaretRightIcon className="h-6 w-6 mx-0 text-muted-foreground" />
-          <AddressBadge className="h-6 text-base" address={getContractAddress(contractId)} />
+          <AddressBadge className="text-sm h-6" address={getContractAddress(contractId)} />
           { false &&
           <p className="text-xs">
             getContractAddress(contractId) === user?.addr ? 

@@ -36,6 +36,8 @@ import {
 import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import Loading from "./ui/Loading"
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group"
+import { Label } from "flowbite-react"
 
 
 export function UserNav() {
@@ -43,46 +45,47 @@ export function UserNav() {
   const user = useCurrentUser()
   const [network, setNetwork] = useState("mainnet")
   const searchParams = useSearchParams()
-  const networkParam = searchParams.get("network")
+  fcl.config(getNetworkConfig(network))
   
+
   function changeNetwork(desiredNetwork: string) {
-    //fcl.unauthenticate()
+    fcl.unauthenticate()
     fcl.config(getNetworkConfig(desiredNetwork))
     setNetwork(desiredNetwork)
-    //fcl.authenticate()
+    fcl.authenticate()
   }
-
-  useEffect(() => {
-    //fcl.config.get('flow.network').then(setNetwork)
-
-    if(networkParam && networkParam !== network){
-      console.log("preferred network changing to", networkParam)
-      changeNetwork(networkParam)
-    } else {
-      changeNetwork(network)
-    }
-  }, [])
 
   return (
     <DropdownMenu>
     {user && !user.loggedIn &&
-      <Button onClick={user.logIn}>
+    <div className="flex items-center gap-2 bg-muted pe-2 rounded-md">
+      <Button onClick={user.logIn} className="rounded-r-none">
         <LogIn className="h-4 w-4 me-2" />
         <span className="hidden md:inline-block">Connect Wallet</span>
       </Button>
+      <RadioGroup value={network} className="font-mono tracking-tighter gap-y-0" onValueChange={changeNetwork}>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="mainnet" className="h-3 w-3" id="mainnet" />
+          <Label htmlFor="mainnet" className="text-xs">mainnet</Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="testnet" className="h-3 w-3" id="testnet" />
+          <Label htmlFor="testnet" className="text-xs">testnet</Label>
+        </div>
+      </RadioGroup>
+    </div>
     }
 
     {user.loggedIn && (
-      <AccountNav {...user} />
+      <AccountNav user={user} network={network} changeNetwork={changeNetwork} />
     )}
     </DropdownMenu>
   )
 }
 
 
-export default function AccountNav(user) {
+export default function AccountNav({user, network, changeNetwork}) {
   const account = useAccount(user.addr)
-  const network = getNetworkFromAddress(user.addr)
 
   return user && account ? (
     <>
@@ -158,8 +161,8 @@ export default function AccountNav(user) {
         <DropdownMenuSubTrigger><span className="text-muted-foreground me-2">Network:</span><span className="capitalize">{network}</span></DropdownMenuSubTrigger>
         <DropdownMenuPortal>
           <DropdownMenuSubContent>
-          <DropdownMenuRadioGroup value={network}>
-            <DropdownMenuRadioItem value={"mainnet"} >Mainnet</DropdownMenuRadioItem>
+          <DropdownMenuRadioGroup value={network} onValueChange={changeNetwork}>
+            <DropdownMenuRadioItem value={"mainnet"}>Mainnet</DropdownMenuRadioItem>
             <DropdownMenuRadioItem value={"testnet"}>Testnet</DropdownMenuRadioItem>
           </DropdownMenuRadioGroup>
           </DropdownMenuSubContent>
@@ -177,13 +180,13 @@ export default function AccountNav(user) {
         </DropdownMenuItem>
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
-      <DropdownMenuItem onClick={user.changeUser}>
+      <DropdownMenuItem onClick={fcl.reauthenticate}>
         Switch Account
         <DropdownMenuShortcut>
         <ArrowLeftRight className="h-4 w-4 text-muted-foreground" />
         </DropdownMenuShortcut>
       </DropdownMenuItem>
-      <DropdownMenuItem onClick={user.logOut}>
+      <DropdownMenuItem onClick={fcl.unauthenticate}>
         Log out
         <DropdownMenuShortcut>
         <LogOut className="h-4 w-4 text-muted-foreground" />
