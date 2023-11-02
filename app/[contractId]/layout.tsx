@@ -12,6 +12,7 @@ import { CaretRightIcon } from "@radix-ui/react-icons"
 import { BadgeCheck } from "lucide-react"
 import { isVerified } from "@/lib/official-contracts"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
+import { VerifiedBadge } from "@/components/ui/VerifiedBadge"
 
 export default function ContractLayout({ children }) {
   
@@ -47,7 +48,7 @@ export default function ContractLayout({ children }) {
       <div className="space-y-1">
         <h2 className="text-3xl items-center flex gap-2 font-bold tracking-tight">
           <span className="">{getContractName(contractId)}</span>
-          {isVerified(contractId as string) && <VerifiedBadge/>}
+          {isVerified(contractId as string) && <VerifiedBadge size={6}/>}
         </h2>
         <div className="flex items-center">
           <Badge className={cn("rounded-sm h-6 text-xs font-mono font-light uppercase", `${network === 'testnet' ? "border-orange-600 bg-orange-400 hover:bg-orange-400 text-orange-800" : "border-green-600 bg-green-400 hover:bg-green-400 text-green-800"}`)}>{network}</Badge>
@@ -72,18 +73,5 @@ export default function ContractLayout({ children }) {
         </div>
       </div>
     </div>
-  )
-}
-
-const VerifiedBadge = () => {
-  return (
-    <HoverCard>
-      <HoverCardTrigger asChild>
-        <BadgeCheck className="h-6 w-6 px-0 text-purple-400" />
-      </HoverCardTrigger>
-      <HoverCardContent className="w-80 font-normal">
-        This contract is verified by Contract Browser.
-      </HoverCardContent>
-    </HoverCard>
   )
 }
