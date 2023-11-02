@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./hover-card"
 
 export const VerifiedBadge = ({ size = 3 }) => {
@@ -14,13 +15,16 @@ export const VerifiedBadge = ({ size = 3 }) => {
             </svg>
 
             </HoverCardTrigger>
-            <HoverCardContent className="w-80 font-normal">
-              This contract is verified by Contract Browser.
+            <HoverCardContent className="flex flex-col space-y-2 font-sans text-sm text-start tracking-normal">
+              <div className="text-sm font-bold">This contract is verified.</div>
+              <div className="text-sm text-muted-foreground font-normal">You can safely import this contract.</div>
+              <Link target="_blank" href="https://github.com/muttoni/contract-browser-new/blob/main/lib/official-contracts.ts" className="text-sm text-blue-600 hover:underline">
+                Verify your contract
+              </Link>
             </HoverCardContent>
           </HoverCard>
   )
 }
-
 
 
 // <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" viewBox="0 0 700 700" width="700" height="700" opacity="1"><defs><linearGradient gradientTransform="rotate(333, 0.5, 0.5)" x1="50%" y1="0%" x2="50%" y2="100%" id="ffflux-gradient"><stop stop-color="#8b5cf6" stop-opacity="1" offset="0%"></stop><stop stop-color="#4338ca" stop-opacity="1" offset="100%"></stop></linearGradient><filter id="ffflux-filter" x="-20%" y="-20%" width="140%" height="140%" filterUnits="objectBoundingBox" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB">

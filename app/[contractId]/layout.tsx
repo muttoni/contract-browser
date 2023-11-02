@@ -82,7 +82,7 @@ const NotVerifiedBadge = () => {
       <HoverCardTrigger>
         <BadgeHelp className="h-6 w-6 text-muted" />
       </HoverCardTrigger>
-      <HoverCardContent className="flex flex-col space-y-2">
+      <HoverCardContent className="flex flex-col space-y-2 font-sans text-sm text-start tracking-normal">
         <div className="text-sm font-bold">This contract is not verified.</div>
         <div className="text-sm text-muted-foreground font-normal">Be mindful you are sourcing from the correct account.</div>
         <Link target="_blank" href="https://github.com/muttoni/contract-browser-new/blob/main/lib/official-contracts.ts" className="text-sm text-blue-600 hover:underline">
