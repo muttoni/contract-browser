@@ -122,8 +122,9 @@ export function Search() {
         <>
           <ul className="text-sm py-1 max-h-[150px] overflow-auto">
             {
-            recentContracts.map((recentContract) => {
-              if (recentContracts) {
+            recentContracts
+              .filter((recentContract) => recentContract.toLowerCase().includes(query.toLocaleLowerCase()))
+              .map((recentContract) => {
                 return (
                   <li key={recentContract} className="flex items-center gap-2 py-1 ps-3 text-muted-foreground hover:bg-muted rounded">
                     <Clock className="h-4 w-4 me-2" />
@@ -131,9 +132,8 @@ export function Search() {
                     <ContractBadge uuid={recentContract} />
                   </li>
                 )
-              }
-              return null
-            })}
+              })
+            }
           </ul>
           <Separator />
         </>
