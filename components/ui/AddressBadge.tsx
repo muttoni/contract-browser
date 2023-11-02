@@ -12,7 +12,7 @@ export default function AddressBadge({ address, className }: { address: string, 
     <Tooltip>
       <TooltipTrigger>
       <Link href={`/account/${address}`}>
-        <Badge variant="outline" className={cn("font-mono rounded-sm", className)}>{address}</Badge>
+        <Badge variant="outline" className={cn("relative font-mono rounded-sm", className)}>{address}</Badge>
       </Link>
       </TooltipTrigger>
       <TooltipContent className={ network === 'mainnet' ? 'bg-green-400 border-green-500 text-green-800' : 'bg-orange-400 border-orange-500' }>

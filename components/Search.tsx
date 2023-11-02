@@ -102,7 +102,9 @@ export function Search() {
   }, [query, offset, limit])
 
   return (
-    <div className="relative flex items-center w-full" ref={ref}>
+    <>
+    <div className={cn("fixed inset-0 z-40 bg-background/80 backdrop-blur-sm", showSearchWindow ? "" : "hidden")}></div>
+    <div className="relative flex items-center z-50 w-full" ref={ref}>
       <SearchIcon className={cn("h-6 w-6 text-muted-foreground absolute left-4")} />
       {/* <SearchIcon className={cn("h-6 w-6 text-muted-foreground absolute left-4", query.length > 2 || loading ? "hidden": "")} /> */}
       {/* <Loading className={cn("w-6 h-6 absolute left-4 top-4", loading ? "": "hidden")} /> */}
@@ -187,5 +189,6 @@ export function Search() {
       ): null}
       
     </div>
+  </>
   )
 }
