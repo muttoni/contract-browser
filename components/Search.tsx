@@ -148,8 +148,8 @@ export function Search() {
               .filter((recentContract) => recentContract.toLowerCase().includes(sansPrefix(query, true).toLocaleLowerCase()))
               .map((recentContract) => {
                 return (
-                  <Link href={"/" + recentContract}>
-                  <li key={recentContract} className="flex items-center gap-2 py-1 ps-3 text-muted-foreground hover:bg-muted rounded">
+                  <Link key={recentContract} href={"/" + recentContract}>
+                  <li className="flex items-center gap-2 py-1 ps-3 text-muted-foreground hover:bg-muted rounded">
                     <Clock className="h-4 w-4 me-2" />
                     <AddressBadge address={getContractAddress(recentContract)} colorBasedOnNetwork={true} />
                     <ContractBadge uuid={recentContract} />
