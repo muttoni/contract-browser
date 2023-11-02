@@ -19,8 +19,9 @@ export function withPrefix(address) {
   return "0x" + sansPrefix(cleanAddress(address))
 }
 
-export function sansPrefix(address) {
+export function sansPrefix(address, dontClean = false) {
   if (address == null) return null
+  if (dontClean) return address.replace(/^0x/, "")
   return cleanAddress(address).replace(/^0x/, "")
 }
 
