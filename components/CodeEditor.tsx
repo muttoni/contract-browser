@@ -1,25 +1,42 @@
 "use client"
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, use } from 'react'
 import * as fcl from "@onflow/fcl"
 import * as t from "@onflow/types"
 import { getFileExtension } from '@/lib/file'
 import { readFileAsText } from '@/lib/file'
 import Editor from '@/components/editor'
-import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
-import { Container, RocketIcon, UploadCloud } from 'lucide-react'
-import { withPrefix } from '@/lib/utils'
+import { Info, UploadCloud } from 'lucide-react'
+import { getContractAddress, getNetworkFromAddress, withPrefix } from '@/lib/utils'
 import { Input } from '@/components/ui/input'
 import { useToast } from '@/components/ui/use-toast'
 import { useCurrentUser } from '@/hooks/useCurrentUser'
 import { useParams } from 'next/navigation' 
 import { useTx, IDLE } from '@/hooks/useTx'
-import { Alert, AlertDescription, AlertTitle } from './ui/alert'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import Loading from '@/components/ui/Loading'
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { ContractSearchResponseType } from '@/lib/types'
+import { Badge } from '@/components/ui/badge'
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
 export default function CodeEditor ({ mustBeAuthedToViewCode = false}) {
   const [code, setCode] = useState(Array.from({length: 12}, _ => "\n").join(""))
+  const [imports, setImports] = useState([])
+  const [needsImports, setNeedsImports] = useState(false)
   const [name, setName] = useState("")
   const { toast } = useToast()
   const [exec, status, txStatus, details] = useTx(
@@ -54,21 +71,60 @@ export default function CodeEditor ({ mustBeAuthedToViewCode = false}) {
       fcl.arg(name, t.String),
       fcl.arg(Buffer.from(code, "utf8").toString("hex"), t.String)
     ])
-
-    toast({
-      title: "Deploying contract...",
-      // @ts-ignore
-      description: `txStatus ${txStatus} \n details ${details && details.txId}`
-    })
   }
-  
 
+
+  function replaceImports(code, newImports) {
+    const regex = /^ *import *(?<contracts>[A-Za-z_][A-Za-z0-9_]*( *, *[A-Za-z_][A-Za-z0-9_]+)*) *(from)? *(?<address>0x[a-f0-9]+)?/igm;
+    const matches = Array.from(code.matchAll(regex))
+    console.log("matches", matches)
+
+    let newCode = code
+    for (const match of matches) {
+      console.log("match", match)
+      const importNameToReplace = match[1]
+      const importIndex = findImportIndexInMatches(importNameToReplace, newImports)
+      console.log("importNameToReplace", match[1], "importIndex", importIndex)
+      if (importIndex !== -1) {
+        console.log("replacing", match[0], "with", `import ${newImports[importIndex][1]} from ${newImports[importIndex][4]}`)
+        newCode = newCode.replace(match[0], `import ${newImports[importIndex][1]} from ${newImports[importIndex][4]}`)
+      }
+    }
+    return newCode
+  }
+
+  function findImportIndexInMatches(importName, matches) {
+    for (let i = 0; i < matches.length; i++) {
+      if (matches[i][1] === importName) {
+        return i;
+      }
+    }
+    return -1;
+  }
   
   useEffect(() => {
     setName(code.match(/(?<access>pub|access\(all\)) contract (?<name>\w+)/)?.groups?.name ?? "")
+
+    // Find all import statements that don't specify an address
+    const parseImports = /^ *import (?<contracts>[A-Za-z_][A-Za-z0-9_]*( *, *[A-Za-z_][A-Za-z0-9_]+)*) *(from *(?<address>0x[a-f0-9]+))?/igm
+    const matches = Array.from(code.matchAll(parseImports))
+    const detectedImports = []
+
+    for (const match of matches) {
+      detectedImports.push(match)
+    }
+    setImports(detectedImports)
   }, [code, name])
 
+  function updateImportsAndCode(imports) {
+    setImports(imports)
+    setCode(replaceImports(code, imports))
+
+  }
+
   const user = useCurrentUser()
+  const network = user?.addr ? getNetworkFromAddress(user?.addr) : "mainnet"
+
   const params = useParams()
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,12 +159,12 @@ export default function CodeEditor ({ mustBeAuthedToViewCode = false}) {
           </Button>
           {txStatus !== IDLE &&
           <Alert>
-              <RocketIcon className="h-4 w-4" />
+              <Loading className="w-6 h-6" />
               <AlertTitle>Deploying</AlertTitle>
               <AlertDescription> 
                 {/* 
                 // @ts-ignore */}
-                txStatus {txStatus} | details ${details.txId}
+                {txStatus} | {details.txId}
               </AlertDescription>
             </Alert>
           }
@@ -116,10 +172,100 @@ export default function CodeEditor ({ mustBeAuthedToViewCode = false}) {
       </>
       }
       {(IS_CURRENT_USER || (!IS_CURRENT_USER && !mustBeAuthedToViewCode)) ?
+      <>
+      {imports.length > 0 &&
+      <Accordion type="single" collapsible defaultValue="imports" className="mb-3 w-full px-2 md:px-4 border rounded-md">
+      <AccordionItem value="imports" className="border-none">
+        <AccordionTrigger>{imports.length} imports detected</AccordionTrigger>
+        <AccordionContent>
+          <ImportsTable matches={imports} onChange={updateImportsAndCode} network={network} />
+        </AccordionContent>
+      </AccordionItem>
+      </Accordion>
+      }
       <Editor code={code} onChange={IS_CURRENT_USER ? setCode : false} />
+      </>
       : <p className="p-16 text-center">Please login first.</p>
       }
     </>
   );
 };
 
+const ImportsTable = ({ matches, network, onChange }) => {
+
+  const [imports, setImports] = useState(matches)
+
+  function updateImportAddress(value, index) {
+    const newImports = imports.slice()
+    newImports[index][4] = value
+    setImports(newImports)
+    onChange(newImports)
+  }
+
+  useEffect(() => {
+    setImports(matches)
+  }, [matches])
+
+
+return imports && imports.length > 0 && (
+<Table>
+  {/* <TableCaption>{imports.length} imports detected</TableCaption> */}
+  <TableHeader>
+    <TableRow>
+      <TableHead className="">Imported Contract</TableHead>
+      <TableHead className="max-w-[170px]">Address</TableHead>
+      <TableHead className="">
+        Autofill
+        <Popover>
+          <PopoverTrigger>
+            <Info className="ms-2 w-4 h-4 inline-block" />
+          </PopoverTrigger>
+          <PopoverContent>Autofill finds the address of the most popular contract with that name on the current network. Note: This is experimental</PopoverContent>
+        </Popover>
+      </TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    {imports.map((imp, index) => {
+      return (
+        <ImportTableRow key={imp[1]} imp={imp} index={index} onChange={updateImportAddress} network={network} />
+      )
+    })}
+  </TableBody>
+</Table>
+)
+
+}
+
+const ImportTableRow = ({imp, index, onChange, network}) => {
+
+  const [autofilling, setAutofilling] = useState(false)
+
+  async function getMostPopularContractByName(name, network, index) {
+    setAutofilling(true)
+    const url = `${process.env.NEXT_PUBLIC_BASE_DOMAIN}/api/search/contracts?network=${network}&query=${name}&offset=0&limit=1`
+    const res = await fetch(url)
+    const json : ContractSearchResponseType = await res.json()
+    if(json?.data?.contracts?.length > 0) {
+      onChange(getContractAddress(json.data.contracts[0].uuid), index)
+    }
+    setAutofilling(false)
+  }
+  
+  return (
+  <TableRow key={imp[1]}>
+    <TableCell className="font-medium text-sm">
+      {imp[1]}
+    </TableCell>
+    <TableCell className="w-[210px]">
+      <Input type="text" disabled={imp[1] === 'Crypto'} className="h-8 font-mono" value={imp[4] || ""} onChange={(e) => onChange(e.target.value, index)} />
+    </TableCell>
+    <TableCell className="">
+      <Button disabled={autofilling || imp[1] === 'Crypto'} className='h-8 w-[145px] flex items-center ${}' variant='outline' onClick={() => getMostPopularContractByName(imp[1], network, index)}>
+        {!autofilling && <>🪄 Autofill</>}
+        {autofilling && <><Loading className="h-4 w-4 m-0"/><span className="ms-2">Autofilling ✨</span></>}
+      </Button>
+    </TableCell>
+  </TableRow>
+  )
+}

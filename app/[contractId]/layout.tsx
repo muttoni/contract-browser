@@ -8,9 +8,6 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
 
-import { Breadcrumb } from "flowbite-react"
-import { Home, HomeIcon } from "lucide-react"
-
 export default function ContractLayout({ children }) {
   
   const { contractId } = useParams()
