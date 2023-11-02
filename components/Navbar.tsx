@@ -19,9 +19,9 @@ export function Navbar({
       className={cn("flex space-x-2 items-center md:space-x-4", className)}
       {...props}
     >
-      <Link href="/" className="flex items-center text-sm space-x-3 font-medium transition-colors hover:text-primary">
+      <Link href="/" className="flex items-center text-sm space-x-2 font-medium transition-colors hover:text-primary">
         <Image src="/icon.png" alt="logo" className="object-contain max-w-[32px] min-w-[32px] h-[32px] md:h-[42px] md:w-auto" width="256" height="256" /> 
-        <span className="text-lg inline-block leading-tighter tracking-tight">Contract Browser</span>
+        <span className="text-lg inline-block leading-tighter tracking-tighter">Contract Browser</span>
       </Link>
           {/* <Badge className="ml-2">{network}</Badge> */}
 

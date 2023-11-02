@@ -212,7 +212,7 @@ function Dashboard({ network, status, updatedStart }) {
     </div>
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
       <Card className="md:col-span-3 overflow-auto border-none md:border-solid shadow-none md:shadow-sm">
-        <CardHeader className="px-0 pb-4 md:pb-6 md:px-6">
+        <CardHeader className="px-3 pb-4 md:pb-6 md:px-6">
           <CardTitle className="flex flex-row items-center justify-between">
             <span>Top Contracts</span>
             <Trophy className="h-5 w-5 text-muted-foreground" />
@@ -226,7 +226,7 @@ function Dashboard({ network, status, updatedStart }) {
         </CardContent>
       </Card>
       <Card className="md:col-span-3 overflow-auto border-none md:border-solid shadow-none md:shadow-sm">
-        <CardHeader className="px-0 pb-4 md:pb-6 md:px-6">
+        <CardHeader className="px-3 pb-4 md:pb-6 md:px-6">
           <CardTitle className="flex items-center justify-between">
             <span>Recent Contracts</span>
             <Hourglass className="h-5 w-5 text-muted-foreground" />
