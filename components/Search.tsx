@@ -109,7 +109,7 @@ export function Search() {
       <Input
           type="search"
           placeholder="Search contracts, addresses and code"
-          className="w-full h-10 md:h-14 md:text-lg ps-14"
+          className="w-full h-10 md:h-14 md:text-lg ps-14 ring-2 ring-muted"
           onFocus={() => setShowSearchWindow(true)}
           value={query}
           onChange={(e) => { setQuery(e.target.value)}}
