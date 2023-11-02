@@ -96,6 +96,9 @@ export default function APIContractsTable({
     deleteByAccessorKey(cols, "dependants_count")
   }
 
+  if(action === "topByDependencies") {
+    deleteByAccessorKey(cols, "dependants_count")
+  }
   return (
     <div>
       {data ? 
