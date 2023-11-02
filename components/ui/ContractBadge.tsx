@@ -17,7 +17,7 @@ export default function ContractBadge({ uuid, className }: { uuid: string, class
           <Badge variant="secondary" className={cn("font-mono rounded-sm", className)}>{ellipsify(contractName, 30)}</Badge>
         </Link>
       </TooltipTrigger>
-      <TooltipContent className={ network === 'mainnet' ? '' : 'bg-orange-600' }>
+      <TooltipContent className={ network === 'mainnet' ? 'bg-green-400 border-green-500 text-green-800' : 'bg-orange-400 border-orange-500' }>
         <p>{uuid} is deployed on {network}</p>
       </TooltipContent>
     </Tooltip>

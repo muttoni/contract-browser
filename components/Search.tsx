@@ -160,7 +160,7 @@ export function Search() {
               </div>
 
               <TabsContent value="mainnet" className="space-y-4">
-              <h3 className="text-sm uppercase font-bold flex items-center justify-between mt-4 mb-2">
+              <h3 className="text-sm uppercase font-bold flex items-center justify-between mt-2 mb-1">
                   <span>Mainnet Contracts</span>
                   <span className="text-muted-foreground font-normal text-sm lowercase">{contractResultsMainnet?.data?.total_contracts_count || 0} results</span>
                 </h3>
@@ -170,7 +170,7 @@ export function Search() {
                 }
               </TabsContent>
               <TabsContent value="testnet" className="space-y-4">
-                <h3 className="text-sm uppercase font-bold flex items-center justify-between mt-4 mb-2">
+                <h3 className="text-sm uppercase font-bold flex items-center justify-between mt-2 mb-1">
                   <span>Testnet Contracts</span>
                   <span className="text-muted-foreground">{contractResultsTestnet?.data?.total_contracts_count || 0} results</span>
                 </h3>

@@ -70,3 +70,5 @@ export type DeploymentsResponseType = {
     total_deployments_count: number;
   };
 }
+
+export type QUERY_TYPE = 'top' | 'ownedBy' | 'recent' | 'topByDependencies' | null

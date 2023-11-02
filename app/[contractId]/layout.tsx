@@ -7,6 +7,8 @@ import { getContractAddress, getContractName, cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
+import AddressBadge from "@/components/ui/AddressBadge"
+import { CaretRightIcon } from "@radix-ui/react-icons"
 
 export default function ContractLayout({ children }) {
   
@@ -39,22 +41,22 @@ export default function ContractLayout({ children }) {
 
   return (
     <div className="space-y-6 pt-4 pb-16 flex flex-col flex-1">
-      <div className="space-y-0.5">
+      <div className="space-y-1">
         <h2 className="text-3xl items-center flex gap-2 font-bold tracking-tight">
           <span className="">{getContractName(contractId)}</span>
-          <Badge className={cn("capitalize text-sm", network === 'testnet' ? "bg-orange-400 text-orange-800" : "bg-green-400 text-green-800")}>{network}</Badge>
         </h2>
-        <p className="text-muted-foreground">
-          <Link href={`/account/${getContractAddress(contractId)}`}><span className="text-2xl tracking-tight font-bold text-muted-foreground">by {getContractAddress(contractId)}</span></Link>
-          <br/>
-          <span className="text-xs">
-          {
+        <div className="flex items-center">
+          <Badge className={cn("rounded-sm h-6 text-base me-2 font-normal uppercase", `${network === 'testnet' ? "border-orange-500 bg-orange-400 hover:bg-orange-400 text-orange-800" : "border-green-500 bg-green-400 hover:bg-green-400 text-green-800"}`)}>{network}</Badge>
+          <CaretRightIcon className="h-6 w-6 mx-0 text-muted-foreground" />
+          <AddressBadge className="h-6 text-base" address={getContractAddress(contractId)} />
+          { false &&
+          <p className="text-xs">
             getContractAddress(contractId) === user?.addr ? 
             "You own this contract, so you can update it." : 
             `Login with the deploying account to modify this contract.`
+          </p>
           }
-          </span>
-        </p>
+        </div>
       </div>
       <Separator className="my-6" />
       <div className="flex flex-col flex-1 space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">

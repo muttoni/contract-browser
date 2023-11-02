@@ -1,8 +1,7 @@
 import { ContractResponseType } from "@/lib/types";
+import { QUERY_TYPE } from "@/lib/types";
 
-
-type QUERY_TYPE = 'top' | 'ownedBy' | 'recent' | null
-type ORDER_TYPE = 'dependants_count' | 'inserted_at' | null
+type ORDER_TYPE = 'dependants_count' | 'inserted_at' | 'dependencies_count' | null
 type OWNER_TYPE = string | null
 type NETWORK_TYPE = 'mainnet' | 'testnet'
 type ORDER_DIR_TYPE = 'asc' | 'desc' | null
@@ -11,7 +10,7 @@ export async function GET(request: Request) {
 
 
   const { searchParams } = new URL(request.url)
-  const queryType : QUERY_TYPE = searchParams.get('type') as QUERY_TYPE || 'top'
+  const queryType : QUERY_TYPE = searchParams.get('queryType') as QUERY_TYPE || 'top'
   const limit : string | number = searchParams.get('limit') as string | number || 10
   const address : OWNER_TYPE = searchParams.get('address') as OWNER_TYPE || "" 
   let network : NETWORK_TYPE = searchParams.get('network') as NETWORK_TYPE || 'mainnet'
@@ -23,6 +22,11 @@ export async function GET(request: Request) {
     case 'top':
       orderBy = 'dependants_count'
       orderByDirection = 'desc'
+      break;
+    case 'topByDependencies':
+      orderBy = 'dependencies_count'
+      orderByDirection = 'desc'
+      console.log('topByDependencies', orderBy, orderByDirection)
       break;
     case 'ownedBy':
       orderBy = 'dependants_count'
@@ -43,8 +47,8 @@ export async function GET(request: Request) {
     }
   };
 
-  let url = `${process.env.API_DOMAIN}/api/v2/contracts/?${address ? "owner=" + address : ""}&network=${network}&order_by=${orderBy}&order_by_direction=${orderByDirection}&limit=${limit}`
-  // console.log(url)
+  let url = `${process.env.API_DOMAIN}/api/v2/contracts?${address ? "owner=" + address + "&": ""}network=${network}&order_by=${orderBy}&order_by_direction=${orderByDirection}&limit=${limit}`
+
   try {
     res = await fetch(url, options)
   } catch(e) {
