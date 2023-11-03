@@ -1,5 +1,5 @@
 "use client"
-import RecentContractsTable from "@/components/tables/RecentContractsTable";
+import APIContractsTable from "@/components/tables/APIContractsTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react"
 
@@ -18,10 +18,10 @@ export default function RecentContracts() {
         <TabsTrigger value="testnet" onClick={() => setNetwork("testnet")}>Testnet</TabsTrigger>
       </TabsList>
       <TabsContent value="mainnet" className="space-y-4">
-        <RecentContractsTable network="mainnet" limit={500}/>
+        <APIContractsTable action="recent" network="mainnet" limit={500} />
       </TabsContent>
       <TabsContent value="testnet" className="space-y-4">
-        <RecentContractsTable network="testnet" limit={500}/>
+        <APIContractsTable action="recent" network="testnet" limit={500} />
       </TabsContent>
     </Tabs>
   </>

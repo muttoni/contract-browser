@@ -96,7 +96,7 @@ export default function ContractPage() {
           <Check className="h-4 w-4 me-2" />
         : <Copy className="h-4 w-4 me-2" />
         }
-        Copy Code
+        Code
       </Button>
       </CopyToClipboard>
       <CopyToClipboard text={`import ${contract?.name} from ${getContractAddress(contract?.uuid)}`}>
@@ -105,19 +105,19 @@ export default function ContractPage() {
           <Check className="h-4 w-4 me-2" />
         : <Copy className="h-4 w-4 me-2" />
         }
-        Copy Import Statement
+        Import
       </Button>
       </CopyToClipboard>
       <Link href={`/account/${getContractAddress(contract?.uuid)}`}>
       <Button size="sm" variant="outline" className="w-full">
         <Wallet className="h-4 w-4 me-2" />
-        View Account
+        Account
       </Button>
       </Link>
       <Link href={`/${contract?.uuid}/dependants`}>
       <Button size="sm" variant="outline" className="w-full">
         <Network className="h-4 w-4 me-2" />
-        View Dependencies
+        Dependencies
       </Button>
       </Link>
     </div>

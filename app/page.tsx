@@ -17,12 +17,11 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import RecentContractsTable from "@/components/tables/RecentContractsTable"
-import TopContractsTable from "@/components/tables/TopContractsTable"
+
 import { Skeleton } from "@/components/ui/skeleton"
 import ConnectionLight from "@/components/ui/ConnectionLight"
 import Link from "next/link"
-import { FileCode2, Hourglass, Star, Trophy } from "lucide-react"
+import { FileCode2, Hourglass, Trophy } from "lucide-react"
 import APIContractsTable from "@/components/tables/APIContractsTable"
 
 

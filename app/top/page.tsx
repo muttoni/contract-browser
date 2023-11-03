@@ -1,6 +1,5 @@
 "use client"
-import TopContractsTable from "@/components/tables/TopContractsTable";
-import TopDependenciesContractsTable from "@/components/tables/TopDependenciesContractsTable";
+import APIContractsTable from "@/components/tables/APIContractsTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react"
 
@@ -20,10 +19,10 @@ export default function TopContracts() {
             <TabsTrigger value="testnet" onClick={() => setNetwork("testnet")}>Testnet</TabsTrigger>
           </TabsList>
           <TabsContent value="mainnet" className="space-y-4">
-            <TopContractsTable network="mainnet" limit={500}/>
+            <APIContractsTable action="top" network="mainnet" limit={500} />
           </TabsContent>
           <TabsContent value="testnet" className="space-y-4">
-            <TopContractsTable network="testnet" limit={500}/>
+            <APIContractsTable action="top" network="testnet" limit={500} />
           </TabsContent>
         </Tabs>
       </div>
@@ -38,10 +37,10 @@ export default function TopContracts() {
             <TabsTrigger value="testnetDeps" onClick={() => setNetwork("testnet")}>Testnet</TabsTrigger>
           </TabsList>
           <TabsContent value="mainnetDeps" className="space-y-4">
-            <TopDependenciesContractsTable network="mainnet" limit={500} />
+            <APIContractsTable action="topByDependencies" network="mainnet" limit={500} />
           </TabsContent>
           <TabsContent value="testnetDeps" className="space-y-4">
-            <TopDependenciesContractsTable network="testnet" limit={500}/>
+            <APIContractsTable action="topByDependencies" network="testnet" limit={500} />
           </TabsContent>
         </Tabs>
       </div>
