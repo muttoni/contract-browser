@@ -29,7 +29,6 @@ export default function TokensPage() {
           Tokens in this account.
         </p>
       </div>
-      <Separator />
 
       <div className="flex">
         <Link href={`https://${network === 'testnet' ? 'testnet' : ''}flowview.app/account/${address}`}>
