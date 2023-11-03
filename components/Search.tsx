@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react"
 import { usePathname, useRouter } from "next/navigation"
 
-import { cn, debounce, getContractAddress, sansPrefix } from "@/lib/utils"
+import { cn, debounce, getContractAddress, sansPrefix, withPrefix } from "@/lib/utils"
 import {ContractSearchResponseType } from "@/lib/types"
 
 import useOutsideClick from "@/hooks/useOutsideClick"
@@ -133,9 +133,9 @@ export function Search() {
       
       {/^(?:0x)?[0-9a-fA-F]{8,16}$/.test(query) &&
       <Link href={"/account/" + query}>
-      <div className="text-sm flex items-center gap-2 py-2 ps-3 text-muted-foreground hover:bg-muted rounded">
+      <div className="text-sm flex items-center gap-2 pt-2 ps-3 text-muted-foreground hover:bg-muted rounded">
         <Wallet className="h-4 w-4 me-2" />
-        <AddressBadge address={query} colorBasedOnNetwork={true} className="text-sm" />
+        <AddressBadge address={withPrefix(query)} colorBasedOnNetwork={true} className="" />
       </div>
       </Link>
       }
