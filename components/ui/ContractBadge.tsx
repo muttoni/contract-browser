@@ -16,7 +16,7 @@ export default function ContractBadge({ uuid, className }: { uuid: string, class
     <Tooltip>
       <TooltipTrigger>
         <Link href={`/${uuid}`}>
-          <Badge variant="secondary" className={cn("font-mono rounded-sm text-sm bg-transparent", className)}>
+          <Badge variant="secondary" className={cn("font-mono rounded-sm text-sm bg-transparent px-1", className)}>
             <span className="me-1">{ellipsify(contractName, 30)}</span>
             {isVerified(uuid) && <VerifiedBadge/>}
           </Badge>
