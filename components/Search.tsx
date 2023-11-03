@@ -9,7 +9,7 @@ import useOutsideClick from "@/hooks/useOutsideClick"
 import SearchDataTable from "./tables/SearchDataTable"
 import { columns } from "./tables/SearchContractTableColumns"
 
-import { Clock, Eye, Info, SearchIcon } from "lucide-react"
+import { Clock, Eye, Info, SearchIcon, Wallet } from "lucide-react"
 
 import Loading from "@/components/ui/Loading"
 import { Input } from "@/components/ui/input"
@@ -129,12 +129,12 @@ export function Search() {
 
       {showSearchWindow && (recentContracts?.length || query.length > 2) ? (
       <>
-      <Card className="max-h-[80vh] shadow-lg absolute overflow-auto w-full top-[38px] md:top-[50px] z-10 px-2 rounded-t-none">
+      <Card className="max-h-[80vh] shadow-lg absolute overflow-auto w-full top-[38px] md:top-[50px] z-10 px-0 rounded-t-none">
       
       {/^(?:0x)?[0-9a-fA-F]{8,16}$/.test(query) &&
       <Link href={"/account/" + query}>
       <div className="text-sm flex items-center gap-2 py-2 ps-3 text-muted-foreground hover:bg-muted rounded">
-        <Eye className="h-4 w-4 me-2" />
+        <Wallet className="h-4 w-4 me-2" />
         <AddressBadge address={query} colorBasedOnNetwork={true} className="text-sm" />
       </div>
       </Link>
@@ -142,15 +142,15 @@ export function Search() {
 
       {recentContracts?.length > 0 && 
         <>
-          <ul className="text-sm py-1 max-h-[150px] overflow-auto">
+          <ul className="text-sm max-h-[150px] overflow-auto mt-1">
             {
             recentContracts
               .filter((recentContract) => recentContract.toLowerCase().includes(sansPrefix(query, true).toLocaleLowerCase()))
               .map((recentContract) => {
                 return (
                   <Link key={recentContract} href={"/" + recentContract}>
-                  <li className="flex items-center gap-2 py-1 ps-3 text-muted-foreground hover:bg-muted rounded">
-                    <Clock className="h-4 w-4 me-2" />
+                  <li className="flex items-center gap-2 py-1 ps-3 text-muted-foreground hover:bg-muted">
+                    <Clock className="h-4 w-4 flex-shrink-0 me-2" />
                     <AddressBadge address={getContractAddress(recentContract)} colorBasedOnNetwork={true} />
                     <ContractBadge uuid={recentContract} />
                   </li>
@@ -163,41 +163,41 @@ export function Search() {
         </>
         }
         {query.length > 2 && <>
-          <CardHeader className="px-2 pb-2">
+          <CardHeader className="px-2 pb-2 pt-3 md:px-2 md:pt-3">
             <h3 className="text font-bold flex text-sm items-center justify-between">
               <span>Search Results</span>
               <span className="text-muted-foreground font-normal text-sm">{(contractResultsMainnet?.data?.total_contracts_count || 0) + (contractResultsTestnet?.data?.total_contracts_count || 0)} total results</span>
             </h3>
           </CardHeader>
-          <CardContent className="px-2">
-            <Tabs defaultValue="mainnet" className="space-y-4">
-              <div className="flex">
-              <TabsList>
-                <TabsTrigger value="mainnet" onClick={() => setNetwork("mainnet")} className="flex items-center">
+          <CardContent className="px-0 md:px-0">
+            <Tabs defaultValue="mainnet" className="">
+              <div className="flex px-2">
+              <TabsList className="p-1 h-9">
+                <TabsTrigger value="mainnet" onClick={() => setNetwork("mainnet")} className="flex items-center text-xs">
                   Mainnet {loadingMainnetResults ? <Loading className="w-4 h-4 ms-2" /> : `(${contractResultsMainnet?.data?.total_contracts_count || 0})`}
                 </TabsTrigger>
-                <TabsTrigger value="testnet" onClick={() => setNetwork("testnet")} className="flex items-center">
+                <TabsTrigger value="testnet" onClick={() => setNetwork("testnet")} className="flex items-center text-xs">
                   Testnet {loadingTestnetResults ? <Loading className="w-4 h-4 ms-2" /> : `(${contractResultsTestnet?.data?.total_contracts_count || 0})`}
                 </TabsTrigger>
               </TabsList>
               <span className={`flex gap-2 ms-4 items-center text-xs text-muted-foreground ${network !== 'testnet' ? 'hidden' : null}`}><Info className="h-4 w-4"/>Note: Testnet API is slower</span>
               </div>
 
-              <TabsContent value="mainnet" className="space-y-4">
-              <h3 className="text-sm uppercase font-bold flex items-center justify-between mt-2 mb-1">
+              <TabsContent value="mainnet" className="">
+              {/* <h3 className="text-sm uppercase font-bold flex items-center justify-between mt-2 mb-1">
                   <span>Mainnet Contracts</span>
                   <span className="text-muted-foreground font-normal text-sm lowercase">{contractResultsMainnet?.data?.total_contracts_count || 0} results</span>
-                </h3>
+                </h3> */}
                 {contractResultsMainnet && contractResultsMainnet?.data?.contracts?.length && contractResultsMainnet?.data?.contracts?.length  > 0 ?
                 <SearchDataTable data={contractResultsMainnet?.data?.contracts} columns={columns}/>
                 : <div className={cn("text-sm block pt-4 pb-8 text-muted-foreground", loadingMainnetResults ? "hidden" : "")}>No results.</div>
                 }
               </TabsContent>
-              <TabsContent value="testnet" className="space-y-4">
-                <h3 className="text-sm uppercase font-bold flex items-center justify-between mt-2 mb-1">
+              <TabsContent value="testnet" className="">
+                {/* <h3 className="text-sm uppercase font-bold flex items-center justify-between mt-2 mb-1">
                   <span>Testnet Contracts</span>
                   <span className="text-muted-foreground">{contractResultsTestnet?.data?.total_contracts_count || 0} results</span>
-                </h3>
+                </h3> */}
                 {contractResultsTestnet && contractResultsTestnet?.data?.contracts?.length && contractResultsTestnet?.data?.contracts?.length  > 0 ?
                 <SearchDataTable data={contractResultsTestnet?.data?.contracts} columns={columns}/>
                 : <div className={cn("text-sm block pt-4 pb-8 text-muted-foreground", loadingTestnetResults ? "hidden" : "")}>No results.</div>

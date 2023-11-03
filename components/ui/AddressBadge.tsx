@@ -21,13 +21,13 @@ export default function AddressBadge({ address, colorBasedOnNetwork = false, cop
           <Link href={`/account/${address}`} className="">
             <Badge variant="outline" className={cn("relative font-mono rounded-sm", 
               colorBasedOnNetwork && (network === 'mainnet' 
-              ? 'bg-green-400 border-green-500 text-green-800' 
-              : network === 'testnet' ? 'bg-orange-400 border-orange-500'
+              ? 'bg-green-400 border-green-500 text-green-900' 
+              : network === 'testnet' ? 'bg-orange-300 border-orange-500 text-orange-900'
               : '')
               , className)}>{address}</Badge>
           </Link>
           </TooltipTrigger>
-          <TooltipContent className={ network === 'mainnet' ? 'bg-green-400 border-green-500 text-green-800' : 'bg-orange-400 border-orange-500' }>
+          <TooltipContent className={ network === 'mainnet' ? 'bg-green-400 border-green-500 text-green-900' : 'bg-orange-300 border-orange-500 text-orange-900' }>
             <p>{address} is a {network} account</p>
           </TooltipContent>
         </Tooltip>
