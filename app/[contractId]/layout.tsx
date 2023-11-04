@@ -45,7 +45,7 @@ export default function ContractLayout({ children }) {
 
   return (
     <div className="space-y-6 pt-4 pb-16 flex flex-col flex-1">
-      <div className="space-y-1">
+      <div className="space-y-2">
         <h2 className="text-3xl items-center flex gap-2 font-bold tracking-tight">
           <span className="">{getContractName(contractId)}</span>
           {isVerified(contractId as string) ? <VerifiedBadge size={6}/> : <NotVerifiedBadge />}
