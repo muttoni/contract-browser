@@ -78,10 +78,10 @@ export default function SnippetsPage() {
             {contract.snippetsObject.snippets.filter(snippet => snippet.type === type).sort((a, b) => b.contracts_count - a.contracts_count).map((snippet, index) => (
               <AccordionItem key={snippet.code_hash} value={snippet.code_hash}>
                 <AccordionTrigger className="hover:no-underline hover:bg-muted">
-                  <span>
-                    {snippet.name}
+                  <div>
+                    <span className="font-mono">{snippet.name}</span>
                     <span className="text-muted-foreground text-xs ms-2">(used by {snippet.contracts_count} contracts)</span>
-                  </span>
+                  </div>
                 </AccordionTrigger>
                 <AccordionContent>
                   <CadenceBlock code={snippet.code} />
