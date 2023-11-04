@@ -1,4 +1,5 @@
 import { createStarryNight } from '@wooorm/starry-night'
+// @ts-ignore
 import cadence from '@wooorm/starry-night/source.cadence'
 import { toHtml } from 'hast-util-to-html'
 
