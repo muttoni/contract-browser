@@ -65,7 +65,7 @@ export default function Page() {
   }
 
   useInterval(() => {
-    let currentBlockHeight = status?.status?.data?.synced_height || 0
+    let currentBlockHeight = status?.data?.synced_height || 0
     getData().then((data) => {
       setUpdatedStart(currentBlockHeight)
       setStatus(data)
@@ -112,7 +112,7 @@ function Dashboard({ network, status, updatedStart }) {
         </CardHeader>
         <CardContent>
           <Suspense fallback={<Skeleton className="h-8 w-24" />}>
-            <div className="text-2xl font-bold">{formatNumber(status?.status?.data?.contract_amount || 0)}</div>
+            <div className="text-2xl font-bold">{formatNumber(status?.data?.contract_amount || 0)}</div>
           </Suspense>
           <p className="text-xs text-muted-foreground">
             contracts on {network}
@@ -164,7 +164,7 @@ function Dashboard({ network, status, updatedStart }) {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold"><CountUp start={updatedStart} end={status?.status?.data?.synced_height} /></div>
+          <div className="text-2xl font-bold"><CountUp start={updatedStart} end={status?.data?.synced_height} /></div>
           <p className="text-xs text-muted-foreground">
             Blocks on {network}
           </p>
@@ -190,11 +190,11 @@ function Dashboard({ network, status, updatedStart }) {
         </CardHeader>
         <CardContent>
           <div className="text-2xl flex items-center gap-3 font-bold">
-            <ConnectionLight status={status?.status?.data ? "online" : "connecting"}/>
-            {status?.status?.data ? "Online" : "Connecting"}
+            <ConnectionLight status={status?.data ? "online" : "connecting"}/>
+            {status?.data ? "Online" : "Connecting"}
           </div>
           <p className="text-xs text-muted-foreground">
-            last synced {timeSince(new Date(status?.status?.data?.last_sync_at + "Z")) || "-"} ago
+            last synced {timeSince(new Date(status?.data?.last_sync_at + "Z")) || "-"} ago
           </p>
         </CardContent>
       </Card>

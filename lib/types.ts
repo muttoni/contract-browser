@@ -1,46 +1,14 @@
-export type DependantsResponseType = {
-  code: number,
-  data: {
-    dependants: any[],
-    total_dependants_count: number,
-    uuid: string
-  }
+export type APIResponse = {
+  code: number;
+  data: any;
 }
 
-export type DependenciesResponseType = {
-  code: number;
+export type StatusResponseType = APIResponse & {
   data: {
-    dependencies: string[];
-    total_dependants_count: number;
-    uuid: string;
-  };
-};
-
-
-export type ContractResponseType = {
-  contract: {
-    code: number;
-    data: {
-      address: string;
-      code: string;
-      dependants_count: number;
-      dependencies_count: number;
-      events: any[];
-      name: string;
-      uuid: string;
-    };
-  };
-};
-
-export type StatusResponseType = {
-  status: {
-    code: number;
-    data: {
-      contract_amount: number;
-      last_sync_at: string;
-      network: string;
-      synced_height: number;
-    };
+    contract_amount: number;
+    last_sync_at: string;
+    network: string;
+    synced_height: number;
   };
 }
 
@@ -50,7 +18,44 @@ export type Contract = {
 	uuid: string;
 }
 
-export type ContractSearchResponseType = {
+export type FullContract = Contract & {
+  address: string;
+  code: string;
+  events: any[];
+  name: string;
+};
+
+export type DeploymentsResult = {
+  deployments: {
+    block_height: number;
+    block_timestamp: string;
+    tx_id: string;
+    type: string;
+  }[];
+  total_deployments_count: number;
+};
+
+export type ContractResponseType = APIResponse & {
+  data: FullContract
+};
+
+export type DependantsResponseType = APIResponse & {
+  data: {
+    dependants: any[],
+    total_dependants_count: number,
+    uuid: string
+  }
+}
+
+export type DependenciesResponseType = APIResponse & {
+  data: {
+    dependencies: string[];
+    total_dependants_count: number;
+    uuid: string;
+  };
+};
+
+export type ContractSearchResponseType = APIResponse & {
 	code: number;
 	data: {
     contracts: Contract[],
@@ -58,17 +63,23 @@ export type ContractSearchResponseType = {
   }
 }
 
-export type DeploymentsResponseType = {
-  code: number;
-  data: {
-    deployments: {
-      block_height: number;
-      block_timestamp: string;
-      tx_id: string;
-      type: string;
-    }[];
-    total_deployments_count: number;
-  };
+export type DeploymentsResponseType = APIResponse & {
+  data: DeploymentsResult
+}
+
+export type Snippet = {
+  code: string;
+  code_hash: string;
+  contracts_count: number;
+  type: string;
+}
+
+export type SnippetResponse = APIResponse & {
+  data: Snippet
+} 
+
+export type SnippetsResponse = APIResponse & {
+  data: Snippet[]
 }
 
 export type QUERY_TYPE = 'top' | 'ownedBy' | 'recent' | 'topByDependencies' | null

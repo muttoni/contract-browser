@@ -1,102 +1,89 @@
-import { ContractResponseType, DependantsResponseType, DeploymentsResponseType } from "@/lib/types"
+import { ContractResponseType, DependantsResponseType, DeploymentsResponseType, FullContract, SnippetsResponse } from "@/lib/types"
 import { useState, useEffect } from "react"
 import { getContractAddress, getNetworkFromAddress } from "@/lib/utils"
+
+function createGetDataFunction(cacheKeySuffix, pathSuffix) {
+  return async function getData(uuid) {
+    const cacheKey = `${cacheKeySuffix}_${uuid}`
+    const cachedData = localStorage.getItem(cacheKey)
+    if (cachedData) {
+      return JSON.parse(cachedData)
+    }
+
+    const path = `${process.env.NEXT_PUBLIC_BASE_DOMAIN}/api/contracts/${uuid}/${pathSuffix}?network=${getNetworkFromAddress(getContractAddress(uuid)) || "mainnet"}`
+    const res = await fetch(path)
+
+    if (!res.ok) {
+      // This will activate the closest `error.js` Error Boundary
+      throw new Error('Failed to fetch data')
+    }
+
+    const data = await res.json()
+    localStorage.setItem(cacheKey, JSON.stringify(data))
+    localStorage.setItem(`${cacheKey}_timestamp`, Date.now().toString())
+
+    return data
+  }
+}
 
 export function useContract(uuid: string) {
 
   const [ contract, setContract ] = useState(null)
 
-  async function getBasicData() {
-    const cacheKey = `basicData_${uuid}`
-    const cachedData = localStorage.getItem(cacheKey)
-    if (cachedData) {
-      return JSON.parse(cachedData)
-    }
+  const getBasicData = createGetDataFunction("basicData", "");
+  const getDeploymentData = createGetDataFunction("deploymentData", "deployments");
+  const getDependantData = createGetDataFunction("dependantData", "dependants");
+  const getSnippetData = createGetDataFunction("snippetData", "snippets");
 
-    const path = `${process.env.NEXT_PUBLIC_BASE_DOMAIN}/api/contracts/${uuid}?network=${getNetworkFromAddress(getContractAddress(uuid)) || "mainnet"}`
-    const res = await fetch(path)
-  
-    if (!res.ok) {
-      // This will activate the closest `error.js` Error Boundary
-      throw new Error('Failed to fetch data')
-    }
-
-    const data = await res.json()
-    localStorage.setItem(cacheKey, JSON.stringify(data))
-    localStorage.setItem(`${cacheKey}_timestamp`, Date.now().toString())
-    return data
-  }
-
-  async function getDeploymentData() {
-    const cacheKey = `deploymentData_${uuid}`
-    const cachedData = localStorage.getItem(cacheKey)
-    if (cachedData) {
-      return JSON.parse(cachedData)
-    }
-
-    const path = `${process.env.NEXT_PUBLIC_BASE_DOMAIN}/api/contracts/${uuid}/deployments?network=${getNetworkFromAddress(getContractAddress(uuid)) || "mainnet"}`
-    const res = await fetch(path)
-  
-    if (!res.ok) {
-      // This will activate the closest `error.js` Error Boundary
-      throw new Error('Failed to fetch data')
-    }
-
-    const data = await res.json()
-    localStorage.setItem(cacheKey, JSON.stringify(data))
-    localStorage.setItem(`${cacheKey}_timestamp`, Date.now().toString())
-    return data
-  }
-
-
-  async function getDependantData() {
-    const cacheKey = `dependantData_${uuid}`
-    const cachedData = localStorage.getItem(cacheKey)
-    if (cachedData) {
-      return JSON.parse(cachedData)
-    }
-
-    const path = `${process.env.NEXT_PUBLIC_BASE_DOMAIN}/api/contracts/${uuid}/dependants?network=${getNetworkFromAddress(getContractAddress(uuid)) || "mainnet"}`
-    const res = await fetch(path)
-  
-    if (!res.ok) {
-      // This will activate the closest `error.js` Error Boundary
-      throw new Error('Failed to fetch data')
-    }
-
-    const data = await res.json()
-    localStorage.setItem(cacheKey, JSON.stringify(data))
-    localStorage.setItem(`${cacheKey}_timestamp`, Date.now().toString())
-    return data
-  }
 
   useEffect(() => {
-    getBasicData().then((data : ContractResponseType) => {
-      console.log("setting contract data", {...data.contract.data})
+    getBasicData(uuid).then((contractReponse : ContractResponseType) => {
+      // console.log("setting contract data",contractReponse)
       setContract((prev) => {
         return {
           ...prev,
-          ...data.contract.data
+          ...contractReponse.data
         }
       })
     })
 
-    getDeploymentData().then((data: DeploymentsResponseType) => {
-      console.log("setting deployment data", data)
+    getDeploymentData(uuid).then((deploymentResponse: DeploymentsResponseType) => {
+      // console.log("setting deployment data", {...deploymentResponse.data})
       setContract((prev) => {
         return {
           ...prev,
-          deploymentsObject: data.data
+          deploymentsObject: deploymentResponse.data
         }
       })
     })
 
-    getDependantData().then((data : DependantsResponseType) => {
-      console.log("setting dependant data", data)
+    getDependantData(uuid).then((dependantsResponse : DependantsResponseType) => {
+      // console.log("setting dependant data", {...dependantsResponse.data})
       setContract((prev) => {
         return {
           ...prev,
-          dependantsObject: data.data
+          dependantsObject: dependantsResponse.data
+        }
+      })
+    })
+
+    getSnippetData(uuid).then((snippetsResponse : SnippetsResponse) => {
+      console.log("setting snippets data", {...snippetsResponse.data})
+      const snippets = snippetsResponse.data.snippets
+
+      const regex = /^ *(pub|priv|access\(self\)|access\(contract\)|access\(all\)|access\(account\)|pub\(set\))? *(resource|struct|fun|event|resource *interface) * (?<name>(?!interface)[A-Za-z_][A-Za-z0-9_]*)/
+
+      snippets.map((snippet, i) => {
+        console.log(snippet.code.match(regex)?.groups?.name)
+        snippets[i].name = snippet.code.match(regex)?.groups?.name
+      })
+
+      snippetsResponse.data.snippets = snippets
+
+      setContract((prev) => {
+        return {
+          ...prev,
+          snippetsObject: snippetsResponse.data
         }
       })
     })
@@ -127,27 +114,9 @@ export function useContract(uuid: string) {
     })
   }, [uuid])
 
-  return contract as {
-    uuid: string,
-    name: string,
-    address: string,
-    code: string,
-    events: any[]
-    dependants_count: number,
-    dependencies_count: number,
-    deploymentsObject?: {
-      deployments: {
-        block_height: number,
-        block_timestamp: string,
-        tx_id: string,
-        type: string,
-      }[],
-      total_deployments_count: number,
-    },
-    dependantsObject?: {
-      dependants: any[];
-      total_dependants_count: number;
-      uuid: string;
-    }
+  return contract as FullContract & {
+    deploymentsObject?: DeploymentsResponseType["data"]
+    dependantsObject?: DependantsResponseType["data"]
+    snippetsObject?: SnippetsResponse["data"]
   }
 }

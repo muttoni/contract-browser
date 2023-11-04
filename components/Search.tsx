@@ -190,7 +190,7 @@ export function Search() {
                 </h3> */}
                 {contractResultsMainnet && contractResultsMainnet?.data?.contracts?.length && contractResultsMainnet?.data?.contracts?.length  > 0 ?
                 <SearchDataTable data={contractResultsMainnet?.data?.contracts} columns={columns}/>
-                : <div className={cn("text-sm block pt-4 pb-8 text-muted-foreground", loadingMainnetResults ? "hidden" : "")}>No results.</div>
+                : <div className={cn("text-sm block pt-4 text-center pb-8 text-muted-foreground", loadingMainnetResults ? "hidden" : "")}>No results.</div>
                 }
               </TabsContent>
               <TabsContent value="testnet" className="">
