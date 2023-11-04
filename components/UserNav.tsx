@@ -47,13 +47,16 @@ export function UserNav() {
   const searchParams = useSearchParams()
   fcl.config(getNetworkConfig(network))
   
-
   function changeNetwork(desiredNetwork: string) {
     fcl.unauthenticate()
     fcl.config(getNetworkConfig(desiredNetwork))
     setNetwork(desiredNetwork)
     fcl.authenticate()
   }
+
+  useEffect(() => {
+    fcl.config(getNetworkConfig(network))
+  }, [network])
 
   return (
     <DropdownMenu>

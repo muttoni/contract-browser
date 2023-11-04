@@ -5,6 +5,7 @@ import { UserNav } from '@/components/UserNav'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { RecoilRoot } from 'recoil'
 import '../styles/globals.css'
+import '../styles/code.css'
 //import '../config/fcl'
 
 export default function RootLayout({ 

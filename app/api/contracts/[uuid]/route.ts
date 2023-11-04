@@ -22,5 +22,5 @@ export async function GET(
     console.log(e)
   }
   const contract : ContractResponseType = await res.json()
-  return Response.json({ contract })
+  return Response.json(contract)
 }

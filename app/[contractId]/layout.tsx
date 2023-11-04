@@ -27,9 +27,9 @@ export default function ContractLayout({ children }) {
       href: "/" + contractId,
     },
     {
-      title: "Code",
+      title: "Snippets",
       type: "parent",
-      href: "/" + contractId + "/#code",
+      href: "/" + contractId + "/snippets",
     },
     {
       title: "Used by",
@@ -65,7 +65,7 @@ export default function ContractLayout({ children }) {
       </div>
       <Separator className="my-6" />
       <div className="flex flex-col flex-1 space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
-        <aside className="lg:w-1/5">
+        <aside className="">
           <SidebarNav items={sidebarNavItems} />
         </aside>
         <div className="flex-1 space-y-4 lg:ps-4">
