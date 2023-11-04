@@ -10,7 +10,6 @@ import { Button } from '@/components/ui/button'
 import { Info, UploadCloud } from 'lucide-react'
 import { getContractAddress, getNetworkFromAddress, withPrefix } from '@/lib/utils'
 import { Input } from '@/components/ui/input'
-import { useToast } from '@/components/ui/use-toast'
 import { useCurrentUser } from '@/hooks/useCurrentUser'
 import { useParams } from 'next/navigation' 
 import { useTx, IDLE } from '@/hooks/useTx'
@@ -33,13 +32,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { getVerifiedContractAddressByName } from '@/lib/verified-contracts'
+import Link from 'next/link'
 
 export default function CodeEditor ({ mustBeAuthedToViewCode = false}) {
   const [code, setCode] = useState(Array.from({length: 12}, _ => "\n").join(""))
   const [imports, setImports] = useState([])
   const [needsImports, setNeedsImports] = useState(false)
   const [name, setName] = useState("")
-  const { toast } = useToast()
   const [exec, status, txStatus, details] = useTx(
     [
       fcl.transaction`
@@ -152,24 +151,27 @@ export default function CodeEditor ({ mustBeAuthedToViewCode = false}) {
     <>
       {IS_CURRENT_USER && 
       <>
+        {txStatus === IDLE ?
         <div className="flex items-center mb-4 gap-4">
           <Input id="cadenceFile" className="w-60" type="file" onChange={handleFileChange} />
           <Button className="flex" onClick={handleDeployClick}>
             <UploadCloud className="h-4 w-4 me-2" />
             {txStatus === IDLE ? "Deploy" : "Deploying"}
           </Button>
-          {txStatus !== IDLE &&
-          <Alert>
+        </div>
+        :
+          <Alert className='flex gap-4 mb-4 p-2 px-4 pe-2 items-center'>
               <Loading className="w-6 h-6" />
-              <AlertTitle>Deploying</AlertTitle>
-              <AlertDescription> 
+              <div className='m-0 p-0 items-center flex flex-1 justify-between'> 
+                <p className='m-0 p-0'>Deploying your contract...({txStatus as string})</p>
                 {/* 
                 // @ts-ignore */}
-                {txStatus} | {details.txId}
-              </AlertDescription>
+                <Link target="_blank" href={`https://flowdiver.io/${details.txId}`}>
+                  <Button variant='secondary' size='sm'>View transaction</Button>
+                </Link>
+              </div>
             </Alert>
           }
-        </div>
       </>
       }
       {(IS_CURRENT_USER || (!IS_CURRENT_USER && !mustBeAuthedToViewCode)) ?
@@ -184,7 +186,7 @@ export default function CodeEditor ({ mustBeAuthedToViewCode = false}) {
       </AccordionItem>
       </Accordion>
       }
-      <Editor code={code} onChange={IS_CURRENT_USER ? setCode : false} />
+      <Editor code={code} onChange={IS_CURRENT_USER && txStatus === IDLE ? setCode : false} />
       </>
       : <p className="p-16 text-center">Please login first.</p>
       }

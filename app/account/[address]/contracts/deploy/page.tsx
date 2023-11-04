@@ -1,5 +1,4 @@
 import CodeEditor from '@/components/CodeEditor'
-import { Separator } from '@/components/ui/separator'
 
 export default function DeploymentPage () {
   
