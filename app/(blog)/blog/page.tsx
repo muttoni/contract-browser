@@ -12,7 +12,6 @@ export default function Index() {
   const heroPost = allPosts ? allPosts[0] : null
   const morePosts = allPosts?.slice(1) || null
 
-  console.log(allPosts)
   return (
     <>
       <Head>
