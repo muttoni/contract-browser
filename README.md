@@ -1,69 +1,22 @@
-This is a scaffold for an FCL NextJS Dapp on the Flow Blockchain.
+# Flow Contract Browser
 
-## Features Provided
+This community project aims to archive and make available (and searchable) all mainnet contracts on Flow.
 
-- FCL setup and configuration
-- "flow dev" integration for automatic local account creation and contract deployment
-- Wallet Discovery (including Dev Wallet on Emulator)
-- CLI private key separation for security
-- Flow.json loading for contract placeholders
-- Authentication
-- CDC file loader
-- Custom hooks
-- Deployment 
+![]("https://contractbrowser.com/social.png")
 
-## Featues TODO
+## Developing
 
-- Mainnet deployment
-- JS Testing
-
-## Running the App
-
-First run:
-
-```
-npm install
-```
-
-### Local with Flow Dev, the Emulator, and Dev Wallet
-
-Run the following to run Flow Dev, the Emulator, and Dev Wallet:
+Once you've forked the repo and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server (on port 3000)
 
 ```bash
-npm run dev:local
+npm run dev
 ```
 
-Note: Flow Dev will will automatically create new accounts and deploy for you while developing. Your flow.json will be updated automatically. Committing these changes for local development is unncessary.
+## Building
 
-### Testnet
+Before submitting a PR, please build the app and fix any errors:
 
-If you haven't yet created a testnet account, in the CLI run:
-
-```
-flow accounts create
+```bash
+npm run build
 ```
 
-Follow the steps and select testnet. This will create a `[name].pkey` file (make sure this is gitignored) and add your account to flow.json.
-
-Then in `flow.json`, add the contracts you'd like to be deployed to testnet under this account:
-
-```
-// Inside of "deployments"
-"testnet": {
-  "testnet-account": [
-    "HelloWorld"
-  ]
-}
-```
-
-Then run:
-
-```
-npm run dev:testnet:deploy
-``` 
-
-Whenever you need to redeploy changed contracts to Testnet while seeing the diff between deployed contracts and updates being pushed, you can run:
-
-```
-npm run dev:testnet:update
-```
