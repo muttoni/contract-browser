@@ -2,6 +2,7 @@
 import { Navbar } from '@/components/Navbar'
 import { Search } from '@/components/Search'
 import { UserNav } from '@/components/UserNav'
+import Footer from '@/components/Footer'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { RecoilRoot } from 'recoil'
 import '@/styles/globals.css'
@@ -43,6 +44,7 @@ export default function RootLayout({
         </main>
       </ThemeProvider>
         </RecoilRoot>
+        <Footer />
         </body>
       </html>
   )

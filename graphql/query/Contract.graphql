@@ -1,0 +1,27 @@
+query Contract($address: String, $name: String) @cached(ttl: 60) {
+	contracts(
+		order_by: {valid_from: desc_nulls_first}
+		where: { address: { _eq: $address }, name: { _eq: $name } }
+	) {
+		id
+		name
+		address
+		parent_contract_id
+		diff
+		body
+		transaction_hash
+		valid_from
+		valid_to
+	}
+
+	contracts_aggregate(
+		distinct_on: name,
+		where: {
+			address: {_eq: $address}
+		}
+	){
+		nodes{
+			name
+		}
+	}
+}
