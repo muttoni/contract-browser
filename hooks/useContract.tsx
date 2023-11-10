@@ -68,13 +68,13 @@ export function useContract(uuid: string) {
     })
 
     getSnippetData(uuid).then((snippetsResponse : SnippetsResponse) => {
-      console.log("setting snippets data", {...snippetsResponse.data})
+      // console.log("setting snippets data", {...snippetsResponse.data})
       const snippets = snippetsResponse.data.snippets
 
       const regex = /^ *(pub|priv|access\(self\)|access\(contract\)|access\(all\)|access\(account\)|pub\(set\))? *(resource|struct|fun|event|resource *interface) * (?<name>(?!interface)[A-Za-z_][A-Za-z0-9_]*)/
 
       snippets.map((snippet, i) => {
-        console.log(snippet.code.match(regex)?.groups?.name)
+        //console.log(snippet.code.match(regex)?.groups?.name)
         snippets[i].name = snippet.code.match(regex)?.groups?.name
       })
 

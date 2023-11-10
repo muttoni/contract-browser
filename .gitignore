@@ -38,3 +38,10 @@ next-env.d.ts
 
 testnet-account.private.json
 .vscode
+
+
+# graphql
+graphql.config.yml
+graphql.schema.json
+graphql/types.ts
+graphql/operations.ts

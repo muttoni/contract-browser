@@ -1,10 +1,12 @@
 
 import Link from "next/link";
-import { FilePlus2 } from "lucide-react";
+import { ArrowUpRight, Diff, FilePlus2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { timeSince, formatDate } from "@/lib/utils";
-
+import { timeSince, formatDate, getContractAddress, getContractName } from "@/lib/utils";
 import { useContract } from "@/hooks/useContract";
+import { useEffect, useState } from "react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import DiffEditor from "./editor/diff";
 
 export default function ContractHistory({uuid}) {
   const contract = useContract(uuid)
@@ -12,7 +14,7 @@ export default function ContractHistory({uuid}) {
   return (
   <div className="w-full">
   {contract && contract.deploymentsObject.deployments && contract.deploymentsObject.deployments.length > 0 ?
-      <ContractTimeline deployments={contract.deploymentsObject.deployments as DeploymentsType} />
+      <ContractTimeline deployments={contract.deploymentsObject.deployments as DeploymentsType} uuid={uuid} original={contract.code} />
       : <div className="text-center text-muted-foreground py-6">No history available for this contract.</div>  }
   </div>
   )
@@ -25,8 +27,35 @@ type DeploymentsType = {
   type: string;
 }[]
 
-function ContractTimeline({deployments}) {
-  console.log(deployments)
+function ContractTimeline({deployments, uuid, original}) {
+
+  const [diffs, setDiffs] = useState({} as any)
+
+  useEffect(() => {
+    let diffsToSet = {} as any
+    getDiffs.then((diffsResponse) => {
+      diffsResponse.contracts.map((diffResponseItem, i) => {
+        // find the deployment in the deployments array that matches the tx_id in the diff array
+        const deploymentIndex = deployments.findIndex((d) => d.tx_id === diffResponseItem.transaction_hash)
+        // if the deployment is found, add the diff data
+        if (deploymentIndex > -1) {
+          diffsToSet[deployments[deploymentIndex].tx_id] = diffResponseItem.body
+        }
+      })
+      setDiffs(diffsToSet)
+    })
+  }, [deployments])
+
+  const getDiffs = fetch(`${process.env.NEXT_PUBLIC_BASE_DOMAIN}/api/graphql/`, {
+    method: "POST",
+    body: JSON.stringify({
+      queryType: "CONTRACT_DIFFS",
+      args: {
+        uuid
+      }
+    })
+  }).then((res) => res.json())
+
   return (
     <>
     <ol className="relative ms-2 pt-2 border-l">
@@ -57,12 +86,41 @@ function ContractTimeline({deployments}) {
             <span className="font-mono text-sm py-1 px-2 ms-2 bg-muted rounded">{deployment.block_height}</span>
           </Link>
         </p>
+        <div className="flex items-center gap-2">
+        {diffs && diffs[deployment.tx_id] && diffs[deployment.tx_id] !== original && <DiffViewer original={diffs[deployment.tx_id]} modified={original}></DiffViewer>} 
         <Link href={`https://flowdiver.io/${deployment.tx_id}`} target="_blank">
-          <Button size="sm" variant="outline">View transaction</Button>
+          <Button size="sm" variant="ghost">
+            View Transaction
+            <ArrowUpRight className="w-4 h-4 ms-2" />
+          </Button>
         </Link>
+        </div>
       </li>
       ))}
     </ol>
     </>
   )
 }
+
+function DiffViewer({original, modified}) {
+  return (
+    <Dialog>
+    <DialogTrigger asChild>
+    <Button size="sm" variant="outline">
+      <Diff className="w-4 h-4 me-2" />
+      View Diff
+    </Button>
+    </DialogTrigger>
+    <DialogContent className="min-w-[80vw]">
+      <DialogHeader>
+        <DialogTitle>Diff compared to the latest version</DialogTitle>
+        <DialogDescription>
+          See how this contract evolved over time. The selected version is on the left, the <strong>latest</strong> version is on the right.
+        </DialogDescription>
+      </DialogHeader>
+      <div className="grid gap-4 py-4 h-[80vh]">
+        <DiffEditor original={original} modified={modified} />
+      </div>
+    </DialogContent>
+  </Dialog>
+)}

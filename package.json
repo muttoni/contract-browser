@@ -18,7 +18,8 @@
     "test": "jest",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "codegen": "graphql-codegen --require dotenv/config --config codegen.ts"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
@@ -48,6 +49,7 @@
     "clsx": "^2.0.0",
     "encoding": "^0.1.13",
     "flowbite-react": "^0.6.4",
+    "graphql": "^16.8.1",
     "gray-matter": "^4.0.3",
     "hast-util-to-html": "^9.0.0",
     "json-to-pretty-yaml": "^1.2.2",
@@ -64,9 +66,17 @@
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
     "tailwind-merge": "^1.14.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "urql": "^4.0.5"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/import-types-preset": "^3.0.0",
+    "@graphql-codegen/introspection": "^4.0.0",
+    "@graphql-codegen/near-operation-file-preset": "^3.0.0",
+    "@graphql-codegen/typescript": "^4.0.1",
+    "@graphql-codegen/typescript-operations": "^4.0.1",
+    "@graphql-codegen/typescript-urql": "^4.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "autoprefixer": "^10.4.16",
