@@ -13,7 +13,7 @@ export default function ContractHistory({uuid}) {
 
   return (
   <div className="w-full">
-  {contract && contract.deploymentsObject.deployments && contract.deploymentsObject.deployments.length > 0 ?
+  {contract && contract.deploymentsObject && contract.deploymentsObject.deployments && contract.deploymentsObject.deployments.length > 0 ?
       <ContractTimeline deployments={contract.deploymentsObject.deployments as DeploymentsType} uuid={uuid} original={contract.code} />
       : <div className="text-center text-muted-foreground py-6">No history available for this contract.</div>  }
   </div>
@@ -33,6 +33,8 @@ function ContractTimeline({deployments, uuid, original}) {
 
   useEffect(() => {
     let diffsToSet = {} as any
+    if(!deployments) return
+    
     getDiffs.then((diffsResponse) => {
       diffsResponse.contracts.map((diffResponseItem, i) => {
         // find the deployment in the deployments array that matches the tx_id in the diff array
