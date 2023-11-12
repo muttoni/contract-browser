@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { ArrowUpRight, Diff, FilePlus2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { timeSince, formatDate, getContractAddress, getContractName, ellipsify } from "@/lib/utils";
+import { timeSince, formatDate, getContractAddress, getContractName, ellipsify, cn } from "@/lib/utils";
 import { useContract } from "@/hooks/useContract";
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -52,9 +52,9 @@ function ContractTimeline({deployments, uuid, original}) {
 
   return (
     <>
-    <ol className="relative ms-2 pt-2 border-l">
+    <ol className="relative ms-2 pt-2">
       {deployments && deployments.length && deployments.sort((a, b) => new Date(b.block_timestamp).getTime() - new Date(a.block_timestamp).getTime()).map((deployment, i) => (
-      <li className="mb-10 ml-6 ps-3" key={deployment.tx_id}>            
+      <li className={cn("pb-10 ml-0 ps-10", deployment.type !== "added" ? 'border-l': '')} key={deployment.tx_id}>            
         {deployment.type === "added" ? 
           <span className="absolute flex items-center justify-center w-8 h-8 bg-green-100 rounded-full -left-4 ring-8 ring-white dark:ring-gray-900 dark:bg-green-900">
             <FilePlus2 className="w-4 h-4  text-green-800 dark:text-green-300" />
@@ -145,8 +145,8 @@ function DiffViewer({current, original, latest, previous, isOriginal, isLatest, 
         <SelectGroup>
           <SelectLabel>Compare against...</SelectLabel>
           {!isLatest && <SelectItem value="latest">latest version</SelectItem>}
-          {!isOriginal && <SelectItem value="original">original version</SelectItem>}
           {!isOriginal && previous && <SelectItem value="previous">previous version</SelectItem>}
+          {!isOriginal && <SelectItem value="original">original version</SelectItem>}
         </SelectGroup>
       </SelectContent>
     </Select>
