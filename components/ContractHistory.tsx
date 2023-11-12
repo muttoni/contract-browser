@@ -152,7 +152,7 @@ function DiffViewer({current, original, latest, previous, isOriginal, isLatest, 
       </SelectContent>
     </Select>
     {left && right && 
-    <DialogContent className="min-w-[80vw]">
+    <DialogContent className="min-w-full lg:min-w-[80vw]">
       <DialogHeader>
         <DialogTitle>Contract Evolution</DialogTitle>
         <DialogDescription>
