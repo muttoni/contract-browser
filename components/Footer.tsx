@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { VerifiedBadge } from "./ui/VerifiedBadge";
 
 export default function Footer() {
   return (
@@ -15,6 +16,9 @@ export default function Footer() {
                   <div>
                       <h2 className="mb-6 text-sm font-semibold uppercase ">Contracts</h2>
                       <ul className="text-muted-foreground font-medium">
+                          <li className="mb-4">
+                              <Link href="/verified" className="hover:underline flex items-center gap-1">Verified <VerifiedBadge size={4}/> </Link>
+                          </li>
                           <li className="mb-4">
                               <Link href="/top" className="hover:underline">Top Contracts</Link>
                           </li>
