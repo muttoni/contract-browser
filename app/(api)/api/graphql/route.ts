@@ -15,6 +15,14 @@ const QUERIES = {
       }
     }
   `, 
+
+  "CONTRACT_STATS": gql`
+    query BlockchainStats($interval: Int! = 7, $time_scale: String! = "day") {
+    blockexplorer_stats(args: { interval: $interval, time_scale: $time_scale }) {
+      ,contracts
+      ,contracts_diff
+    }
+  }`
 }
 
 const DATA_FUNCTIONS = {
@@ -28,6 +36,9 @@ const DATA_FUNCTIONS = {
       }
     })
     return diffObject
+  },
+  'CONTRACT_STATS': (data) => {
+    return data.blockexplorer_stats[0]
   }
 }
 
@@ -41,8 +52,26 @@ const client = new Client({
   },
 });
 
+
+const testnetClient = new Client({
+  url: process.env.FLOWDIVER_TESTNET_API_DOMAIN,
+  exchanges: [cacheExchange, fetchExchange],
+  fetchOptions: () => {
+    return {
+      headers: { authorization: `Bearer ${process.env.FLOWDIVER_API_KEY}` },
+    };
+  },
+});
+
 export async function POST(req: Request) {
-  const { queryType, args } = await req.json();
-  const result = await client.query(QUERIES[queryType], args ? args : null);
+
+  const { queryType, args, network = "mainnet" } = await req.json();
+  let result;
+  
+  if(network !== 'testnet')
+    result = await client.query(QUERIES[queryType], args ? args : null);
+  else
+    result = await testnetClient.query(QUERIES[queryType], args ? args : null);
+
   return Response.json(DATA_FUNCTIONS[queryType](result?.data))
 }

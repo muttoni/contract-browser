@@ -30,6 +30,7 @@ export default function Page() {
   const [ status, setStatus ] = useState(null as unknown as StatusResponseType | null | undefined)
   const [ network, setNetwork ] = useState("mainnet")
   const [ updatedStart, setUpdatedStart ] = useState(0)
+  const [ contractStats, setContractStats ] = useState({})
 
   async function getData(): Promise<StatusResponseType> {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_DOMAIN}/api/status?network=${network}`)
@@ -76,7 +77,21 @@ export default function Page() {
     getData().then((data) => {
       setStatus(data)
     })
+
+    setContractStats({})
+    fetch(`${process.env.NEXT_PUBLIC_BASE_DOMAIN}/api/graphql/`, {
+      method: "POST",
+      body: JSON.stringify({
+        queryType: "CONTRACT_STATS",
+        args: {
+          interval: 1,
+          time_scale: "day",
+        },
+        network
+      })
+    }).then((res) => res.json()).then(setContractStats)
   }, [network])
+
 
   return (
     <div className="flex-1 pt-2 md:pt-4">
@@ -89,17 +104,17 @@ export default function Page() {
         </TabsList>
       </div>
         <TabsContent value="mainnet" className="space-y-4">
-          <Dashboard network="mainnet" status={status} updatedStart={updatedStart}/>
+          <Dashboard network="mainnet" status={status} updatedStart={updatedStart} contractStats={contractStats}/>
         </TabsContent>
         <TabsContent value="testnet" className="space-y-4">
-          <Dashboard network="testnet" status={status} updatedStart={updatedStart}/>
+          <Dashboard network="testnet" status={status} updatedStart={updatedStart} contractStats={contractStats}/>
         </TabsContent>
       </Tabs>
     </div>
   )
 }
 
-function Dashboard({ network, status, updatedStart }) {
+function Dashboard({ network, status, updatedStart, contractStats }) {
   return (
     <>
     <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
@@ -112,7 +127,7 @@ function Dashboard({ network, status, updatedStart }) {
         </CardHeader>
         <CardContent>
           <Suspense fallback={<Skeleton className="h-8 w-24" />}>
-            <div className="text-2xl font-bold">{formatNumber(status?.data?.contract_amount || 0)}</div>
+            <div className="text-2xl font-bold"><CountUp start={0} end={status?.data?.contract_amount} /></div>
           </Suspense>
           <p className="text-xs text-muted-foreground">
             contracts on {network}
@@ -140,9 +155,9 @@ function Dashboard({ network, status, updatedStart }) {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">26</div>
+          <div className="text-2xl font-bold"><CountUp start={0} end={contractStats ? contractStats.contracts : 0} /></div>
           <p className="text-xs text-muted-foreground">
-            +180.1% from yesterday
+            {(contractStats.contracts_diff || 0).toFixed(2)}% from yesterday
           </p>
         </CardContent>
       </Card>
