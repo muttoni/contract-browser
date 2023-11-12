@@ -2,6 +2,7 @@
 import { Navbar } from '@/components/Navbar'
 import { Search } from '@/components/Search'
 import { UserNav } from '@/components/UserNav'
+import { Analytics } from '@vercel/analytics/react';
 import Footer from '@/components/Footer'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { RecoilRoot } from 'recoil'
@@ -45,6 +46,7 @@ export default function RootLayout({
       </ThemeProvider>
         </RecoilRoot>
         <Footer />
+        <Analytics />
         </body>
       </html>
   )
