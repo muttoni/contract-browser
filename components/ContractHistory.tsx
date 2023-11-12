@@ -137,6 +137,7 @@ function DiffViewer({current, original, latest, previous, isOriginal, isLatest, 
       View Diff
     </Button>
     </DialogTrigger>
+    <span className="text-muted-foreground text-sm">vs</span>
     <Select onValueChange={setDiffType} value={diffType}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder={diffType + " version"} defaultValue={diffType} />
