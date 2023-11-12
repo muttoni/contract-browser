@@ -2,10 +2,11 @@
 import Link from "next/link";
 import { ArrowUpRight, Diff, FilePlus2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { timeSince, formatDate, getContractAddress, getContractName } from "@/lib/utils";
+import { timeSince, formatDate, getContractAddress, getContractName, ellipsify } from "@/lib/utils";
 import { useContract } from "@/hooks/useContract";
 import { useEffect, useState } from "react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 import DiffEditor from "./editor/diff";
 
 export default function ContractHistory({uuid}) {
@@ -32,19 +33,10 @@ function ContractTimeline({deployments, uuid, original}) {
   const [diffs, setDiffs] = useState({} as any)
 
   useEffect(() => {
-    let diffsToSet = {} as any
     if(!deployments) return
-    
-    getDiffs.then((diffsResponse) => {
-      diffsResponse.contracts.map((diffResponseItem, i) => {
-        // find the deployment in the deployments array that matches the tx_id in the diff array
-        const deploymentIndex = deployments.findIndex((d) => d.tx_id === diffResponseItem.transaction_hash)
-        // if the deployment is found, add the diff data
-        if (deploymentIndex > -1) {
-          diffsToSet[deployments[deploymentIndex].tx_id] = diffResponseItem.body
-        }
-      })
+    getDiffs.then((diffsToSet) => {
       setDiffs(diffsToSet)
+      console.log(diffsToSet)
     })
   }, [deployments])
 
@@ -85,17 +77,31 @@ function ContractTimeline({deployments, uuid, original}) {
         <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
           Contract was {deployment.type} at block height: 
           <Link href={`https://flowdiver.io/${deployment.tx_id}`}>
-            <span className="font-mono text-sm py-1 px-2 ms-2 bg-muted rounded">{deployment.block_height}</span>
+            <span className="font-mono text-sm py-1 px-2 ms-2 bg-muted rounded inline-flex items-center">
+              {deployment.block_height}
+              <ArrowUpRight className="w-4 h-4 ms-2" />
+            </span>
           </Link>
         </p>
+
+        {/* {diffs && diffs[deployment.tx_id]?.diff &&
+        <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
+          {diffs[deployment.tx_id]?.diff.split(/^(\+|-)/gm).length - 1} lines changed in this version.
+        </p>
+        } */}
+
         <div className="flex items-center gap-2">
-        {diffs && diffs[deployment.tx_id] && diffs[deployment.tx_id] !== original && <DiffViewer original={diffs[deployment.tx_id]} modified={original}></DiffViewer>} 
-        <Link href={`https://flowdiver.io/${deployment.tx_id}`} target="_blank">
-          <Button size="sm" variant="ghost">
-            View Transaction
-            <ArrowUpRight className="w-4 h-4 ms-2" />
-          </Button>
-        </Link>
+        {diffs && diffs[deployment.tx_id]?.body && diffs[deployment.tx_id].body && 
+          <DiffViewer 
+            original={diffs[deployments[deployments.findIndex((d) => d.type === 'added')]?.tx_id]}
+            current={diffs[deployment.tx_id]} 
+            latest={diffs[deployments[0].tx_id]}
+            previous={diffs[deployments[i + 1]?.tx_id]}
+            isOriginal={i === deployments.length - 1}
+            isLatest={i === 0}
+            deployments={deployments}
+          />
+        } 
         </div>
       </li>
       ))}
@@ -104,7 +110,25 @@ function ContractTimeline({deployments, uuid, original}) {
   )
 }
 
-function DiffViewer({original, modified}) {
+function DiffViewer({current, original, latest, previous, isOriginal, isLatest, deployments }) {
+
+  const [diffType, setDiffType] = useState(isLatest ? "previous" : "latest")
+  const [left, setLeft] = useState(isLatest ? previous : current)
+  const [right, setRight] = useState(isLatest ? current : latest)
+
+  useEffect(() => {
+    if(diffType === "latest") {
+      setLeft(current)
+      setRight(latest)
+    } else if(diffType === "original") {
+      setLeft(original)
+      setRight(current)
+    } else if(diffType === "previous") {
+      setLeft(previous)
+      setRight(current)
+    }
+  },[diffType])
+
   return (
     <Dialog>
     <DialogTrigger asChild>
@@ -113,15 +137,37 @@ function DiffViewer({original, modified}) {
       View Diff
     </Button>
     </DialogTrigger>
+    <Select onValueChange={setDiffType} value={diffType}>
+      <SelectTrigger className="w-[180px]">
+        <SelectValue placeholder={diffType + " version"} defaultValue={diffType} />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>Compare against...</SelectLabel>
+          {!isLatest && <SelectItem value="latest">latest version</SelectItem>}
+          {!isOriginal && <SelectItem value="original">original version</SelectItem>}
+          {!isOriginal && previous && <SelectItem value="previous">previous version</SelectItem>}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
     <DialogContent className="min-w-[80vw]">
       <DialogHeader>
-        <DialogTitle>Diff compared to the latest version</DialogTitle>
+        <DialogTitle>Contract Evolution</DialogTitle>
         <DialogDescription>
-          See how this contract evolved over time. The selected version is on the left, the <strong>latest</strong> version is on the right.
+          Comparing the selected version to the {diffType} version. The <strong>most recent</strong> version is always on the right.
         </DialogDescription>
       </DialogHeader>
-      <div className="grid gap-4 py-4 h-[80vh]">
-        <DiffEditor original={original} modified={modified} />
+        <div className="flex justify-between gap-3 text-center font-mono">
+          <Link href={`https://flowdiver.io/${left.tx_id}`} target="_blank" className="w-full font-mono text-sm py-1 px-2 ms-2 bg-muted rounded text-center" title={left.tx_id}>
+            {deployments[deployments.findIndex((t) => t.tx_id === left.tx_id)].block_height}
+          </Link>
+          <p className="w-10 text-muted-foreground">vs</p>
+          <Link href={`https://flowdiver.io/${right.tx_id}`} target="_blank" className="w-full font-mono text-sm py-1 px-2 ms-2 bg-muted rounded text-center" title={right.tx_id}>
+            {deployments[deployments.findIndex((t) => t.tx_id === right.tx_id)].block_height}
+          </Link>
+        </div>
+      <div className="grid gap-4 h-[80vh]">
+        <DiffEditor original={left.body} modified={right.body} />
       </div>
     </DialogContent>
   </Dialog>

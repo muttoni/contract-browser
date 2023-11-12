@@ -11,9 +11,24 @@ const QUERIES = {
       ) {
         ,transaction_hash
         ,body
+        ,diff
       }
     }
   `, 
+}
+
+const DATA_FUNCTIONS = {
+  'CONTRACT_DIFFS': (data) => {
+    let diffObject = {}
+    data.contracts.forEach((contract) => {
+      diffObject[contract.transaction_hash] = {
+        tx_id: contract.transaction_hash,
+        body: contract.body,
+        //diff: contract.diff,
+      }
+    })
+    return diffObject
+  }
 }
 
 const client = new Client({
@@ -29,5 +44,5 @@ const client = new Client({
 export async function POST(req: Request) {
   const { queryType, args } = await req.json();
   const result = await client.query(QUERIES[queryType], args ? args : null);
-  return Response.json(result?.data)
+  return Response.json(DATA_FUNCTIONS[queryType](result?.data))
 }
