@@ -54,7 +54,7 @@ function ContractTimeline({deployments, uuid, original}) {
     <>
     <ol className="relative ms-2 pt-2">
       {deployments && deployments.length && deployments.sort((a, b) => new Date(b.block_timestamp).getTime() - new Date(a.block_timestamp).getTime()).map((deployment, i) => (
-      <li className={cn("pb-10 ml-0 ps-10", deployment.type !== "added" ? 'border-l': '')} key={deployment.tx_id}>            
+      <li className={cn("pb-10 ml-0 ps-10", deployment.type !== "added" && deployments.length > 1 ? 'border-l': '')} key={deployment.tx_id}>            
         {deployment.type === "added" ? 
           <span className="absolute flex items-center justify-center w-8 h-8 bg-green-100 rounded-full -left-4 ring-8 ring-white dark:ring-gray-900 dark:bg-green-900">
             <FilePlus2 className="w-4 h-4  text-green-800 dark:text-green-300" />
@@ -91,7 +91,7 @@ function ContractTimeline({deployments, uuid, original}) {
         } */}
 
         <div className="flex items-center gap-2">
-        {diffs && diffs[deployment.tx_id]?.body && diffs[deployment.tx_id].body && 
+        {diffs && Object.keys(diffs)?.length > 1 && diffs[deployment.tx_id]?.body && diffs[deployment.tx_id].body && 
           <DiffViewer 
             original={diffs[deployments[deployments.findIndex((d) => d.type === 'added')]?.tx_id]}
             current={diffs[deployment.tx_id]} 
@@ -145,12 +145,13 @@ function DiffViewer({current, original, latest, previous, isOriginal, isLatest, 
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Compare against...</SelectLabel>
-          {!isLatest && <SelectItem value="latest">latest version</SelectItem>}
+          {!isLatest && latest && <SelectItem value="latest">latest version</SelectItem>}
           {!isOriginal && previous && <SelectItem value="previous">previous version</SelectItem>}
-          {!isOriginal && <SelectItem value="original">original version</SelectItem>}
+          {!isOriginal && original &&  <SelectItem value="original">original version</SelectItem>}
         </SelectGroup>
       </SelectContent>
     </Select>
+    {left && right && 
     <DialogContent className="min-w-[80vw]">
       <DialogHeader>
         <DialogTitle>Contract Evolution</DialogTitle>
@@ -167,9 +168,10 @@ function DiffViewer({current, original, latest, previous, isOriginal, isLatest, 
             {deployments[deployments.findIndex((t) => t.tx_id === right.tx_id)].block_height}
           </Link>
         </div>
-      <div className="grid gap-4 h-[80vh]">
-        <DiffEditor original={left.body} modified={right.body} />
-      </div>
+        <div className="grid gap-4 h-[80vh]">
+          <DiffEditor original={left.body} modified={right.body} />
+        </div>
     </DialogContent>
+    }
   </Dialog>
 )}
