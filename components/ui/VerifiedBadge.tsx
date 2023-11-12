@@ -1,5 +1,7 @@
 import Link from "next/link"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./hover-card"
+import { ArrowUpRight, List } from "lucide-react"
+import { Button } from "./button"
 
 export const VerifiedBadge = ({ size = 3 }) => {
   return ( <HoverCard>
@@ -16,10 +18,19 @@ export const VerifiedBadge = ({ size = 3 }) => {
 
             </HoverCardTrigger>
             <HoverCardContent className="flex flex-col space-y-2 font-sans text-sm text-start tracking-normal">
-              <div className="text-sm font-bold">This contract is verified.</div>
+              <div className="text-sm font-bold flex items-center gap-1">This contract is Verified <VerifiedBadge size={3} /></div>
               <div className="text-sm text-muted-foreground font-normal">You can safely import this contract.</div>
-              <Link target="_blank" href="https://github.com/muttoni/contract-browser-new/blob/main/lib/official-contracts.ts" className="text-sm text-blue-600 hover:underline">
-                Verify your contract
+              <Link href="/verified" className="text-sm">
+                <Button size="sm" variant="ghost" className="flex items-center gap-2 w-full text-left">
+                  <List className="h-4 w-4" />
+                  View all verified contracts
+                </Button>
+              </Link>
+              <Link target="_blank" href="https://github.com/muttoni/contract-browser-new/blob/main/lib/official-contracts.ts" className="">
+                <Button size="sm" variant="secondary" className="flex items-center gap-2 w-full text-left">
+                  Verify your contract
+                  <ArrowUpRight className="h-4 w-4" />
+                </Button>
               </Link>
             </HoverCardContent>
           </HoverCard>
