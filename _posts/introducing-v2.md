@@ -1,5 +1,5 @@
 ---
-title: 'Introducing Contract Browser 2.0: The Next Generation of Smart Contract Browsing'
+title: 'Introducing Contract Browser 2.0: The Next Generation of Smart Contract Development'
 coverImage: '/blog/new-xl.jpeg'
 excerpt: 'After exactly a year since its first release, I am thrilled to announce the launch of Contract Browser 2.0! A completely revamped experience that is faster, prettier, and more useful than ever before. Read on to learn more about what you can enjoy with the latest version.'
 date: '2023-11-16T05:35:07.322Z'
