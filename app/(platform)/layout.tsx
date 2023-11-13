@@ -8,7 +8,13 @@ import { ThemeProvider } from '@/components/ThemeProvider'
 import { RecoilRoot } from 'recoil'
 import '@/styles/globals.css'
 import '@/styles/code.css'
-//import '../config/fcl'
+import Banner from '@/components/ui/Banner'
+// import type { Metadata } from 'next'
+ 
+// export const metadata: Metadata = {
+//   title: 'Contract Browser',
+//   description: 'The best place to find Cadence smart contracts. Search for contracts by name, address and code.',
+// }
 
 export default function RootLayout({ 
   children 
@@ -29,6 +35,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Banner />
           <main className="container px-4 md:px-8 lg:px-16 min-h-screen w-full flex flex-col">
           <div className="flex-col py-2 md:py-4 md:flex">
             <div className="flex items-center">

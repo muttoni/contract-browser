@@ -1,5 +1,5 @@
+"use client"
 
-//import config from "@/config/fcl"
 import * as fcl from "@onflow/fcl"
 import { Button } from "@/components/ui/button"
 import { ChevronDown, Cog, Plus, Eye, LogOut, ArrowLeftRight, LogIn, UserCircle } from "lucide-react"

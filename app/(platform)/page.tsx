@@ -24,8 +24,6 @@ import Link from "next/link"
 import { FileCode2, Hourglass, Trophy } from "lucide-react"
 import APIContractsTable from "@/components/tables/APIContractsTable"
 
-
-
 export default function Page() {
   const [ status, setStatus ] = useState(null as unknown as StatusResponseType | null | undefined)
   const [ network, setNetwork ] = useState("mainnet")

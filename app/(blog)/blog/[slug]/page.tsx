@@ -1,14 +1,11 @@
 
 import Container from '@/components/blog/container'
 import PostBody from '@/components/blog/post-body'
-import Header from '@/components/blog/header'
 import PostHeader from '@/components/blog/post-header'
 import { getPostBySlug } from '@/lib/blog'
 import Head from 'next/head'
 import markdownToHtml from '@/lib/markdownToHtml'
 import type { Post } from '@/lib/blog'
-import Image from 'next/image'
-import CoverImage from '@/components/blog/cover-image'
 
 export default async function Post({  params }) {
 

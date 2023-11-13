@@ -38,7 +38,10 @@ When deploying a contract, you can enjoy automatic import detection and a new "A
 
 ![Verified](/blog/verified.jpeg)
 
-Introducing Verified Contracts – import contracts with confidence. Verified contracts are "the right ones" to import, 100% of the time. Anyone can verify their contracts as verified, 100% for free filing a simply pull request. If you own popular contracts, [verify them here](). 
+Introducing Verified Contracts – import contracts with confidence. Verified contracts are "the right ones" to import, 100% of the time. Anyone can verify contracts, 100% for free via a simple pull request. 
+If you want to verify your contract, [do so here](https://github.com/muttoni/contract-browser-new/blob/main/lib/verified-contracts.ts). 
+
+[See all currently verified contracts &rarr;](/verified)
 
 ## Enhanced Browsing
 
@@ -46,8 +49,20 @@ Introducing Verified Contracts – import contracts with confidence. Verified co
 
 Contracts can be complex, but are often made up of similar building blocks. With Snippets, you can more easily understand how each contract works. With deployment history you'll be able to see a contract's timeline. Thanks to smart caching you'll also enjoy snappier load times, you'll be able to browse more efficiently than ever before. 
 
+![Diffing](/blog/diffs.jpeg)
+
+Like all apps, smart contracts evolve over time. Easily pin-point what changed at a specific point in time, and leverage the flexible diffing options to quickly understand how a contract evolved over time.  
+
+Contract Browser displays diffs side by side, just like on your favorite code editor.
+
+![Diffing Preview](/blog/diffs2.jpeg)
+
 ## Roadmap
 
-We – i.e. myself and Lanford, who built the backend service – are not done yet! In the coming months, we'll be working on even more features to enhance your experience with Contract Browser 2.0. Look out for enhanced interactivity, transaction suggestion, and FLIX and verified transaction support.
+While I (Andrea) am the creator and maintainer of Contract Browser, this is a service built by the community, for the community. For example, [Lanford](https://github.com/LanfordCai) created the backend indexing service, [Flowdiver](https://flowdiver.io) is providing the data which powers Diffs (which you gotta try out - [here](https://contractbrowser.com/A.1d7e57aa55817448.MetadataViews/events)'s an example).
 
-[Try it out today](https://contractbrowser.com) and let us know what you think.
+The project is [100% open source](https://github.com/muttoni/contract-browser-new), so you can both contribute to the project, as well as take inspiration for your own projects, whether it be the UI components or functionality. If you're curious, Contract Browser 2.0 is now using NextJS and Tailwind to better align with industry standards for easier contributions.
+
+We're only just getting started In the coming months, we'll be working on even more features to enhance your experience with Contract Browser 2.0. Look out for enhanced interactivity, transaction suggestion, and FLIX and verified transaction support.
+
+[Try it out today](https://contractbrowser.com) and let me know what you think!

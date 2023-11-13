@@ -6,31 +6,32 @@ const Meta = () => {
       <link
         rel="apple-touch-icon"
         sizes="180x180"
-        href="/favicon/apple-touch-icon.png"
+        href="/icon.png"
       />
       <link
         rel="icon"
         type="image/png"
         sizes="32x32"
-        href="/favicon/favicon-32x32.png"
+        href="/icon.png"
       />
       <link
         rel="icon"
         type="image/png"
         sizes="16x16"
-        href="/favicon/favicon-16x16.png"
+        href="/icon.png"
       />
       <link rel="manifest" href="/favicon/site.webmanifest" />
       <link
         rel="mask-icon"
-        href="/favicon/safari-pinned-tab.svg"
-        color="#000000"
+        href="/icon.png"
+        color="#06091a"
       />
       <link rel="shortcut icon" href="/favicon/favicon.ico" />
-      <meta name="msapplication-TileColor" content="#000000" />
+      <meta name="msapplication-TileColor" content="#06091a" />
       <meta name="msapplication-config" content="/favicon/browserconfig.xml" />
-      <meta name="theme-color" content="#000" />
-      <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
+      <meta name="theme-color" content="#06091a" />
+
+      <meta title={`Contract Browser`} />
       <meta
         name="description"
         content={`Contract Browser is a search engine for Cadence smart contracts on Flow. Search for contracts by name, address and code.`}

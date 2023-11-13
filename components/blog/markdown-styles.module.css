@@ -9,6 +9,21 @@
   @apply my-6;
 }
 
+
+.markdown p,
+.markdown ul,
+.markdown ol,
+.markdown blockquote,
+.markdown h1,
+.markdown h2,
+.markdown h3 {
+  @apply max-w-2xl mx-auto;
+}
+
+.markdown p:has(img) {
+  @apply max-w-4xl;
+}
+
 .markdown a {
   @apply font-bold text-blue-600 hover:text-blue-500;
 }
