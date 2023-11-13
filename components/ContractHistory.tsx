@@ -113,19 +113,42 @@ function ContractTimeline({deployments, uuid, original}) {
 function DiffViewer({current, original, latest, previous, isOriginal, isLatest, deployments }) {
 
   const [diffType, setDiffType] = useState(isLatest ? "previous" : "latest")
-  const [left, setLeft] = useState(isLatest ? previous : current)
-  const [right, setRight] = useState(isLatest ? current : latest)
+  const [left, setLeft] = useState(isLatest 
+    ? {...previous, self: "previous" } 
+    : {...current, self: "current"})
+
+  const [right, setRight] = useState(isLatest 
+    ? {...current, self: "current"} 
+    : {...latest, self: "latest"})
 
   useEffect(() => {
     if(diffType === "latest") {
-      setLeft(current)
-      setRight(latest)
+      setLeft({
+        ...current,
+        self: "selected"
+      })
+      setRight({
+        ...latest,
+        self: "latest"
+      })
     } else if(diffType === "original") {
-      setLeft(original)
-      setRight(current)
+      setLeft({
+        ...original,
+        self: "original"
+      })
+      setRight({
+        ...current,
+        self: "selected"
+      })
     } else if(diffType === "previous") {
-      setLeft(previous)
-      setRight(current)
+      setLeft({
+        ...previous,
+        self: "previous"
+      })
+      setRight({
+        ...current,
+        self: "selected"
+      })
     }
   },[diffType])
 
@@ -160,12 +183,14 @@ function DiffViewer({current, original, latest, previous, isOriginal, isLatest, 
         </DialogDescription>
       </DialogHeader>
         <div className="flex justify-between gap-3 text-center font-mono">
-          <Link href={`https://flowdiver.io/${left.tx_id}`} target="_blank" className="w-full font-mono text-sm py-1 px-2 ms-2 bg-muted rounded text-center" title={left.tx_id}>
+          <Link href={`https://flowdiver.io/${left.tx_id}`} target="_blank" className="w-full font-mono text-sm py-1 px-2 ms-2 bg-muted rounded text-center flex items-center gap-2 justify-center" title={left.tx_id}>
             {deployments[deployments.findIndex((t) => t.tx_id === left.tx_id)].block_height}
+            <span className="text-xs text-muted-foreground">({left.self} version)</span>
           </Link>
           <p className="w-10 text-muted-foreground">vs</p>
-          <Link href={`https://flowdiver.io/${right.tx_id}`} target="_blank" className="w-full font-mono text-sm py-1 px-2 ms-2 bg-muted rounded text-center" title={right.tx_id}>
+          <Link href={`https://flowdiver.io/${right.tx_id}`} target="_blank" className="w-full font-mono text-sm py-1 px-2 ms-2 bg-muted rounded text-center flex items-center gap-2 justify-center" title={right.tx_id}>
             {deployments[deployments.findIndex((t) => t.tx_id === right.tx_id)].block_height}
+            <span className="text-xs text-muted-foreground">({right.self} version)</span>
           </Link>
         </div>
         <div className="grid gap-4 h-[80vh]">
