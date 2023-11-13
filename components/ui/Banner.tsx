@@ -8,12 +8,14 @@ const BANNER_COLLAPSED_KEY = '2.0-bannerCollapsed'
 
 export default function WelcomeBanner() {
   const [isCollapsed, setIsCollapsed] = useState(
-    localStorage.getItem(BANNER_COLLAPSED_KEY) === 'true'
+    typeof window !== 'undefined' && localStorage.getItem(BANNER_COLLAPSED_KEY) === 'true'
   )
 
   const handleCollapse = () => {
-    localStorage.setItem(BANNER_COLLAPSED_KEY, 'true')
-    setIsCollapsed(true)
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(BANNER_COLLAPSED_KEY, 'true')
+      setIsCollapsed(true)
+    }
   }
 
   if (isCollapsed) {
@@ -49,3 +51,4 @@ export default function WelcomeBanner() {
     </Banner>
   )
 }
+
