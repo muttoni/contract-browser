@@ -76,7 +76,7 @@ export default async function Image({ params }: { params: { contractId: string }
       </div>
       <div tw="flex flex-col">
         <p tw="text-7xl font-bold h-10 flex items-center">
-          {ellipsify(contractName, 30)}
+          {ellipsify(contractName, 27)}
           {/* @ts-ignore */}
           {isVerified && <svg tw="mx-4" width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
