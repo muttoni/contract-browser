@@ -25,6 +25,9 @@
       ],
       "@/constants/*": [
         "constants/*"
+      ],
+      "@/cadence/*": [
+        "cadence/*"
       ]
     },
     "allowJs": true,

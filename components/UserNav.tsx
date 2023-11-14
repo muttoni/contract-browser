@@ -62,7 +62,7 @@ export function UserNav() {
     <DropdownMenu>
     {user && !user.loggedIn &&
     <div className="flex items-center gap-2 bg-muted pe-2 rounded-md">
-      <Button onClick={user.logIn} className="rounded-r-none">
+      <Button onClick={fcl.authenticate} className="rounded-r-none">
         <LogIn className="h-4 w-4 me-2" />
         <span className="hidden md:inline-block">Connect Wallet</span>
       </Button>

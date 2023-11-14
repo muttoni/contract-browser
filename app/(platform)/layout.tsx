@@ -5,7 +5,6 @@ import { UserNav } from '@/components/UserNav'
 import { Analytics } from '@vercel/analytics/react';
 import Footer from '@/components/Footer'
 import { ThemeProvider } from '@/components/ThemeProvider'
-import { RecoilRoot } from 'recoil'
 import '@/styles/globals.css'
 import '@/styles/code.css'
 import Banner from '@/components/ui/Banner'
@@ -28,7 +27,6 @@ export default function RootLayout({
         className={"min-h-screen w-full bg-background font-sans antialiased"}
       >
       <div className="absolute z-0 w-full h-full bg-gradient-to-b from-purple-950 to-transparent opacity-5 pointer-events-none"></div>
-      <RecoilRoot>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -51,10 +49,9 @@ export default function RootLayout({
           {children}
         </main>
       </ThemeProvider>
-        </RecoilRoot>
-        <Footer />
-        <Analytics />
-        </body>
-      </html>
+      <Footer />
+      <Analytics />
+      </body>
+    </html>
   )
 }
