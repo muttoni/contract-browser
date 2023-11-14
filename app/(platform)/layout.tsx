@@ -13,7 +13,7 @@ import type { Metadata } from 'next'
 import { generateMetadataObject } from '@/lib/utils';
  
 export const metadata: Metadata = {
-  metadataBase: new URL('https://contractbrowser.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_DOMAIN),
   alternates: {
     canonical: process.env.NEXT_PUBLIC_BASE_DOMAIN,
     languages: {
