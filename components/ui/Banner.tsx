@@ -2,14 +2,12 @@ import { Banner } from 'flowbite-react'
 import { Sparkles, X } from 'lucide-react'
 import Link from 'next/link'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const BANNER_COLLAPSED_KEY = '2.0-bannerCollapsed'
 
 export default function WelcomeBanner() {
-  const [isCollapsed, setIsCollapsed] = useState(
-    typeof window !== 'undefined' && localStorage.getItem(BANNER_COLLAPSED_KEY) === 'true'
-  )
+  const [isCollapsed, setIsCollapsed] = useState(true)
 
   const handleCollapse = () => {
     if (typeof window !== 'undefined') {
@@ -18,13 +16,21 @@ export default function WelcomeBanner() {
     }
   }
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsCollapsed(localStorage.getItem(BANNER_COLLAPSED_KEY) === 'true')
+    } else {
+      setIsCollapsed(false)
+    }
+  })
+
   if (isCollapsed) {
     return null
   }
 
   return (
     <Banner>
-      <div className="flex w-full justify-between border-b py-1">
+      <div className={`flex w-full justify-between border-b py-1 ${isCollapsed ?? 'hidden'}`}>
         <div className="mx-auto flex items-center">
           <p className="flex items-center text-sm font-normal">
             <Sparkles className="mr-2 h-4 w-4" />
