@@ -15,7 +15,7 @@ import { generateMetadataObject } from '@/lib/utils';
 export const metadata: Metadata = {
   metadataBase: new URL('https://contractbrowser.com'),
   alternates: {
-    canonical: '/',
+    canonical: process.env.NEXT_PUBLIC_BASE_DOMAIN,
     languages: {
       'en-US': '/en-US',
     },
