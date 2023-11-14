@@ -1,19 +1,30 @@
-"use client"
+
 import { Navbar } from '@/components/Navbar'
 import { Search } from '@/components/Search'
 import { UserNav } from '@/components/UserNav'
 import { Analytics } from '@vercel/analytics/react';
-import Footer from '@/components/Footer'
+import { Footer } from '@/components/Footer'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import '@/styles/globals.css'
 import '@/styles/code.css'
-import Banner from '@/components/ui/Banner'
-// import type { Metadata } from 'next'
+import WelcomeBanner from '@/components/ui/WelcomeBanner'
+
+import type { Metadata } from 'next'
+import { generateMetadataObject } from '@/lib/utils';
  
-// export const metadata: Metadata = {
-//   title: 'Contract Browser',
-//   description: 'The best place to find Cadence smart contracts. Search for contracts by name, address and code.',
-// }
+export const metadata: Metadata = {
+  metadataBase: new URL('https://contractbrowser.com'),
+  alternates: {
+    canonical: '/',
+    languages: {
+      'en-US': '/en-US',
+    },
+  },
+  openGraph: {
+    images: '/social.png',
+  },
+  ...generateMetadataObject()
+}
 
 export default function RootLayout({ 
   children 
@@ -33,11 +44,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Banner />
+          <WelcomeBanner />
           <main className="container px-4 md:px-8 lg:px-16 min-h-screen w-full flex flex-col">
           <div className="flex-col py-2 md:py-4 md:flex">
             <div className="flex items-center">
-              <Navbar className="" />
+              <Navbar className="" /> 
               <div className="ml-auto flex items-center space-x-4">
                 <UserNav />
               </div>

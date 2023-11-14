@@ -1,3 +1,5 @@
+"use client"
+
 import { Banner } from 'flowbite-react'
 import { Sparkles, X } from 'lucide-react'
 import Link from 'next/link'
@@ -22,7 +24,7 @@ export default function WelcomeBanner() {
     } else {
       setIsCollapsed(false)
     }
-  })
+  }, [])
 
   if (isCollapsed) {
     return null

@@ -1,7 +1,8 @@
+"use client"
 import Link from "next/link";
 import { VerifiedBadge } from "./ui/VerifiedBadge";
 
-export default function Footer() {
+export function Footer() {
   return (
     <footer className="w-full flex flex-col bg-muted bg-gradient-to-b from-background to-transparent">
         <div className="container pt-16 pb-6 lg:pb-8 px-4 md:px-8 lg:px-16">
@@ -53,7 +54,7 @@ export default function Footer() {
           </div>
           <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
           <div className="sm:flex flex-row sm:items-center sm:justify-between">
-              <span className="text-sm text-muted-foreground sm:text-center">© 2023 <a href="https://flowbite.com/" className="hover:underline">Contract Browser</a>. All Rights Reserved.</span>
+              <span className="text-sm text-muted-foreground sm:text-center">© 2023 <a href="/" className="hover:underline">Contract Browser</a>. All Rights Reserved.</span>
               <div className="flex mt-4 sm:justify-center sm:mt-0">
                   <Link href="https://twitter.com/contractbrowser" target="_blank" className="text-muted-foreground hover:text-gray-900 dark:hover:text-white ms-5">
                       <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 17">

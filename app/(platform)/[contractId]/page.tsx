@@ -11,8 +11,6 @@ import { Button } from "@/components/ui/button"
 import { calculateStringSizeInBytes, formatStorageSize, getContractAddress } from "@/lib/utils";
 import Link from "next/link"
 import { Skeleton } from "@/components/ui/skeleton"
-import CadenceBlock from "@/components/ui/CadenceBlock"
-
 
 export default function ContractPage() {
   const [contractCopied, setContractCopied] = useState(false)
@@ -123,9 +121,6 @@ export default function ContractPage() {
       </Link>
     </div>
     {contract && contract.code ? <CodeEditor className={"min-h-[400px]"} code={contract?.code} /> : <Skeleton className="min-h-[400px] w-full" />}
-    {/* <div className="rounded-mg border p-4">
-    {contract && contract.code ? <CadenceBlock code={contract?.code} /> : <Skeleton className="min-h-[400px] w-full" />}
-    </div> */}
   </>
   )
 }
