@@ -5,6 +5,7 @@ import '@/styles/code.css'
 import { ModeToggle } from '@/components/ui/ModeToggle'
 import Link from 'next/link'
 import Image from "next/image"
+import { Button } from '@/components/ui/button'
 
 export default function RootLayout({ 
   children 
@@ -30,11 +31,13 @@ export default function RootLayout({
             <div className="flex items-center gap-4">
             <Link href="/blog" className="flex items-center text-sm space-x-2 font-medium transition-colors hover:text-primary">
               <Image src="/icon.png" alt="logo" className="object-contain max-w-[32px] min-w-[32px] h-[32px] md:h-[42px] md:w-auto" width="256" height="256" /> 
-              <span className="text-lg inline-block leading-tighter tracking-tighter whitespace-nowrap">Contract Browser Blog</span>
+              <span className="text-lg inline-block leading-tighter tracking-tighter whitespace-nowrap"><span className='hidden md:inline-block me-1'>Contract Browser </span>Blog</span>
             </Link>
             <ModeToggle />
               <div className="ml-auto flex items-center space-x-4">
-                <Link href="/">Go to Contract Browser &rarr;</Link>
+                <Link href="/">
+                  <Button variant="outline">Go to Contract Browser &rarr;</Button>
+                </Link>
               </div>
             </div>
             <div className="flex flex-1 w-full pt-3 lg:pt-5">

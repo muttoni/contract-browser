@@ -24,7 +24,7 @@ export async function generateMetadata(
     title: post.title,
     description: post.excerpt,
     openGraph: {
-      images: ["https://contractbrowser.com/social.png"],
+      images: [process.env.NEXT_PUBLIC_BASE_DOMAIN + post.ogImage.url],
     },
   }
 }
@@ -40,12 +40,6 @@ export default async function Post({  params }) {
     <Container>
       <>
         <article className="mb-32">
-          <Head>
-            <title>{title}</title>
-            <meta property="og:image" content={post.ogImage.url} />
-          </Head>
-          {/* <CoverImage src={post.coverImage} title={post.title} slug={post.slug}/> */}
-
           <PostHeader
             title={post.title}
             coverImage={post.coverImage}

@@ -32,7 +32,7 @@ export default function WelcomeBanner() {
 
   return (
     <Banner>
-      <div className={`flex w-full justify-between border-b py-1 ${isCollapsed ?? 'hidden'}`}>
+      <div className={`hidden md:flex w-full justify-between border-b py-1 ${isCollapsed ?? 'hidden'}`}>
         <div className="mx-auto flex items-center">
           <p className="flex items-center text-sm font-normal">
             <Sparkles className="mr-2 h-4 w-4" />

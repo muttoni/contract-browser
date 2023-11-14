@@ -7,7 +7,7 @@ author:
   name: Andrea Muttoni
   picture: '/me.jpeg'
 ogImage:
-  url: '/blog/v2-hero.png'
+  url: '/blog/new-xl.jpeg'
 ---
 
 After exactly a year since its first release, I'm thrilled to announce the launch of Contract Browser 2.0! A completely revamped experience that is faster, easier, and more useful than ever before. Read on to learn more about what you can enjoy with the latest version.
