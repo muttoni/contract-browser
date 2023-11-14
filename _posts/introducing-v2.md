@@ -10,7 +10,7 @@ ogImage:
   url: '/blog/v2-hero.png'
 ---
 
-After exactly a year since its first release, I'm thrilled to announce the launch of Contract Browser 2.0! A completely revamped experience that is faster, prettier, and more useful than ever before. Read on to learn more about what you can enjoy with the latest version.
+After exactly a year since its first release, I'm thrilled to announce the launch of Contract Browser 2.0! A completely revamped experience that is faster, easier, and more useful than ever before. Read on to learn more about what you can enjoy with the latest version.
 
 ![New](/blog/new.jpeg)
 
@@ -26,15 +26,7 @@ Contract Browser 2.0 is built from the ground up, using state-of-the-art technol
 
 The new cross-network search functionality makes it easy to find the smart contracts you need, whether you're looking on mainnet or testnet. Thanks to recently viewed contracts auto-suggested on search, you can instantly access your most frequently used contracts with just a few clicks.
 
-## Onchain Functionality
-
-![Onchain](/blog/onchain.jpeg)
-
-With Contract Browser 2.0, you can connect your wallet and manage your account directly from our platform: deploy contracts via our user-friendly UI, as well as update an existing contract. 
-
-When deploying a contract, you can enjoy automatic import detection and a new "Autofill" button to automagically fetch contract addresses based on the network you're deploying to – you'll never have to worry about making a mistake or waste time looking for the right address.
-
-## Verified Contracts
+## Verify
 
 ![Verified](/blog/verified.jpeg)
 
@@ -43,7 +35,15 @@ If you want to verify your contract, [do so here](https://github.com/muttoni/con
 
 [See all currently verified contracts &rarr;](/verified)
 
-## Enhanced Browsing
+## Deploy
+
+![Onchain](/blog/onchain.jpeg)
+
+With Contract Browser 2.0, you can connect your wallet and manage your account directly from our platform: deploy contracts via our user-friendly UI, as well as update an existing contract. 
+
+When deploying a contract, you can enjoy automatic import detection and a new "Autofill" button to automagically fetch contract addresses based on the network you're deploying to – you'll never have to worry about making a mistake or waste time looking for the right address.
+
+## Inspect
 
 ![Browsing](/blog/browsing.jpeg)
 
@@ -63,6 +63,6 @@ While I (Andrea) am the creator and maintainer of Contract Browser, this is a se
 
 The project is [100% open source](https://github.com/muttoni/contract-browser-new), so you can both contribute to the project, as well as take inspiration for your own projects, whether it be the UI components or functionality. If you're curious, Contract Browser 2.0 is now using NextJS and Tailwind to better align with industry standards for easier contributions.
 
-We're only just getting started In the coming months, we'll be working on even more features to enhance your experience with Contract Browser 2.0. Look out for enhanced interactivity, transaction suggestion, and FLIX and verified transaction support.
+We're just getting started. In the coming months, we'll be working on even more features to enhance your experience with Contract Browser 2.0. Look out for enhanced interactivity, transaction suggestion, and verified transaction (aka FLIX) support.
 
 [Try it out today](https://contractbrowser.com) and let me know what you think!

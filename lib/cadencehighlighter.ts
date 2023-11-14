@@ -33,7 +33,7 @@ class CadenceHighlighter {
       await this.waitForInstanceReady();
     }
 
-    const tree = this.starryNight.highlight(code, 'source.cadence');
+    const tree = this.starryNight.highlight(code || '', 'source.cadence');
     const html = toHtml(tree);
     return html;
   }

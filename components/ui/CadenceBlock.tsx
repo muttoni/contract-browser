@@ -13,6 +13,6 @@ export default function CadenceBlock({ code }) {
   }, [code])
 
   return (
-    <pre><code dangerouslySetInnerHTML={{ __html: htmlx}}></code></pre>
+    <pre className="p-3 border rounded-md"><code dangerouslySetInnerHTML={{ __html: htmlx}}></code></pre>
   )
 }

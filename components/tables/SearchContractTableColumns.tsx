@@ -24,13 +24,6 @@ export const columns: ColumnDef<Contract>[] = [
       )
     }
   },
-  // {
-  //   accessorKey: "name",
-  //   header: "Name",
-  //   cell: ({ row }) => {
-  //     return <ContractBadge uuid={`${row.original.uuid}`} className="" />
-  //   }
-  // },
   {
     accessorKey: "dependants_count",
     header: () => <div className="text-right">Used by</div>,

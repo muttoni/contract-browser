@@ -233,3 +233,10 @@ export function debounce(func, wait, immediate = false) {
 export function calculateStringSizeInBytes(str: string): number {
   return new Blob([str]).size;
 }
+
+
+export function extractSnippetName(str: string): string {
+  const regex = /^ *(pub|priv|access\(self\)|access\(contract\)|access\(all\)|access\(account\)|pub\(set\))? *(resource|struct|fun|event|resource *interface) * (?<name>(?!interface)[A-Za-z_][A-Za-z0-9_]*)/
+  const match = str.match(regex)
+  return match?.groups?.name || ''
+}

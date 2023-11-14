@@ -12,6 +12,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function SnippetsPage() {
   const contractId = useParams().contractId as string
@@ -85,17 +87,16 @@ export default function SnippetsPage() {
                 </AccordionTrigger>
                 <AccordionContent>
                   <CadenceBlock code={snippet.code} />
+
+                  <Link href={"/snippet/" + snippet.code_hash}>
+                  <Button variant="outline" size="sm" className="mt-3">
+                    View snippet
+                  </Button>
+                  </Link>
                 </AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
-            {/* <ul>
-              {contract.snippetsObject.snippets.filter(snippet => snippet.type === type).map((snippet, index) => (
-                <li>
-                  <div><CadenceBlock code={snippet.code} /></div>
-                </li>
-              ))}
-            </ul> */}
           </TabsContent>
         </>
         )}
