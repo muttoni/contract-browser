@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link";
 import { VerifiedBadge } from "./ui/VerifiedBadge";
+import { CBLogo } from "./CBLogo";
 
 export function Footer() {
   return (
@@ -8,8 +9,8 @@ export function Footer() {
         <div className="container pt-16 pb-6 lg:pb-8 px-4 md:px-8 lg:px-16">
             <div className="md:flex md:justify-between">
               <div className="mb-6 md:mb-0">
-                  <Link href="https://contractbrowser.com/" className="flex items-center">
-                      <img src="/icon.png" className="h-6 me-3" alt="FlowBite Logo" />
+                  <Link href="https://contractbrowser.com/" className="flex items-center gap-2">
+                      <CBLogo size={"1.5rem"} />
                       <span className="text-sm font-semibold whitespace-nowrap ">Contract Browser</span>
                   </Link>
               </div>

@@ -59,7 +59,7 @@ export default function AccountLayout({ children }) {
           {address === user?.addr &&
             <Badge className={cn("rounded-sm h-6 font-mono font-light uppercase whitespace-nowrap","border-blue-600 bg-blue-400 hover:bg-blue-400 text-blue-800")}>Current User</Badge>
           }
-         </h2>
+        </h2>
         <p className="text-muted-foreground">
           {
             address === user?.addr ? 
