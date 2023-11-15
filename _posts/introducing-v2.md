@@ -10,7 +10,7 @@ ogImage:
   url: '/blog/new-xl.jpeg'
 ---
 
-After exactly a year since its first release, I'm thrilled to announce the launch of Contract Browser 2.0! A completely revamped experience that is faster, easier, and more useful than ever before. Read on to learn more about what you can enjoy with the latest version.
+Celebrating exactly one year since its creation, I'm thrilled to present Contract Browser 2.0 – your new swiss army knife for composing on Flow. This latest version is not just an upgrade; it's a complete overhaul designed to make your experience smoother, quicker, and more intuitive.
 
 ![New](/blog/new.jpeg)
 
@@ -20,22 +20,21 @@ Composability is the backbone of web3 - a smart contract becomes a building bloc
 
 Contract Browser 2.0 is built from the ground up, using state-of-the-art technologies and a new component framework. The result? A cleaner, more intuitive browsing experience that's easier to use than ever before, including on mobile.
 
-## Search
+## Enhanced Search
 
 ![Search](/blog/search.jpeg)
 
-The new cross-network search functionality makes it easy to find the smart contracts you need, whether you're looking on mainnet or testnet. Thanks to recently viewed contracts auto-suggested on search, you can instantly access your most frequently used contracts with just a few clicks.
+Discover smart contracts across networks effortlessly. The new cross-network search, coupled with a smart auto-suggest feature for your frequently used contracts, means less time searching, more time building.
 
-## Verify
+## Trust with Verified Contracts
 
 ![Verified](/blog/verified.jpeg)
 
-Introducing Verified Contracts – import contracts with confidence. Verified contracts are "the right ones" to import, 100% of the time. Anyone can verify contracts, 100% for free via a simple pull request. 
-If you want to verify your contract, [do so here](https://github.com/muttoni/contract-browser-new/blob/main/lib/verified-contracts.ts). 
+Say hello to Verified Contracts. Now, import with confidence knowing you're using the right contract every time. Verifying your own contract is just a pull request away – simplicity and security in one. Anyone can verify contracts, 100% for free via a simple pull request. If you want to verify your contract, [you can do so here](https://github.com/muttoni/contract-browser-new/blob/main/lib/verified-contracts.ts). 
 
-[See all currently verified contracts &rarr;](/verified)
+[Explore verified contracts &rarr;](/verified)
 
-## Deploy
+## Seamless Deployment
 
 ![Onchain](/blog/onchain.jpeg)
 
@@ -43,26 +42,29 @@ With Contract Browser 2.0, you can connect your wallet and manage your account d
 
 When deploying a contract, you can enjoy automatic import detection and a new "Autofill" button to automagically fetch contract addresses based on the network you're deploying to – you'll never have to worry about making a mistake or waste time looking for the right address.
 
-## Inspect
+## Intuitive Contract Inspection
 
 ![Browsing](/blog/browsing.jpeg)
 
-Contracts can be complex, but are often made up of similar building blocks. With Snippets, you can more easily understand how each contract works. With deployment history you'll be able to see a contract's timeline. Thanks to smart caching you'll also enjoy snappier load times, you'll be able to browse more efficiently than ever before. 
+Contracts can be complex, but are often made up of similar building blocks. Thanks to Snippets, you can more easily understand how each contract works.
+
+> Fun fact, did you know that the new [Disney Pinnacle contract](https://contractbrowser.com/A.edf9df96c92f4595.Pinnacle/snippets) emits 30 events and has 149 functions?! Now you know. 
+
 
 ![Diffing](/blog/diffs.jpeg)
 
-Like all apps, smart contracts evolve over time. Easily pin-point what changed at a specific point in time, and leverage the flexible diffing options to quickly understand how a contract evolved over time.  
-
-Contract Browser displays diffs side by side, just like on your favorite code editor.
+With deployment history, you can step back in time and track how contracts evolve with the side-by-side diffing tool, mirroring the familiarity of your favorite code editor.
 
 ![Diffing Preview](/blog/diffs2.jpeg)
 
 ## Roadmap
 
-While I (Andrea) am the creator and maintainer of Contract Browser, this is a service built by the community, for the community. For example, [Lanford](https://github.com/LanfordCai) created the backend indexing service, [Flowdiver](https://flowdiver.io) is providing the data which powers Diffs (which you gotta try out - [here](https://contractbrowser.com/A.1d7e57aa55817448.MetadataViews/events)'s an example).
+Since creating the original Contract Browser, it is a service built by the community, for the community. For example, [Lanford](https://github.com/LanfordCai) created the backend indexing service, [Flowdiver](https://flowdiver.io) is providing the data that powers Diffs (which you gotta try out - [here](https://contractbrowser.com/A.1d7e57aa55817448.MetadataViews/events)'s an example). 
 
-The project is [100% open source](https://github.com/muttoni/contract-browser-new), so you can both contribute to the project, as well as take inspiration for your own projects, whether it be the UI components or functionality. If you're curious, Contract Browser 2.0 is now using NextJS and Tailwind to better align with industry standards for easier contributions.
+The project is [100% open source](https://github.com/muttoni/contract-browser), so you can contribute to the project, as well as take inspiration for your own projects. Contract Browser 2.0 uses NextJS and Tailwind to better align with industry standards for easier community contributions.
 
-We're just getting started. In the coming months, we'll be working on even more features to enhance your experience with Contract Browser 2.0. Look out for enhanced interactivity, transaction suggestion, and verified transaction (aka FLIX) support.
+What's Next? Expect more interactive features, transaction suggestions, and FLIX / verified transaction support in the near future.
 
-[Try it out today](https://contractbrowser.com) and let me know what you think!
+[Experience the new Contract Browser today](https://contractbrowser.com) and let me know what you think!
+
+\- Andrea

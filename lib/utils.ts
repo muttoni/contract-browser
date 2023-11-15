@@ -245,6 +245,6 @@ export function extractSnippetName(str: string): string {
 export function generateMetadataObject(title? : string, description? : string) {
   return {
     title: `${title ? title + ' | ' : ''}Contract Browser`,
-    description: `${description ? description + '. ' : ''}Contract browser is the best place to find, inspect and understand Cadence smart contracts. Search for contracts by name, address and code.`,
+    description: `${description ? description + '. ' : ''}Contract browser is the best place to find, inspect and understand Cadence smart contracts on the Flow Blockchain. Search for contracts by name, address and code.`,
   }
 }
