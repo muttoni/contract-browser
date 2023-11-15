@@ -1,18 +1,18 @@
 ---
 title: 'Introducing Contract Browser 2.0: The Next Generation of Smart Contract Development'
-coverImage: '/blog/new-xl.jpeg'
+coverImage: '/blog/new-xl.png'
 excerpt: 'After exactly a year since its first release, I am thrilled to announce the launch of Contract Browser 2.0! A completely revamped experience that is faster, prettier, and more useful than ever before. Read on to learn more about what you can enjoy with the latest version.'
 date: '2023-11-16T05:35:07.322Z'
 author:
   name: Andrea Muttoni
   picture: '/me.jpeg'
 ogImage:
-  url: '/blog/new-xl.jpeg'
+  url: '/blog/new-xl.png'
 ---
 
 Celebrating exactly one year since its creation, I'm thrilled to present Contract Browser 2.0 – your new swiss army knife for composing on Flow. This latest version is not just an upgrade; it's a complete overhaul designed to make your experience smoother, quicker, and more intuitive.
 
-![New](/blog/new.jpeg)
+![New](/blog/new.png)
 
 ## Introduction
 

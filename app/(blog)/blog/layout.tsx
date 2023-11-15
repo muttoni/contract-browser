@@ -6,6 +6,7 @@ import { ModeToggle } from '@/components/ui/ModeToggle'
 import Link from 'next/link'
 import Image from "next/image"
 import { Button } from '@/components/ui/button'
+import { CBLogo } from '@/components/CBLogo'
 
 export default function RootLayout({ 
   children 
@@ -30,7 +31,7 @@ export default function RootLayout({
           <div className="flex-col py-2 md:py-4 md:flex">
             <div className="flex items-center gap-4">
             <Link href="/blog" className="flex items-center text-sm space-x-2 font-medium transition-colors hover:text-primary">
-              <Image src="/icon.png" alt="logo" className="object-contain max-w-[32px] min-w-[32px] h-[32px] md:h-[42px] md:w-auto" width="256" height="256" /> 
+              <CBLogo />
               <span className="text-lg inline-block leading-tighter tracking-tighter whitespace-nowrap"><span className='hidden md:inline-block me-1'>Contract Browser </span>Blog</span>
             </Link>
             <ModeToggle />
