@@ -1,7 +1,7 @@
 ---
 title: 'Introducing Contract Browser 2.0: The Next Generation of Smart Contract Development'
 coverImage: '/blog/new-xl.png'
-excerpt: 'After exactly a year since its first release, I am thrilled to announce the launch of Contract Browser 2.0! A completely revamped experience that is faster, prettier, and more useful than ever before. Read on to learn more about what you can enjoy with the latest version.'
+excerpt: 'Celebrating exactly one year since its creation, I am thrilled to present Contract Browser 2.0 - the best way to discover smart contracts on Flow. This latest version is not just an upgrade; it is a complete overhaul designed to make your experience smoother, quicker, and more intuitive.'
 date: '2023-11-16T05:35:07.322Z'
 author:
   name: Andrea Muttoni
