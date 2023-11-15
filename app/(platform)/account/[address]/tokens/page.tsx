@@ -1,9 +1,7 @@
 "use client"
-import { Separator } from "@/components/ui/separator"
 
 import { useAccount } from "hooks/useAccount"
 import { useParams } from "next/navigation"
-import { getNetwork } from "hooks/useNetwork" 
 
 import { 
   Card,
@@ -11,40 +9,52 @@ import { 
   CardTitle,
   CardContent,
 } from "@/components/ui/card"
-import { Coins, Eye } from "lucide-react"
+import { ArrowUpRight, Coins, Eye } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { getNetworkFromAddress } from "@/lib/utils"
 
 export default function TokensPage() {
 
   const address = useParams().address
-  const network = getNetwork().network
-  const accountStorage = useAccount(address).storage
+  const network = getNetworkFromAddress(address)
+  const account = useAccount(address)
+
+  console.log(account)
 
   return (
     <div className="space-y-6">
       <div>
         <h3 className="text-lg font-medium">Tokens</h3>
         <p className="text-sm text-muted-foreground">
-          Tokens in this account.
+          Fungible Tokens in this account. For a more detailed overview, check out the links below.
         </p>
       </div>
 
       <div className="flex">
-        <Link href={`https://${network === 'testnet' ? 'testnet' : ''}flowview.app/account/${address}`}>
+        <Link target="_blank" href={`https://${network === 'testnet' ? 'testnet.' : ''}flowview.app/account/${address}`}>
         <Button size="sm" variant="outline" className="flex me-2">
           <Eye className="h-4 w-4 me-2" /> FlowView 
+          <ArrowUpRight className="h-4 w-4 ml-1" />
         </Button>
         </Link>
 
-        <Link href={`https://f.dnz.dev/${address}`}>
+        <Link target="_blank" href={`https://${network === 'testnet' ? 'testnet.' : ''}flowdiver.io/account/${address}`}>
+        <Button size="sm" variant="outline" className="flex me-2">
+          <Eye className="h-4 w-4 me-2" /> Flowdiver 
+          <ArrowUpRight className="h-4 w-4 ml-1" />
+        </Button>
+        </Link>
+
+        <Link target="_blank" href={`https://f.dnz.dev/${address}`}>
         <Button size="sm" variant="outline" className="flex">
           <Eye className="h-4 w-4 me-2" /> f.dnz.dev 
+          <ArrowUpRight className="h-4 w-4 ml-1" />
         </Button>
         </Link>
       </div>
 
-      {accountStorage && accountStorage?.ft.sort(function compareFn(a, b) { return a.balance - b.balance}).map(vault => (
+      {account && account.storage && account.storage.ft && account.storage.ft.sort(function compareFn(a, b) { return a.balance - b.balance}).map(vault => (
 
             <Card key={vault.path.domain+"/"+vault.path.identifier}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

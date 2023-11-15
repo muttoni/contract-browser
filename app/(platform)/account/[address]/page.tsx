@@ -4,9 +4,9 @@ import FlowLogo from '@/components/ui/FlowLogo'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
-import { formatFlowBalance, storageCapacity, formatStorageSize, cleanAddress } from '@/lib/utils'
+import { formatFlowBalance, storageCapacity, formatStorageSize, cleanAddress, getNetworkFromAddress } from '@/lib/utils'
 import { useAccount } from 'hooks/useAccount'
-import { Disc, Eye, Key, Plus, Text } from 'lucide-react'
+import { Disc, Eye, Key, List, Plus, Text } from 'lucide-react'
 import { useParams, usePathname } from 'next/navigation'
 import Link from "next/link"
 
@@ -46,7 +46,7 @@ function AccountPage({}) {
           <Link href={path + "/tokens"}>
             <Button size="sm" className="h-7" variant="outline">
               <Eye className="h-4 w-4 me-2" />
-              View all tokens
+              View all FTs
             </Button>
             </Link>
         </CardFooter>
@@ -64,17 +64,19 @@ function AccountPage({}) {
             {Object.keys(account.contracts || {}).length}
           </div>
         </CardContent>
-        <CardFooter className="flex">
+        <CardFooter className="flex items-center gap-2">
             <Link href={path+"/contracts"}>
             <Button size="sm" className="h-7" disabled={Object.keys(account.contracts || {}).length < 1} variant="outline">
-              <Eye className="h-4 w-4 me-2" />
+              <List className="h-4 w-4 me-2" />
               View
             </Button>
+            </Link>
+          <Link href={path+"/contracts/deploy"}>
             <Button size="sm" className="h-7" variant="outline">
               <Plus className="h-4 w-4 me-2" /> 
               Deploy
             </Button>
-            </Link>
+          </Link>
         </CardFooter>
       </Card>
       <Card>
@@ -88,8 +90,8 @@ function AccountPage({}) {
             {formatStorageSize(storageCapacity(account?.storage).capacity - storageCapacity(account?.storage).used) } of {formatStorageSize(storageCapacity(account?.storage).capacity)} free
           </p>
         </CardContent>
-        <CardFooter className="flex">
-        <Link href={path+"/tokens"}>
+        <CardFooter className="flex items-center">
+        <Link href={`https://${getNetworkFromAddress(address) === 'testnet' ? 'testnet.' : ''}flowview.app/account/${address}`} target='_blank'>
           <Button size="sm" className="h-7" variant="outline">
             <Eye className="h-4 w-4 me-2" />
             Inspect
@@ -107,15 +109,11 @@ function AccountPage({}) {
         <CardContent>
         <div className="text-2xl font-bold">{Object.keys(account?.keys || {} ).length}</div>
         </CardContent>
-        <CardFooter className="flex">
-          <Link href={path+"/keys"}>
+        <CardFooter className="flex items-center gap-2">
+          <Link href={`https://${getNetworkFromAddress(address) === 'testnet' ? 'testnet.' : ''}flowview.app/account/${address}`} target='_blank'>
             <Button size="sm" className="h-7" disabled={Object.keys(account.keys || {}).length < 1} variant="outline">
               <Eye className="h-4 w-4 me-2" />
-              View
-            </Button>
-            <Button size="sm" className="h-7" variant="outline">
-              <Plus className="h-4 w-4 me-2" /> 
-              Add
+              Manage
             </Button>
           </Link>
         </CardFooter>

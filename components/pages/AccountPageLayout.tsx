@@ -30,30 +30,20 @@ export default function AccountPageLayout({ children }) {
       type: "sub",
       href: "/account/" + address + "/contracts/deploy",
     },
-    // {
-    //   title: "Tokens",
-    //   type: "parent",
-    //   href: "/account/" + params.address + "/tokens",
-    // },
-    // {
-    //   title: "Storage",
-    //   type: "parent",
-    //   href: "/account/" + params.address + "/storage",
-    // },
-    // {
-    //   title: "Keys",
-    //   type: "parent",
-    //   href: "/account/" + params.address + "/keys",
-    // },
+    {
+      title: "Tokens",
+      type: "parent",
+      href: "/account/" + params.address + "/tokens",
+    },
   ]
 
   return (
 
     <div className="space-y-6 pt-4 pb-16 h-full flex-1">
       <div className="space-y-0.5">
-        <h2 className="text-2xl items-center flex gap-2 font-bold tracking-tight">
+        <h2 className="text-2xl items-start md:items-center flex flex-col md:flex-row md:gap-2 font-bold tracking-tight">
 
-          Account <span className="text-muted-foreground">{address}</span>
+          <span className="text-muted-foreground">Account</span>{address}
           <Badge className={cn("rounded-sm h-6 font-mono font-light uppercase", `${network === 'testnet' ? "border-orange-600 bg-orange-400 hover:bg-orange-400 text-orange-800" : "border-green-600 bg-green-400 hover:bg-green-400 text-green-800"}`)}>{network}</Badge>
           {address === user?.addr &&
             <Badge className={cn("rounded-sm h-6 font-mono font-light uppercase whitespace-nowrap","border-blue-600 bg-blue-400 hover:bg-blue-400 text-blue-800")}>Current User</Badge>
