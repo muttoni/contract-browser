@@ -8,13 +8,6 @@ import GetAccountStorage from "@/cadence/scripts/GetAccountStorage"
 export const IDLE = "IDLE"
 export const PROCESSING = "PROCESSING"
 
-// // this is gross need to fix this in fcl
-// function ready() {
-//   return new Promise(resolve => {
-//     setTimeout(resolve,100)
-//   })
-// }
-
 async function fetchAccount(address) {
   return address == null ? Promise.resolve(null) : fcl.account(address)
 }

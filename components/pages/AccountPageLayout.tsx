@@ -3,16 +3,15 @@ import { useCurrentUser } from "@/hooks/useCurrentUser"
 import { Separator } from "@/components/ui/separator"
 import { SidebarNav } from "@/components/AccountSideBar"
 import { useParams } from "next/navigation"
-import { useNetworkForAddress } from "@/hooks/useNetwork"
 import { Badge } from "@/components/ui/badge"
-import { cleanAddress, cn } from "@/lib/utils"
+import { cleanAddress, cn, getNetworkFromAddress } from "@/lib/utils"
 
 export default function AccountPageLayout({ children }) {
 
   const user = useCurrentUser()
   const params = useParams()
   const address = cleanAddress(params.address as string)
-  const network = useNetworkForAddress(address)
+  const network = getNetworkFromAddress(address)
 
   const sidebarNavItems = [
     {

@@ -1,9 +1,8 @@
 "use client"
 import { SidebarNav } from "@/components/AccountSideBar"
 import { useParams } from "next/navigation"
-import { useNetworkForAddress } from "@/hooks/useNetwork"
 import { useCurrentUser } from "@/hooks/useCurrentUser"
-import { getContractAddress, getContractName, cn } from "@/lib/utils"
+import { getContractAddress, getContractName, cn, getNetworkFromAddress } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
@@ -18,7 +17,7 @@ export default function ContractPageLayout({ children }) {
   
   const { contractId } = useParams()
   const user = useCurrentUser()
-  const network = useNetworkForAddress(getContractAddress(contractId))
+  const network = getNetworkFromAddress(getContractAddress(contractId))
 
   const sidebarNavItems = [
     {

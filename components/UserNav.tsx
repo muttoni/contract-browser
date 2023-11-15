@@ -44,8 +44,6 @@ export function UserNav() {
   
   const user = useCurrentUser()
   const [network, setNetwork] = useState("mainnet")
-  const searchParams = useSearchParams()
-  fcl.config(getNetworkConfig(network))
   
   function changeNetwork(desiredNetwork: string) {
     fcl.unauthenticate()
