@@ -12,7 +12,7 @@ export default function VerifiedContracts() {
       <div>
         <div className="py-6">
           <h2 className="text-3xl font-bold tracking-tight flex items-center gap-3">Verified <VerifiedBadge size={6} /></h2>
-          <p className="text-muted-foreground">Below are the currently verified contracts on Contract Browser. Verify your contract today by submitting a PR <Link href="https://github.com/muttoni/contract-browser-new/blob/main/lib/verified-contracts.ts" target="_blank" className="font-bold underline">here</Link></p>
+          <p className="text-muted-foreground">Below are the currently verified contracts on Contract Browser. Verify your contract today by submitting a PR <Link href="https://github.com/muttoni/contract-browser/blob/main/lib/verified-contracts.ts" target="_blank" className="font-bold underline">here</Link></p>
         </div>
           {/* @ts-ignore */}
           <DataTable columns={columns} data={Object.values(VERIFIED_CONTRACTS)} />

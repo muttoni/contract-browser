@@ -27,7 +27,7 @@ export const VerifiedBadge = ({ size = 3 }) => {
             View all verified contracts
           </Button>
         </Link>
-        <Link target="_blank" href="https://github.com/muttoni/contract-browser-new/blob/main/lib/official-contracts.ts" className="">
+        <Link target="_blank" href="https://github.com/muttoni/contract-browser/blob/main/lib/official-contracts.ts" className="">
           <Button size="sm" variant="secondary" className="flex items-center gap-2 w-full text-left">
             Verify your contract
             <ArrowUpRight className="h-4 w-4" />
