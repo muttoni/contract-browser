@@ -58,7 +58,7 @@ With deployment history, you can step back in time and track how contracts evolv
 
 You can also use the side-by-side diffing tool, mirroring the familiarity of your favorite code editor.
 
-![Diffing Preview](/blog/diffs2.png)
+![Diffing Preview](/blog/diffs-2.png)
 
 ## Roadmap
 
