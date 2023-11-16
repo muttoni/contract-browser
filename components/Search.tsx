@@ -10,7 +10,7 @@ import useOutsideClick from "@/hooks/useOutsideClick"
 import SearchDataTable from "./tables/SearchDataTable"
 import { columns } from "./tables/SearchContractTableColumns"
 
-import { Clock, Eye, Info, SearchIcon, Wallet } from "lucide-react"
+import { Clock, Info, SearchIcon, Wallet } from "lucide-react"
 
 import Loading from "@/components/ui/Loading"
 import { Input } from "@/components/ui/input"
@@ -20,8 +20,6 @@ import { Separator } from "@/components/ui/separator"
 import ContractBadge from "@/components/ui/ContractBadge"
 import AddressBadge from "@/components/ui/AddressBadge"
 import Link from "next/link"
-
-import Router from "next/router"
 
 export function Search() {
 
@@ -185,22 +183,14 @@ export function Search() {
               </div>
 
               <TabsContent value="mainnet" className="">
-              {/* <h3 className="text-sm uppercase font-bold flex items-center justify-between mt-2 mb-1">
-                  <span>Mainnet Contracts</span>
-                  <span className="text-muted-foreground font-normal text-sm lowercase">{contractResultsMainnet?.data?.total_contracts_count || 0} results</span>
-                </h3> */}
                 {contractResultsMainnet && contractResultsMainnet?.data?.contracts?.length && contractResultsMainnet?.data?.contracts?.length  > 0 ?
-                <SearchDataTable data={contractResultsMainnet?.data?.contracts} columns={columns}/>
+                <SearchDataTable data={contractResultsMainnet?.data?.contracts} columns={columns} onRowClick={(row) => router.push('/'+row.uuid)}/>
                 : <div className={cn("text-sm block pt-4 text-center pb-8 text-muted-foreground", loadingMainnetResults ? "hidden" : "")}>No results.</div>
                 }
               </TabsContent>
               <TabsContent value="testnet" className="">
-                {/* <h3 className="text-sm uppercase font-bold flex items-center justify-between mt-2 mb-1">
-                  <span>Testnet Contracts</span>
-                  <span className="text-muted-foreground">{contractResultsTestnet?.data?.total_contracts_count || 0} results</span>
-                </h3> */}
                 {contractResultsTestnet && contractResultsTestnet?.data?.contracts?.length && contractResultsTestnet?.data?.contracts?.length  > 0 ?
-                <SearchDataTable data={contractResultsTestnet?.data?.contracts} columns={columns}/>
+                <SearchDataTable data={contractResultsTestnet?.data?.contracts} columns={columns} onRowClick={(row) => router.push('/'+row.uuid)}/>
                 : <div className={cn("text-sm block pt-4 pb-8 text-muted-foreground", loadingTestnetResults ? "hidden" : "")}>No results.</div>
                 }
               </TabsContent>
