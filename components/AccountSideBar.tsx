@@ -5,11 +5,6 @@ import { usePathname } from "next/navigation"
 
 import { cn } from "@/lib/utils"
 import { Button, buttonVariants } from "@/components/ui/button"
-import { CornerDownRight, Plus } from "lucide-react"
-
-import { useParams } from "next/navigation"
-import {useCurrentUser} from "@/hooks/useCurrentUser"
-
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   items: {
