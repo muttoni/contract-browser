@@ -118,7 +118,7 @@ export const columns: ColumnDef<Contract>[] = [
             <Link href="/[uuid]" as={`/${contract.uuid}`}>
             <DropdownMenuItem>View contract</DropdownMenuItem>
             </Link>
-            <Link href="/[uuid]/dependants" as={`/${contract.uuid}/dependants`}>
+            <Link href="/[uuid]/dependents" as={`/${contract.uuid}/dependents`}>
             <DropdownMenuItem>View dependants</DropdownMenuItem>
             </Link>
             <Link href="/account/[address]" as={`/account/${getContractAddress(contract.uuid)}/`}>

@@ -113,10 +113,10 @@ export default function ContractPage() {
         Account
       </Button>
       </Link>
-      <Link href={`/${contract?.uuid}/dependants`}>
+      <Link href={`/${contract?.uuid}/dependents`}>
       <Button size="sm" variant="outline" className="w-full">
         <Network className="h-4 w-4 me-2" />
-        Dependencies
+        Dependents
       </Button>
       </Link>
     </div>

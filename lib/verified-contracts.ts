@@ -90,8 +90,8 @@ export const VERIFIED_CONTRACTS = {
       "mainnet": "0xe467b9dd11fa00df"
     },
     "uuid": {
-      "testnet": "A.8c5303eaa26202d6.StorageFeeContract",
-      "mainnet": "A.e467b9dd11fa00df.StorageFeeContract"
+      "testnet": "A.8c5303eaa26202d6.FlowStorageFees",
+      "mainnet": "A.e467b9dd11fa00df.FlowStorageFees"
     },
     "name": "FlowStorageFees",
     "metadata": {
@@ -105,8 +105,8 @@ export const VERIFIED_CONTRACTS = {
       "mainnet": "0xf919ee77447b7497"
     },
     "uuid": {
-      "testnet": "A.912d5440f7e3769e.FlowTransactionFee",
-      "mainnet": "A.f919ee77447b7497.FlowTransactionFee"
+      "testnet": "A.912d5440f7e3769e.FlowFees",
+      "mainnet": "A.f919ee77447b7497.FlowFees"
     },
     "name": "FlowFees",
     "metadata": {
@@ -150,8 +150,8 @@ export const VERIFIED_CONTRACTS = {
       "mainnet": "0x8624b52f9ddcd04a"
     },
     "uuid": {
-      "testnet": "A.9eca2b38b18b5dfe.FlowIDTableStaking",
-      "mainnet": "A.8624b52f9ddcd04a.FlowIDTableStaking"
+      "testnet": "A.9eca2b38b18b5dfe.FlowEpoch",
+      "mainnet": "A.8624b52f9ddcd04a.FlowEpoch"
     },
     "name": "FlowEpoch",
     "metadata": {
@@ -165,8 +165,8 @@ export const VERIFIED_CONTRACTS = {
       "mainnet": "0x8d0e87b65159ae63"
     },
     "uuid": {
-      "testnet": "A.95e019a17d0e23d7.FlowLockedTokens",
-      "mainnet": "A.8d0e87b65159ae63.FlowLockedTokens"
+      "testnet": "A.95e019a17d0e23d7.LockedTokens",
+      "mainnet": "A.8d0e87b65159ae63.LockedTokens"
     },
     "name": "LockedTokens",
     "metadata": {

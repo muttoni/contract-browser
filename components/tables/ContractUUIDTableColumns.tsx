@@ -81,7 +81,7 @@ export const columns: ColumnDef<string>[] = [
             <Link href="/[uuid]" as={`/${contract}`}>
             <DropdownMenuItem>View contract</DropdownMenuItem>
             </Link>
-            <Link href="/[uuid]/dependants" as={`/${contract}/dependants`}>
+            <Link href="/[uuid]/dependents" as={`/${contract}/dependents`}>
             <DropdownMenuItem>View dependants</DropdownMenuItem>
             </Link>
             <Link href="/account/[address]" as={`/account/${getContractAddress(contract)}/`}>

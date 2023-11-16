@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { CornerDownRight, Plus } from "lucide-react"
 
 import { useParams } from "next/navigation"
@@ -15,13 +15,12 @@ interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   items: {
     href: string
     title: string
+    type: string
   }[]
 }
 
 export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
   const pathname = usePathname()
-  const address = useParams().address
-  const userAddress =  useCurrentUser()?.addr
 
   return (
     <nav
@@ -32,7 +31,7 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
       {...props}
     >
       {items.map((item) => (
-        <Link
+        !item.type || item.type !== 'coming-soon' ? <Link
           key={item.href}
           href={item.href}
           className={cn(
@@ -45,6 +44,11 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
         >
           {item.title}
         </Link>
+        :
+        <Button disabled={true} variant="ghost" key={item.title}
+          className="justify-start">
+          {item.title}<sup className="text-xs text-muted-foreground">WIP</sup>
+        </Button>
       ))}
     </nav>
   )

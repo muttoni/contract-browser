@@ -26,19 +26,24 @@ export default function ContractPageLayout({ children }) {
       href: "/" + contractId,
     },
     {
-      title: "Snippets",
+      title: "Components",
       type: "parent",
-      href: "/" + contractId + "/snippets",
+      href: "/" + contractId + "/components",
     },
     {
       title: "Used by",
       type: "parent",
-      href: "/" + contractId + "/dependants",
+      href: "/" + contractId + "/dependents",
     },
     {
       title: "History",
       type: "parent",
       href:"/" + contractId + "/events",
+    },
+    {
+      title: "Interact",
+      type: "coming-soon",
+      href:"/" + contractId + "/interact",
     }
   ]
 
