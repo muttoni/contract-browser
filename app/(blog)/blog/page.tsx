@@ -1,10 +1,7 @@
 import Container from '@/components/blog/container'
 import MoreStories from '@/components/blog/more-stories'
 import HeroPost from '@/components/blog/hero-post'
-import Intro from '@/components/blog/intro'
 import { getAllPosts } from '@/lib/blog'
-import Head from 'next/head'
-import { Post } from '@/lib/blog'
 
 export default function Index() {
 
@@ -14,9 +11,6 @@ export default function Index() {
 
   return (
     <>
-      <Head>
-        <title>{`Contract Browser Blog`}</title>
-      </Head>
       <Container>
         {heroPost && (
           <HeroPost
