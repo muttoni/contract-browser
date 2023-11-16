@@ -59,7 +59,7 @@ With deployment history, you can step back in time and track how contracts evolv
 
 ## Roadmap
 
-Since creating the original Contract Browser, it is a service built by the community, for the community. For example, [Lanford](https://github.com/LanfordCai) created the backend indexing service, [Flowdiver](https://flowdiver.io) is providing the data that powers Diffs (which you gotta try out - [here](https://contractbrowser.com/A.1d7e57aa55817448.MetadataViews/events)'s an example). 
+Since creating the original Contract Browser, it has always been a service built by the community, for the community. For example, the amazing [Lanford](https://github.com/LanfordCai) created the backend indexing service, [Flowdiver](https://flowdiver.io) is providing the data that powers Diffs (which you gotta try out - [here](https://contractbrowser.com/A.1d7e57aa55817448.MetadataViews/events)'s an example). 
 
 The project is [100% open source](https://github.com/muttoni/contract-browser), so you can contribute to the project, as well as take inspiration for your own projects. Contract Browser 2.0 uses NextJS and Tailwind to better align with industry standards for easier community contributions.
 
