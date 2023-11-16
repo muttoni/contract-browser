@@ -30,7 +30,7 @@ Discover smart contracts across networks effortlessly. The new cross-network sea
 
 ![Verified](/blog/verified.png)
 
-Say hello to Verified Contracts. Now, import with confidence knowing you're using the right contract every time. Verifying your own contract is just a pull request away – simplicity and security in one. Anyone can verify contracts, 100% for free via a simple pull request. If you want to verify your contract, [you can do so here](https://github.com/muttoni/contract-browser/blob/main/lib/verified-contracts.ts). 
+Say hello to Verified Contracts. Now, import with confidence knowing you're using the right contract every time. Anyone can verify contracts, 100% for free via a simple pull request. If you want to verify your contract, [you can do so here](https://github.com/muttoni/contract-browser/blob/main/lib/verified-contracts.ts). 
 
 [Explore verified contracts &rarr;](/verified)
 
