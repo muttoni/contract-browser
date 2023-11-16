@@ -1,12 +1,28 @@
-"use client"
+
 import { ThemeProvider } from '@/components/ThemeProvider'
 import '@/styles/globals.css'
 import '@/styles/code.css'
 import { ModeToggle } from '@/components/ui/ModeToggle'
 import Link from 'next/link'
-import Image from "next/image"
 import { Button } from '@/components/ui/button'
 import { CBLogo } from '@/components/CBLogo'
+
+import type { Metadata } from 'next'
+import { generateMetadataObject } from '@/lib/utils';
+
+export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_DOMAIN),
+  alternates: {
+    canonical: process.env.NEXT_PUBLIC_BASE_DOMAIN,
+    languages: {
+      'en-US': '/en-US',
+    },
+  },
+  openGraph: {
+    images: '/social.png',
+  },
+  ...generateMetadataObject("Blog", "The Contract Browser Blog")
+}
 
 export default function RootLayout({ 
   children 
