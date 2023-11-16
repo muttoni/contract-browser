@@ -22,13 +22,13 @@ Contract Browser 2.0 is built from the ground up, using state-of-the-art technol
 
 ## Enhanced Search
 
-![Search](/blog/search.jpeg)
+![Search](/blog/search.png)
 
 Discover smart contracts across networks effortlessly. The new cross-network search, coupled with a smart auto-suggest feature for your frequently used contracts, means less time searching, more time building.
 
 ## Trust with Verified Contracts
 
-![Verified](/blog/verified.jpeg)
+![Verified](/blog/verified.png)
 
 Say hello to Verified Contracts. Now, import with confidence knowing you're using the right contract every time. Verifying your own contract is just a pull request away – simplicity and security in one. Anyone can verify contracts, 100% for free via a simple pull request. If you want to verify your contract, [you can do so here](https://github.com/muttoni/contract-browser/blob/main/lib/verified-contracts.ts). 
 
@@ -36,7 +36,7 @@ Say hello to Verified Contracts. Now, import with confidence knowing you're usin
 
 ## Seamless Deployment
 
-![Onchain](/blog/onchain.jpeg)
+![Onchain](/blog/onchain.png)
 
 With Contract Browser 2.0, you can connect your wallet and manage your account directly from our platform: deploy contracts via our user-friendly UI, as well as update an existing contract. 
 
@@ -44,18 +44,21 @@ When deploying a contract, you can enjoy automatic import detection and a new "A
 
 ## Intuitive Contract Inspection
 
-![Browsing](/blog/browsing.jpeg)
+![Components](/blog/components.png)
 
-Contracts can be complex, but are often made up of similar building blocks. Thanks to Snippets, you can more easily understand how each contract works.
+Contracts can be complex, but are often made up of similar building blocks. Thanks to Components, you can more easily understand how each contract works.
 
-> Fun fact, did you know that the new [Disney Pinnacle contract](https://contractbrowser.com/A.edf9df96c92f4595.Pinnacle/snippets) emits 30 events and has 149 functions?! Now you know. 
+> Fun fact, did you know that the new [Disney Pinnacle contract](https://contractbrowser.com/A.edf9df96c92f4595.Pinnacle/components) emits 30 events and has 149 functions?! Now you know. 
 
+![History](/blog/history.png)
 
-![Diffing](/blog/diffs.jpeg)
+With deployment history, you can step back in time and track how contracts evolved. 
 
-With deployment history, you can step back in time and track how contracts evolve with the side-by-side diffing tool, mirroring the familiarity of your favorite code editor.
+![Diffing](/blog/diffs.png)
 
-![Diffing Preview](/blog/diffs2.jpeg)
+You can also use the side-by-side diffing tool, mirroring the familiarity of your favorite code editor.
+
+![Diffing Preview](/blog/diffs2.png)
 
 ## Roadmap
 
