@@ -9,11 +9,13 @@ import { useAccount } from 'hooks/useAccount'
 import { Disc, Eye, Key, List, Plus, Text } from 'lucide-react'
 import { useParams, usePathname } from 'next/navigation'
 import Link from "next/link"
+import { useCurrentUser } from '@/hooks/useCurrentUser'
 
 function AccountPage({}) {
   const address = cleanAddress(useParams().address as string)
   const account = useAccount(address)
   const path = usePathname()
+  const currentUser = useCurrentUser()
 
   return (
 <>
@@ -65,18 +67,18 @@ function AccountPage({}) {
           </div>
         </CardContent>
         <CardFooter className="flex items-center gap-2">
-            <Link href={path+"/contracts"}>
+          <Link href={path+"/contracts"}>
             <Button size="sm" className="h-7" disabled={Object.keys(account.contracts || {}).length < 1} variant="outline">
               <List className="h-4 w-4 me-2" />
               View
             </Button>
-            </Link>
-          <Link href={path+"/contracts/deploy"}>
+          </Link>
+          {currentUser && currentUser.addr === address && <Link href={path+"/contracts/deploy"}>
             <Button size="sm" className="h-7" variant="outline">
               <Plus className="h-4 w-4 me-2" /> 
               Deploy
             </Button>
-          </Link>
+          </Link>}
         </CardFooter>
       </Card>
       <Card>

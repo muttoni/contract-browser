@@ -8,7 +8,7 @@ export function getNetworkConfig(network){
     "testnet":{
     "flow.network": "testnet",
     "app.detail.title":"Contract Browser Testnet",
-    "app.detail.icon": "https://contractbrowser.com/favicon.png",
+    "app.detail.icon": "https://contractbrowser.com/icon.png",
     "accessNode.api": "https://rest-testnet.onflow.org",
     "discovery.wallet": "https://fcl-discovery.onflow.org/testnet/authn",
     "fcl.eventsPollRate": 2500,
@@ -22,7 +22,7 @@ export function getNetworkConfig(network){
   "mainnet":{
     "flow.network": "mainnet",
     "app.detail.title":"Contract Browser",
-    "app.detail.icon": "https://contractbrowser.com/favicon.png",
+    "app.detail.icon": "https://contractbrowser.com/icon.png",
     "accessNode.api": "https://rest-mainnet.onflow.org",
     "discovery.wallet": "https://fcl-discovery.onflow.org/authn",
     "fcl.eventsPollRate": 2500,
