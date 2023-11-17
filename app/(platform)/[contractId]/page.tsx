@@ -1,7 +1,8 @@
 "use client"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { Calendar, Copy, ListTree, Wallet, ScrollText, Network, Check } from "lucide-react"
-import CodeEditor from "@/components/editor"
+import { Calendar, Copy, ListTree, Wallet, ScrollText, Network, Check, Pencil } from "lucide-react"
+import CodeEditor from "@/components/CodeEditor"
+import CadenceEditor from "@/components/editor"
 import { useState } from "react"
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
@@ -11,12 +12,16 @@ import { Button } from "@/components/ui/button"
 import { calculateStringSizeInBytes, formatStorageSize, getContractAddress } from "@/lib/utils";
 import Link from "next/link"
 import { Skeleton } from "@/components/ui/skeleton"
+import { useCurrentUser } from "@/hooks/useCurrentUser"
 
 export default function ContractPage() {
   const [contractCopied, setContractCopied] = useState(false)
   const [importCopied, setImportCopied] = useState(false)
+  const [addressCopied, setAddressCopied] = useState(false)
+  const [editMode, setEditMode] = useState(false)
   const contractId = useParams().contractId as string
   const contract = useContract(contractId)
+  const user = useCurrentUser()
 
   return (
     <>
@@ -107,20 +112,25 @@ export default function ContractPage() {
         Import
       </Button>
       </CopyToClipboard>
-      <Link href={`/account/${getContractAddress(contract?.uuid)}`}>
-      <Button size="sm" variant="outline" className="w-full">
-        <Wallet className="h-4 w-4 me-2" />
+      <CopyToClipboard text={getContractAddress(contract?.uuid)}>
+      <Button size="sm" variant="outline" className="w-full" onClick={() => setAddressCopied(true)}>
+        {addressCopied ?
+          <Check className="h-4 w-4 me-2" />
+        : <Copy className="h-4 w-4 me-2" />
+        }
         Account
       </Button>
-      </Link>
-      <Link href={`/${contract?.uuid}/dependents`}>
-      <Button size="sm" variant="outline" className="w-full">
-        <Network className="h-4 w-4 me-2" />
-        Dependents
+      </CopyToClipboard>
+      <Button size="sm" variant="outline" className="w-full" disabled={user?.addr !== getContractAddress(contractId)} onClick={() => setEditMode(true)}>
+        <Pencil className="h-4 w-4 me-2" />
+        Update
       </Button>
-      </Link>
     </div>
-    {contract && contract.code ? <CodeEditor className={"min-h-[400px]"} code={contract?.code} /> : <Skeleton className="min-h-[400px] w-full" />}
+    <div className="h-full">
+    {contract && contract.code && editMode && <CodeEditor initialCode={contract?.code} />}
+    {contract && contract.code && !editMode && <CadenceEditor code={contract?.code} />}
+    {(!contract || !contract.code) && <Skeleton className="min-h-[400px] w-full" />}
+    </div>
   </>
   )
 }

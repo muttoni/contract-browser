@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect } from 'react';
-import Editor,  { useMonaco } from "@monaco-editor/react";
+import Editor, { useMonaco } from "@monaco-editor/react";
 import configureCadence from "./cadence"
 import { useTheme } from "next-themes"
 import { cn } from '@/lib/utils';
@@ -12,7 +12,7 @@ function setEditorReadOnly(readOnly) {
   }
 }
 
-export default function CodeEditor({prefix="", type="", index=0, code = "", onChange = null, name = "RAWR", lang="cadence", className="" }) {
+export default function CadenceEditor({prefix="", type="", index=0, code = "", onChange = null, name = "RAWR", lang="cadence", className="" }) {
   const monaco  = useMonaco();
   const { theme } = useTheme();
 
@@ -46,7 +46,7 @@ export default function CodeEditor({prefix="", type="", index=0, code = "", onCh
       }}
       value={code}
       onChange={onChange}
-      onMount={onChange?setEditorReadOnly(false):setEditorReadOnly(true)}
+      onMount={onChange ? setEditorReadOnly(false) : setEditorReadOnly(true)}
     />
   )
 }

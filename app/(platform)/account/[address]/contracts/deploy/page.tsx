@@ -30,7 +30,7 @@ export default function DeploymentPage () {
         <p className="text-sm text-muted-foreground">
           Paste or upload your contract code here and click &quot;Deploy&quot; to deploy it to the blockchain.
         </p>
-        <div className='h-full mt-4'>
+        <div className='mt-4 h-full'>
         <CodeEditor mustBeAuthedToViewCode={true} />
         </div>
       </div>}

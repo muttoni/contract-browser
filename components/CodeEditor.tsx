@@ -8,16 +8,15 @@ import { readFileAsText } from '@/lib/file'
 import Editor from '@/components/editor'
 import { Button } from '@/components/ui/button'
 import { Info, UploadCloud } from 'lucide-react'
-import { getContractAddress, getNetworkFromAddress, withPrefix } from '@/lib/utils'
+import { getContractAddress, getNetworkFromAddress, sansPrefix, withPrefix } from '@/lib/utils'
 import { Input } from '@/components/ui/input'
 import { useCurrentUser } from '@/hooks/useCurrentUser'
 import { useParams } from 'next/navigation' 
 import { useTx, IDLE } from '@/hooks/useTx'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Alert } from '@/components/ui/alert'
 import Loading from '@/components/ui/Loading'
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { ContractSearchResponseType } from '@/lib/types'
-import { Badge } from '@/components/ui/badge'
 
 import {
   Accordion,
@@ -33,12 +32,16 @@ import {
 } from "@/components/ui/popover"
 import { getVerifiedContractAddressByName } from '@/lib/verified-contracts'
 import Link from 'next/link'
+import { ContractCache } from '@/lib/cache'
 
-export default function CodeEditor ({ mustBeAuthedToViewCode = false}) {
-  const [code, setCode] = useState(Array.from({length: 12}, _ => "\n").join(""))
+export default function CodeEditor ({ initialCode = '', mustBeAuthedToViewCode = false}) {
+  const [code, setCode] = useState(initialCode || Array.from({length: 12}, _ => "\n").join(""))
   const [imports, setImports] = useState([])
-  const [needsImports, setNeedsImports] = useState(false)
   const [name, setName] = useState("")
+  const user = useCurrentUser()
+  const network = user?.addr ? getNetworkFromAddress(user?.addr) : "mainnet"
+  const params = useParams()
+
   const [exec, status, txStatus, details] = useTx(
     [
       fcl.transaction`
@@ -59,7 +62,8 @@ export default function CodeEditor ({ mustBeAuthedToViewCode = false}) {
     ],
     {
       async onSuccess() {
-        window.location.reload()
+        ContractCache.invalidateAllForContract(`A.${sansPrefix(user.addr)}.${name}`)
+        window.location.href = `${window.location.origin}/A.${sansPrefix(user.addr)}.${name}`
       },
     }
   )
@@ -77,16 +81,12 @@ export default function CodeEditor ({ mustBeAuthedToViewCode = false}) {
   function replaceImports(code, newImports) {
     const regex = /^ *import *(?<contracts>[A-Za-z_][A-Za-z0-9_]*( *, *[A-Za-z_][A-Za-z0-9_]+)*) *(from)? *(?<address>0x[a-f0-9]+)?/igm;
     const matches = Array.from(code.matchAll(regex))
-    console.log("matches", matches)
 
     let newCode = code
     for (const match of matches) {
-      console.log("match", match)
       const importNameToReplace = match[1]
       const importIndex = findImportIndexInMatches(importNameToReplace, newImports)
-      console.log("importNameToReplace", match[1], "importIndex", importIndex)
       if (importIndex !== -1 && newImports[importIndex][4]) {
-        console.log("replacing", match[0], "with", `import ${newImports[importIndex][1]} from ${newImports[importIndex][4]}`)
         newCode = newCode.replace(match[0], `import ${newImports[importIndex][1]} from ${newImports[importIndex][4]}`)
       }
     }
@@ -122,11 +122,6 @@ export default function CodeEditor ({ mustBeAuthedToViewCode = false}) {
 
   }
 
-  const user = useCurrentUser()
-  const network = user?.addr ? getNetworkFromAddress(user?.addr) : "mainnet"
-
-  const params = useParams()
-
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (!file) return
@@ -145,18 +140,18 @@ export default function CodeEditor ({ mustBeAuthedToViewCode = false}) {
     saveContract()
   };
 
-  const IS_CURRENT_USER = withPrefix(user?.addr) === withPrefix(params?.address)
+  const IS_CURRENT_USER = withPrefix(user?.addr) === withPrefix(params?.address) || withPrefix(user?.addr) === getContractAddress(params?.contractId)
 
   return (
-    <>
+    <div className='grid min-h-[800px] h-full'>
       {IS_CURRENT_USER && 
       <>
         {txStatus === IDLE ?
-        <div className="flex items-center mb-4 gap-4">
+        <div className="flex items-center justify-between mb-4 gap-4">
           <Input id="cadenceFile" className="w-60" type="file" onChange={handleFileChange} />
           <Button className="flex" onClick={handleDeployClick}>
             <UploadCloud className="h-4 w-4 me-2" />
-            {txStatus === IDLE ? "Deploy" : "Deploying"}
+            {txStatus === IDLE ? (initialCode ? "Update" : "Deploy") : "Deploying"}
           </Button>
         </div>
         :
@@ -190,7 +185,7 @@ export default function CodeEditor ({ mustBeAuthedToViewCode = false}) {
       </>
       : <p className="p-16 text-center">Please login first.</p>
       }
-    </>
+    </div>
   );
 };
 

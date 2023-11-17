@@ -1,13 +1,14 @@
 import { ContractResponseType, DependantsResponseType, DeploymentsResponseType, FullContract, SnippetsResponse } from "@/lib/types"
 import { useState, useEffect } from "react"
 import { extractSnippetName, getContractAddress, getNetworkFromAddress } from "@/lib/utils"
+import { ContractCache } from "@/lib/cache"
 
-function createGetDataFunction(cacheKeySuffix, pathSuffix) {
+function createGetDataFunction(cacheKeyPrefix, pathSuffix) {
   return async function getData(uuid) {
-    const cacheKey = `${cacheKeySuffix}_${uuid}`
-    const cachedData = localStorage.getItem(cacheKey)
+    const cacheKey = `${cacheKeyPrefix}_${uuid}`
+    const cachedData = ContractCache.retrieve(cacheKey)
     if (cachedData) {
-      return JSON.parse(cachedData)
+      return cachedData
     }
 
     const path = `${process.env.NEXT_PUBLIC_BASE_DOMAIN}/api/contracts/${uuid}/${pathSuffix}?network=${getNetworkFromAddress(getContractAddress(uuid)) || "mainnet"}`
@@ -19,9 +20,7 @@ function createGetDataFunction(cacheKeySuffix, pathSuffix) {
     }
 
     const data = await res.json()
-    localStorage.setItem(cacheKey, JSON.stringify(data))
-    localStorage.setItem(`${cacheKey}_timestamp`, Date.now().toString())
-
+    ContractCache.store(cacheKey, data)
     return data
   }
 }
@@ -100,14 +99,7 @@ export function useContract(uuid: string) {
 
   useEffect(() => {
     const cacheKeys = [`basicData_${uuid}`, `deploymentData_${uuid}`, `dependantData_${uuid}`, `snippetData_${uuid}`]
-    const now = Date.now()
-    cacheKeys.forEach((key) => {
-      const timestamp = localStorage.getItem(`${key}_timestamp`)
-      if (timestamp && now - parseInt(timestamp) > 24 * 60 * 60 * 1000) {
-        localStorage.removeItem(key)
-        localStorage.removeItem(`${key}_timestamp`)
-      }
-    })
+    ContractCache.checkExpiry(cacheKeys)
   }, [uuid])
 
   return contract as FullContract & {
