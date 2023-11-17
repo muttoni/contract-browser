@@ -143,7 +143,7 @@ export default function CodeEditor ({ initialCode = '', mustBeAuthedToViewCode =
   const IS_CURRENT_USER = withPrefix(user?.addr) === withPrefix(params?.address) || withPrefix(user?.addr) === getContractAddress(params?.contractId)
 
   return (
-    <div className='grid min-h-[800px] h-full'>
+    <div className=''>
       {IS_CURRENT_USER && 
       <>
         {txStatus === IDLE ?
@@ -181,7 +181,9 @@ export default function CodeEditor ({ initialCode = '', mustBeAuthedToViewCode =
       </AccordionItem>
       </Accordion>
       }
-      <Editor code={code} onChange={IS_CURRENT_USER && txStatus === IDLE ? setCode : false} />
+      <div className='grid min-h-[800px] h-full'>
+        <Editor code={code} onChange={IS_CURRENT_USER && txStatus === IDLE ? setCode : false} />
+      </div>
       </>
       : <p className="p-16 text-center">Please login first.</p>
       }
