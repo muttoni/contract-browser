@@ -9,6 +9,7 @@ export type StatusResponseType = APIResponse & {
     last_sync_at: string;
     network: string;
     synced_height: number;
+    contract_search_amount: number;
   };
 }
 

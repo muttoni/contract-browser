@@ -179,7 +179,7 @@ function Dashboard({ network, status, updatedStart, contractStats }) {
         <CardContent>
           <div className="text-2xl font-bold"><CountUp start={updatedStart} end={status?.data?.synced_height} /></div>
           <p className="text-xs text-muted-foreground">
-            Blocks on {network}
+            blocks synced
           </p>
         </CardContent>
       </Card>
@@ -188,27 +188,15 @@ function Dashboard({ network, status, updatedStart, contractStats }) {
           <CardTitle className="text-sm font-medium">
             Status
           </CardTitle>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            className="h-4 w-4 text-muted-foreground"
-          >
-            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-          </svg>
+          <ConnectionLight status={status?.data ? "online" : "connecting"}/>
         </CardHeader>
         <CardContent>
           <div className="text-2xl flex items-center gap-3 font-bold">
-            <ConnectionLight status={status?.data ? "online" : "connecting"}/>
-            {status?.data ? "Online" : "Connecting"}
+            <div className="text-2xl font-bold"><CountUp start={0} end={status?.data?.contract_search_count || 0} /></div>
           </div>
-          <p className="text-xs text-muted-foreground">
-            last synced {timeSince(new Date(status?.data?.last_sync_at + "Z")) || "-"} ago
-          </p>
+          <div className="text-xs text-muted-foreground flex items-center gap-2">
+            searches on {network}
+          </div>
         </CardContent>
       </Card>
     </div>

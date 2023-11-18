@@ -13,7 +13,7 @@ export async function GET(request: Request) {
     }
   };
 
-  const res = await fetch(`${process.env.API_DOMAIN}/api/v1/status?network=${network}`, options)
+  const res = await fetch(`${process.env.API_DOMAIN}/api/v2/status?network=${network}`, options)
   const status : StatusResponseType = await res.json()
  
   return Response.json(status)
