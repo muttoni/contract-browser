@@ -28,7 +28,6 @@ export function Search() {
   const [ network, setNetwork ] = useState("mainnet")
   const [ contractResultsMainnet, setContractResultsMainnet ] = useState({} as ContractSearchResponseType)
   const [ contractResultsTestnet, setContractResultsTestnet ] = useState({} as ContractSearchResponseType)
-  const [ loading, setLoading ] = useState(false)
   const [ loadingMainnetResults, setLoadingMainnetResults ] = useState(false)
   const [ loadingTestnetResults, setLoadingTestnetResults ] = useState(false)
   const [ showSearchWindow , setShowSearchWindow ] = useState(false)
@@ -48,7 +47,6 @@ export function Search() {
   const getResults = useCallback(
     debounce(async (query) => {
 
-      setLoading(true)
       setLoadingMainnetResults(true)
       setLoadingTestnetResults(true)
 
@@ -83,7 +81,6 @@ export function Search() {
         break;
       case /^(?:A\.)?[0-9a-fA-F]{8,16}\.[\w-]+$/.test(query):
         // Contract search
-        setLoading(false)
         setQuery("")
         return router.push(`/${query}`)
       default:
@@ -95,12 +92,7 @@ export function Search() {
     }
 
     if(query.length > 2){
-      setLoading(true)
       getResults(query)
-    }
-
-    return () => {
-      setLoading(false)
     }
 
   }, [query, offset, limit])
@@ -108,7 +100,6 @@ export function Search() {
   useEffect(() => {
     setShowSearchWindow(false)
   }, [pathName])
-   
 
   return (
     <>

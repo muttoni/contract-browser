@@ -1,7 +1,9 @@
 import { ContractResponseType, DependantsResponseType, DeploymentsResponseType, FullContract, SnippetsResponse } from "@/lib/types"
 import { useState, useEffect } from "react"
-import { extractSnippetName, getContractAddress, getNetworkFromAddress } from "@/lib/utils"
+import { extractSnippetName, getContractAddress, getContractName, getNetworkFromAddress } from "@/lib/utils"
 import { ContractCache } from "@/lib/cache"
+import * as fcl from "@onflow/fcl"
+import { getNetworkConfig } from "./useNetwork"
 
 function createGetDataFunction(cacheKeyPrefix, pathSuffix) {
   return async function getData(uuid) {
@@ -25,6 +27,32 @@ function createGetDataFunction(cacheKeyPrefix, pathSuffix) {
   }
 }
 
+async function getOnchainContractCode(uuid) {
+  const address = getContractAddress(uuid)
+  const name = getContractName(uuid)
+  const network = getNetworkFromAddress(address)
+  fcl.config(getNetworkConfig(network))
+
+  console.log("fetching onchain contract code", address)
+
+  const code = fcl.account(address).then((data) => {
+    if(data as {
+      address: string,
+      keys: any[],
+      contracts: any,
+      balance: number,
+    } && data.contracts[name] ) {
+      return {
+        address,
+        name,
+        code: data.contracts[name]
+      }
+    }
+  })
+
+  return code
+}
+
 export function useContract(uuid: string) {
 
   const [ contract, setContract ] = useState(null)
@@ -36,6 +64,16 @@ export function useContract(uuid: string) {
 
 
   useEffect(() => {
+
+    getOnchainContractCode(uuid).then((code) => {
+      setContract((prev) => {
+        return {
+          ...prev,
+          ...code
+        }
+      })
+    });
+
     getBasicData(uuid).then((contractReponse : ContractResponseType) => {
       // console.log("setting contract data",contractReponse)
       setContract((prev) => {
@@ -67,7 +105,9 @@ export function useContract(uuid: string) {
     })
 
     getSnippetData(uuid).then((snippetsResponse : SnippetsResponse) => {
-      const snippets = snippetsResponse.data.snippets
+      const snippets = snippetsResponse?.data?.snippets
+
+      if(!snippets) return;
 
       snippets.map((snippet, i) => {
         snippets[i].name = extractSnippetName(snippet.code)
