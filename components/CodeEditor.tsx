@@ -79,7 +79,7 @@ export default function CodeEditor ({ initialCode = '', mustBeAuthedToViewCode =
 
 
   function replaceImports(code, newImports) {
-    const regex = /^ *import *(?<contracts>[A-Za-z_][A-Za-z0-9_]*( *, *[A-Za-z_][A-Za-z0-9_]+)*) *(from)? *(?<address>0x[a-f0-9]+)?/igm;
+    const regex = /^ *import "?(?<contracts>[A-Za-z_][A-Za-z0-9_]*( *, *[A-Za-z_][A-Za-z0-9_]+)*)"? *(from)? *(?<address>0x[a-f0-9]+)?/igm;
     const matches = Array.from(code.matchAll(regex))
 
     let newCode = code
@@ -106,7 +106,7 @@ export default function CodeEditor ({ initialCode = '', mustBeAuthedToViewCode =
     setName(code.match(/(?<access>pub|access\(all\)) contract (?<name>\w+)/)?.groups?.name ?? "")
 
     // Find all import statements that don't specify an address
-    const parseImports = /^ *import (?<contracts>[A-Za-z_][A-Za-z0-9_]*( *, *[A-Za-z_][A-Za-z0-9_]+)*) *(from *(?<address>0x[a-f0-9]+))?/igm
+    const parseImports = /^ *import "?(?<contracts>[A-Za-z_][A-Za-z0-9_]*( *, *[A-Za-z_][A-Za-z0-9_]+)*)"? *(from *(?<address>0x[a-f0-9]+))?/igm
     const matches = Array.from(code.matchAll(parseImports))
     const detectedImports = []
 
