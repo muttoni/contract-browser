@@ -44,7 +44,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <WelcomeBanner />
+          {/* <WelcomeBanner /> */}
           <main className="container px-4 md:px-8 lg:px-16 min-h-screen w-full flex flex-col">
           <div className="flex-col py-2 md:py-4 md:flex">
             <div className="flex items-center">

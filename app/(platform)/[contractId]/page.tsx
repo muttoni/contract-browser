@@ -128,7 +128,7 @@ export default function ContractPage() {
     </div>
     <div className="h-full">
     {contract && contract.code && editMode && <CodeEditor initialCode={contract?.code} />}
-    {contract && contract.code && !editMode && <CadenceEditor code={contract?.code} />}
+    {contract && contract.code && !editMode && <CadenceEditor className="min-h-[400px]" code={contract?.code} />}
     {(!contract || !contract.code) && <Skeleton className="min-h-[400px] w-full" />}
     </div>
   </>
