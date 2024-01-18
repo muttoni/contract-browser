@@ -38,12 +38,14 @@ import { useSearchParams } from "next/navigation"
 import Loading from "./ui/Loading"
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group"
 import { Label } from "flowbite-react"
+import { getNetwork } from "@/hooks/useNetwork"
 
 
 export function UserNav() {
   
   const user = useCurrentUser()
-  const [network, setNetwork] = useState("mainnet")
+  const hookNetwork = getNetwork()
+  const [network, setNetwork] = useState(hookNetwork || 'mainnet')
   
   function changeNetwork(desiredNetwork: string) {
     fcl.unauthenticate()
@@ -55,6 +57,13 @@ export function UserNav() {
   useEffect(() => {
     fcl.config(getNetworkConfig(network))
   }, [network])
+
+  useEffect(() => {
+    if(user && user.addr) {
+      setNetwork(getNetworkFromAddress(user.addr))
+      // console.log("setting user network", getNetworkFromAddress(user.addr))
+    }
+  }, [user.addr])
 
   return (
     <DropdownMenu>

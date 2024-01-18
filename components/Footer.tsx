@@ -55,7 +55,7 @@ export function Footer() {
           </div>
           <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
           <div className="sm:flex flex-row sm:items-center sm:justify-between">
-              <span className="text-sm text-muted-foreground sm:text-center">© 2023 <a href="/" className="hover:underline">Contract Browser</a>. All Rights Reserved.</span>
+              <span className="text-sm text-muted-foreground sm:text-center">© 2024 <a href="/" className="hover:underline">Contract Browser</a>. All Rights Reserved.</span>
               <div className="flex mt-4 sm:justify-center sm:mt-0">
                   <Link href="https://twitter.com/contractbrowser" target="_blank" className="text-muted-foreground hover:text-gray-900 dark:hover:text-white ms-5">
                       <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 17">

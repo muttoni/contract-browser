@@ -161,7 +161,7 @@ export default function CodeEditor ({ initialCode = '', mustBeAuthedToViewCode =
                 <p className='m-0 p-0'>Deploying your contract...({txStatus as string})</p>
                 {/* 
                 // @ts-ignore */}
-                <Link target="_blank" href={`https://flowdiver.io/${details.txId}`}>
+                <Link target="_blank" href={`https://${network === "testnet" && "testnet."}flowdiver.io/${details.txId}`}>
                   <Button variant='secondary' size='sm'>View transaction</Button>
                 </Link>
               </div>

@@ -78,7 +78,7 @@ export async function useNetwork(desiredNetwork: string = "mainnet"){
 //   return value
 // }
 
-export function getNetwork(): { network: string | null } {
+export function getNetwork(): string  {
   const [network, setNetwork] = useState<string|null>(null)
 
   useEffect(() => {
@@ -89,5 +89,5 @@ export function getNetwork(): { network: string | null } {
     getConfig()
   }, [])
 
-  return { network }
+  return network
 }
