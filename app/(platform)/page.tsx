@@ -28,7 +28,9 @@ export default function Page() {
   const [ status, setStatus ] = useState(null as unknown as StatusResponseType | null | undefined)
   const [ network, setNetwork ] = useState("mainnet")
   const [ updatedStart, setUpdatedStart ] = useState(0)
-  const [ contractStats, setContractStats ] = useState({})
+  const [ contractStats, setContractStats ] = useState({
+    contracts_diff : 0
+  })
 
   async function getData(): Promise<StatusResponseType> {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_DOMAIN}/api/status?network=${network}`)
@@ -76,7 +78,10 @@ export default function Page() {
       setStatus(data)
     })
 
-    setContractStats({})
+    setContractStats({
+      contracts_diff : 0
+    })
+
     fetch(`${process.env.NEXT_PUBLIC_BASE_DOMAIN}/api/graphql/`, {
       method: "POST",
       body: JSON.stringify({
@@ -155,7 +160,7 @@ function Dashboard({ network, status, updatedStart, contractStats }) {
         <CardContent>
           <div className="text-2xl font-bold"><CountUp start={0} end={contractStats ? contractStats.contracts : 0} /></div>
           <p className="text-xs text-muted-foreground">
-            {(contractStats.contracts_diff || 0).toFixed(2)}% from yesterday
+            {typeof contractStats?.contracts_diff === 'number' ? contractStats?.contracts_diff.toFixed(2) : '0.00'}% from yesterday
           </p>
         </CardContent>
       </Card>
