@@ -7,7 +7,7 @@ import { Footer } from '@/components/Footer'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import '@/styles/globals.css'
 import '@/styles/code.css'
-import WelcomeBanner from '@/components/ui/WelcomeBanner'
+import MigrationBanner from '@/components/ui/MigrationBanner'
 
 import type { Metadata } from 'next'
 import { generateMetadataObject } from '@/lib/utils';
@@ -44,7 +44,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {/* <WelcomeBanner /> */}
+          <MigrationBanner />
           <main className="container px-4 md:px-8 lg:px-16 min-h-screen w-full flex flex-col">
           <div className="flex-col py-2 md:py-4 md:flex">
             <div className="flex items-center">
