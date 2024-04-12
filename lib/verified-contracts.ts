@@ -189,6 +189,22 @@ export const VERIFIED_CONTRACTS = {
       "description": "A Staking Collection is a resource that allows its owner to manage multiple staking objects in a single account via a single storage path, and perform staking and delegation actions using both locked and unlocked Flow."
     }
   },
+  "MigrationContractStaging": {
+    "address": {
+      "testnet": "0x2ceae959ed1a7e7a",
+      "mainnet": "0x56100d46aa9b0212",
+    },
+    "uuid": {
+      "testnet": "A.2ceae959ed1a7e7a.MigrationContractStaging",
+      "mainnet": "A.56100d46aa9b0212.MigrationContractStaging",
+    },
+    "name": "Migration Contract Staging",
+    "metadata": {
+      "name": "Migration Contract Staging Contract",
+      "description":
+        "Used as a staging ground for Cadence 1.0 migration, this contract allows for a contract's updated Cadence 1.0 code to be staged and retrieved. Contracts MUST be staged here to be updated at the Cadence 1.0 milestone.",
+    },
+  },
 
   // FLOW SUPPORTED RANDOMNESS
   "RandomBeaconHistory": {
