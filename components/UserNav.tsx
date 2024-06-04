@@ -97,6 +97,10 @@ export function UserNav() {
 export default function AccountNav({user, network, changeNetwork}) {
   const account = useAccount(user.addr)
 
+  // useEffect(() => {
+  //   console.log(account.storage?.find)
+  // }, [account])
+
   return user && account ? (
     <>
     <DropdownMenuTrigger asChild>
@@ -127,7 +131,8 @@ export default function AccountNav({user, network, changeNetwork}) {
               <AvatarImage src={account.storage?.find.avatar} alt={account.storage?.find.name} />
               <AvatarFallback>{account.storage?.find.name[0]}</AvatarFallback>
             </Avatar>
-            <Link href={{pathname: `https://find.xyz/${account.storage?.find.name}`}} target="_blank"> {account.storage?.find.name}.find  </Link>
+            {account.storage?.find.findName ? <Link href={{pathname: `https://find.xyz/${account.storage?.find.findName}`}} target="_blank"> {account.storage?.find.findName}.find  </Link>
+            : <span>{account.storage?.find.name} (find)</span>}
             </div>
             <div>
               <p className="text-xs text-muted-foreground">{account.storage?.find.description}  </p>
