@@ -9,7 +9,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { useContract } from "@/hooks/useContract"
 import { useParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { calculateStringSizeInBytes, formatStorageSize, getContractAddress, getNetworkFromAddress } from "@/lib/utils";
+import { calculateStringSizeInBytes, formatStorageSize, getContractAddress, getNetworkFromAddress, sansPrefix } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton"
 import { useCurrentUser } from "@/hooks/useCurrentUser"
 import { CopyButton } from "@/components/ui/CopyButton"
@@ -133,8 +133,8 @@ export default function ContractPage() {
           {/* <span className="absolute top-0 left-2 text-xs">FLOW CLI COMMAND</span> */}
             <Terminal className="text-muted-foreground"/>
           <span className="font-mono"><span className="opacity-70">
-            flow dependencies add </span> {getNetworkFromAddress(contract.address)}://{contract.address}.{contract.name}</span>
-          <CopyButton text={`${getNetworkFromAddress(contract.address)}://${contract.address}.${contract.name}`} className="" />
+            flow dependencies add </span> {getNetworkFromAddress(contract.address)}://{sansPrefix(contract.address)}.{contract.name}</span>
+          <CopyButton text={`${getNetworkFromAddress(contract.address)}://${sansPrefix(contract.address)}.${contract.name}`} className="" />
         </div>
         </>
       : <Skeleton className="flex h-16 w-full"></Skeleton>
