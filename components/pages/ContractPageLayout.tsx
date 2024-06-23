@@ -8,10 +8,11 @@ import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
 import AddressBadge from "@/components/ui/AddressBadge"
 import { CaretRightIcon } from "@radix-ui/react-icons"
-import { BadgeHelp } from "lucide-react"
+import { AlertTriangle, BadgeHelp } from "lucide-react"
 import { isVerified } from "@/lib/verified-contracts"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import { VerifiedBadge } from "@/components/ui/VerifiedBadge"
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert"
 
 export default function ContractPageLayout({ children }) {
   
@@ -42,8 +43,8 @@ export default function ContractPageLayout({ children }) {
     },
     {
       title: "Interact",
-      type: "coming-soon",
-      href:"/" + contractId + "/interact",
+      type: "link-out",
+      href:"https://interact.flowser.dev/"+network,
     }
   ]
 
@@ -67,6 +68,14 @@ export default function ContractPageLayout({ children }) {
 
         </div>
       </div>
+      {/* <div>
+        <Alert className="text-orange-500 bg-orange-50">
+          <AlertTriangle className="h-4 w-4 !text-orange-500 me-5"></AlertTriangle>
+          <AlertTitle className="font-bold">This contract has not been staged for Crescendo!</AlertTitle>
+          <AlertDescription>To migrate your contracts to Crescendo, stage this contract by X/XX. <Link className="font-bold text-orange-600" href="https://flow.com/upgrade/crescendo/migration" target="_blank">Learn more &rarr;</Link>
+          </AlertDescription>
+        </Alert>
+      </div> */}
       <Separator className="my-6" />
       <div className="flex flex-col flex-1 space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
         <aside className="">

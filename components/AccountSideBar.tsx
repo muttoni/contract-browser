@@ -14,8 +14,52 @@ interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   }[]
 }
 
+
+const renderers = {
+  'coming-soon': (item) => (
+    <Button
+      disabled={true}
+      variant="ghost"
+      key={item.title}
+      className="justify-start"
+    >
+      {item.title}
+      <sup className="text-xs text-muted-foreground">WIP</sup>
+    </Button>
+  ),
+  'link-out': (item) => (
+    <a
+      key={item.href}
+      href={item.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cn(
+        buttonVariants({ variant: "ghost" }),
+        "justify-start hover:bg-transparent hover:underline"
+      )}
+    >
+      {item.title}&nbsp;<span> &#8599;</span>
+    </a>
+  ),
+  default: (item, pathname) => (
+    <Link
+      key={item.href}
+      href={item.href}
+      className={cn(
+        buttonVariants({ variant: "ghost" }),
+        "justify-start",
+        pathname === item.href
+          ? "bg-muted hover:bg-muted"
+          : "hover:bg-transparent hover:underline"
+      )}
+    >
+      {item.title}
+    </Link>
+  ),
+}
+
 export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   return (
     <nav
@@ -25,26 +69,10 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
       )}
       {...props}
     >
-      {items.map((item) => (
-        !item.type || item.type !== 'coming-soon' ? <Link
-          key={item.href}
-          href={item.href}
-          className={cn(
-            buttonVariants({ variant: "ghost" }),
-            "justify-start",
-            pathname === item.href
-              ? "bg-muted hover:bg-muted"
-              : "hover:bg-transparent hover:underline"
-          )}
-        >
-          {item.title}
-        </Link>
-        :
-        <Button disabled={true} variant="ghost" key={item.title}
-          className="justify-start">
-          {item.title}<sup className="text-xs text-muted-foreground">WIP</sup>
-        </Button>
-      ))}
+      {items.map((item) => {
+        const renderer = renderers[item.type] || renderers.default;
+        return renderer(item, pathname);
+      })}
     </nav>
-  )
+  );
 }

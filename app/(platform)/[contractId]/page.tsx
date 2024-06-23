@@ -1,6 +1,6 @@
 "use client"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { Calendar, Copy, ListTree, Wallet, ScrollText, Network, Check, Pencil } from "lucide-react"
+import { Calendar, Copy, ListTree, ScrollText, Network, Check, Pencil, Terminal } from "lucide-react"
 import CodeEditor from "@/components/CodeEditor"
 import CadenceEditor from "@/components/editor"
 import { useState } from "react"
@@ -9,10 +9,10 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { useContract } from "@/hooks/useContract"
 import { useParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { calculateStringSizeInBytes, formatStorageSize, getContractAddress } from "@/lib/utils";
-import Link from "next/link"
+import { calculateStringSizeInBytes, formatStorageSize, getContractAddress, getNetworkFromAddress } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton"
 import { useCurrentUser } from "@/hooks/useCurrentUser"
+import { CopyButton } from "@/components/ui/CopyButton"
 
 export default function ContractPage() {
   const [contractCopied, setContractCopied] = useState(false)
@@ -125,6 +125,20 @@ export default function ContractPage() {
         <Pencil className="h-4 w-4 me-2" />
         Update
       </Button>
+    </div>
+    <div className="gap-2 grid-cols-1 md:grid-cols-2">
+      {contract && contract.name ? 
+        <>
+        <div className="border rounded relative p-4 flex gap-3 align-center">
+          {/* <span className="absolute top-0 left-2 text-xs">FLOW CLI COMMAND</span> */}
+            <Terminal className="text-muted-foreground"/>
+          <span className="font-mono"><span className="opacity-70">
+            flow dependencies add </span> {getNetworkFromAddress(contract.address)}://{contract.address}.{contract.name}</span>
+          <CopyButton text={`${getNetworkFromAddress(contract.address)}://${contract.address}.${contract.name}`} className="" />
+        </div>
+        </>
+      : <Skeleton className="flex h-16 w-full"></Skeleton>
+      }
     </div>
     <div className="h-full">
     {contract && contract.code && editMode && <CodeEditor initialCode={contract?.code} />}

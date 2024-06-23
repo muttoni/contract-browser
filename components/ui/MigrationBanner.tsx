@@ -37,7 +37,7 @@ export default function WelcomeBanner() {
           <p className="flex items-center text-sm font-normal">
             <Sparkles className="mr-2 h-4 w-4" />
             <span className="[&_p]:inline">
-              Get your contracts ready for Crescendo!&nbsp;
+              Stage your contracts for Crescendo!&nbsp;
               <Link
                 target="_blank"
                 href="https://flow.com/upgrade/crescendo"
