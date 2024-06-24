@@ -84,3 +84,10 @@ export type SnippetsResponse = APIResponse & {
 }
 
 export type QUERY_TYPE = 'top' | 'ownedBy' | 'recent' | 'topByDependencies' | null
+
+export type FlipsideResponseItem = {
+  CONTRACT: string;
+  STAGED: string;
+}
+
+export type FlipsideResponse = FlipsideResponseItem[];

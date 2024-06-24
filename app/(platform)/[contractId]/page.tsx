@@ -1,9 +1,9 @@
 "use client"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { Calendar, Copy, ListTree, ScrollText, Network, Check, Pencil, Terminal } from "lucide-react"
+import { Calendar, Copy, ListTree, ScrollText, Network, Check, Pencil, Terminal, AlertTriangle } from "lucide-react"
 import CodeEditor from "@/components/CodeEditor"
 import CadenceEditor from "@/components/editor"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 import { useContract } from "@/hooks/useContract"
@@ -13,6 +13,9 @@ import { calculateStringSizeInBytes, formatStorageSize, getContractAddress, getN
 import { Skeleton } from "@/components/ui/skeleton"
 import { useCurrentUser } from "@/hooks/useCurrentUser"
 import { CopyButton } from "@/components/ui/CopyButton"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import Link from "next/link"
+import { useMigration } from "@/contexts/MigrationContext"
 
 export default function ContractPage() {
   const [contractCopied, setContractCopied] = useState(false)
@@ -23,8 +26,37 @@ export default function ContractPage() {
   const contract = useContract(contractId)
   const user = useCurrentUser()
 
+  const { data, error } = useMigration();
+
+  const [staged, setStaged] = useState(false);
+
+  useEffect(() => {
+    if (error || !data.contracts) {
+      return;
+    }
+    
+    if(data.contracts.includes(contractId)) {
+      setStaged(true);
+    }
+  }, [data])
+
   return (
     <>
+      {user?.addr === getContractAddress(contractId) && <div>
+      {contract && !staged && <Alert className="text-orange-500 bg-orange-50">
+          <AlertTriangle className="h-4 w-4 !text-orange-500 me-5"></AlertTriangle>
+          <AlertTitle className="font-bold">This contract has not been staged for Crescendo!</AlertTitle>
+          <AlertDescription>Get this contracts ready for Crescendo: stage this contract as soon as possible. <Link className="font-bold text-orange-600" href="https://flow.com/upgrade/crescendo/migration" target="_blank">Learn more &rarr;</Link>
+          </AlertDescription>
+        </Alert>}
+
+      {contract && staged && <Alert className="text-green-500 bg-green-50">
+          <Check className="h-4 w-4 !text-green-500 me-5"></Check>
+          <AlertTitle className="font-bold">This contract has been staged!</AlertTitle>
+          <AlertDescription>Please ensure all your other contracts are staged for Crescendo. <Link className="font-bold text-green-600" href="https://flow.com/upgrade/crescendo/migration" target="_blank">Learn more &rarr;</Link>
+          </AlertDescription>
+        </Alert>}
+      </div>}
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
       {contract && contract.name ? 
       <>

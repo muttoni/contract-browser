@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
+    "@onflow/cadence-docgen": "^0.20.2",
     "@onflow/fcl": "1.6.0",
     "@onflow/typedefs": "1.1.0",
     "@radix-ui/react-accordion": "^1.1.2",

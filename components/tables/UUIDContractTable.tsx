@@ -1,8 +1,9 @@
 import Loading from "../ui/Loading"
 import { columns } from "./ContractUUIDTableColumns"
+import { columnsWithMigrationState } from "./ContractUUIDTableColumnsWithMigrationState"
 import { DataTable } from "./DataTable"
 
-export function UUIDContractTable({ contracts, loading }: { contracts: string[], loading: boolean}) {
+export function UUIDContractTable({ contracts, loading, showMigrationState }: { contracts: string[], loading: boolean, showMigrationState? : boolean}) {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center">
@@ -13,7 +14,7 @@ export function UUIDContractTable({ contracts, loading }: { contracts: string[],
   }
   return (
     <DataTable
-      columns={columns}
+      columns={showMigrationState ? columnsWithMigrationState : columns}
       data={contracts}
     />
   )

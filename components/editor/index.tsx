@@ -4,6 +4,8 @@ import Editor, { useMonaco } from "@monaco-editor/react";
 import configureCadence from "./cadence"
 import { useTheme } from "next-themes"
 import { cn } from '@/lib/utils';
+//import {CadenceDocgen} from "@onflow/cadence-docgen"
+
 
 function setEditorReadOnly(readOnly) {
   return (editor, monaco)=>{
@@ -16,7 +18,16 @@ export default function CadenceEditor({prefix="", type="", index=0, code = "", o
   const monaco  = useMonaco();
   const { theme } = useTheme();
 
-  
+  async function loadDocgen () {
+    // const docgen = await CadenceDocgen.create("cadence-docgen.wasm")
+    // const docs = docgen.generate(`
+    //   /// This is a simple function with a doc-comment.
+    //   pub fun hello() {
+    //   }
+    // `)
+    // console.log("DOCS", docs);
+  }
+
   useEffect(() => {
     if (!monaco) return
     configureCadence(monaco)
@@ -30,6 +41,7 @@ export default function CadenceEditor({prefix="", type="", index=0, code = "", o
       rules: []
     });
     monaco.editor.setTheme('cb');
+    //loadDocgen()
   }, [monaco, theme]);
 
   return (

@@ -8,10 +8,11 @@ import { ThemeProvider } from '@/components/ThemeProvider'
 import '@/styles/globals.css'
 import '@/styles/code.css'
 import MigrationBanner from '@/components/ui/MigrationBanner'
+import { MigrationProvider } from '@/contexts/MigrationContext';
 
 import type { Metadata } from 'next'
 import { generateMetadataObject } from '@/lib/utils';
- 
+
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_DOMAIN),
   alternates: {
@@ -57,7 +58,9 @@ export default function RootLayout({
             <Search /> 
             </div>
           </div>
-          {children}
+          <MigrationProvider>
+            {children}
+          </MigrationProvider>
         </main>
       </ThemeProvider>
       <Footer />

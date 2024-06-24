@@ -1,3 +1,5 @@
+
+import CrescendoComponent from "@/components/CrescendoComponent";
 import { OGContractTemplate } from "@/components/OGContractTemplate";
 
 export default function TestPage() {
@@ -6,7 +8,7 @@ export default function TestPage() {
     <div className="">
       This is a testing page.
 
-      <OGContractTemplate uuid={"test"} />
+      <CrescendoComponent />
     </div>
   )
 } 

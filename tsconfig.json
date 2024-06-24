@@ -28,6 +28,9 @@
       ],
       "@/cadence/*": [
         "cadence/*"
+      ],
+      "@/contexts/*": [
+        "contexts/*"
       ]
     },
     "allowJs": true,
@@ -53,7 +56,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "contexts/MigrationContext.js"  ],
   "exclude": [
     "node_modules"
   ]

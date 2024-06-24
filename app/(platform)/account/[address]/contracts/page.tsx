@@ -5,9 +5,11 @@ import { UUIDContractTable } from "@/components/tables/UUIDContractTable"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { sansPrefix } from "@/lib/utils"
+import { useCurrentUser } from "@/hooks/useCurrentUser"
 
 export default function ContractsPage({  }) {
 
+  const user = useCurrentUser()
   const address = useParams().address as string
   const account = useAccount(address)
   const contracts = account?.contractNames
@@ -24,7 +26,7 @@ export default function ContractsPage({  }) {
 
   return (
     <>
-      <UUIDContractTable contracts={convertToUUIDs(contracts)} loading={!account.contracts} />
+      <UUIDContractTable contracts={convertToUUIDs(contracts)} loading={!account.contracts} showMigrationState={user?.addr === address} />
       {contracts && contracts.length > 0 ?
         <p className="text-sm text-muted-foreground mt-4">There are {contracts.length} contracts deployed to this account. <br/><span className="text-xs">Note: If the number doesn&apos;t match with the items in the table, please contact us.</span></p>
       : <>
