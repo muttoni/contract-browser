@@ -4,9 +4,10 @@ import { Banner } from 'flowbite-react'
 import { Sparkles, X } from 'lucide-react'
 import Link from 'next/link'
 
+
 import { useEffect, useState } from 'react'
 
-const BANNER_COLLAPSED_KEY = '2.0-bannerCollapsed'
+const BANNER_COLLAPSED_KEY = 'crescendo-bannerCollapsed'
 
 export default function WelcomeBanner() {
   const [isCollapsed, setIsCollapsed] = useState(true)

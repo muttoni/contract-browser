@@ -2,7 +2,7 @@
 
 import * as fcl from "@onflow/fcl"
 import { Button } from "@/components/ui/button"
-import { ChevronDown, Cog, Plus, Eye, LogOut, ArrowLeftRight, LogIn, UserCircle } from "lucide-react"
+import { ChevronDown, Cog, Plus, Eye, LogOut, ArrowLeftRight, LogIn, UserCircle, AlertTriangle } from "lucide-react"
 
 import Link from "next/link"
 import {
@@ -39,6 +39,8 @@ import Loading from "./ui/Loading"
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group"
 import { Label } from "flowbite-react"
 import { getNetwork } from "@/hooks/useNetwork"
+import { useMigration } from "@/contexts/MigrationContext"
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert"
 
 
 export function UserNav() {
@@ -96,13 +98,32 @@ export function UserNav() {
 
 export default function AccountNav({user, network, changeNetwork}) {
   const account = useAccount(user.addr)
+  const { data, error } = useMigration();
 
-  // useEffect(() => {
-  //   console.log(account.storage?.find)
-  // }, [account])
+  const [staged, setStaged] = useState(false);
+
+  useEffect(() => {
+    if (error || !data.contracts) {
+      return;
+    }
+    
+    if(data.contractsByAddress[user.addr]?.length > 0) {
+      setStaged(true);
+    }
+  }, [data])
+
 
   return user && account ? (
     <>
+      {!staged && Object.keys(account.contracts || {}).length > 0 &&
+      <Alert className="text-orange-500 bg-orange-50">
+        <AlertTriangle className="h-4 w-4 !text-orange-500 me-5"></AlertTriangle>
+        <AlertTitle className="font-bold">You have un-staged contracts on this account!</AlertTitle>
+        <AlertDescription>
+          <Link className="font-bold text-orange-600" href={"/account/"+user.addr}>View Account</Link> <Link className="ms-2 text-orange-600" href="https://flow.com/upgrade/crescendo/migration" target="_blank">Learn more &#8599;</Link>
+        </AlertDescription>
+      </Alert>
+      }
     <DropdownMenuTrigger asChild>
     <Button variant="outline">
       <ConnectionLight status="online"/><span className="w-2"></span> 
