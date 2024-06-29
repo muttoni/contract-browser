@@ -238,6 +238,68 @@ export const VERIFIED_CONTRACTS = {
     }
   },
 
+  // HYBRID CUSTODY CONTRACTS
+  "HybridCustody": {
+    "address": {
+      "testnet": "0x294e44e1ec6993c6",
+      "mainnet": "0xd8a7e05a7ac670c0"
+    },
+    "uuid": {
+      "testnet": "A.294e44e1ec6993c6.HybridCustody",
+      "mainnet": "A.d8a7e05a7ac670c0.HybridCustody"
+    },
+    "name": "Hybrid Custody Contract",
+    "metadata": {
+      "name": "Hybrid Custody Contract",
+      "description": "This contract enables account linking accounts in a child parent relationship where the child account defines a the scope of access a parent account can have on its behalf. Once claimed, the parent can access permitted assets and perform actions on behalf of the child account."
+    }
+  },
+  "CapabilityDelegator": {
+    "address": {
+      "testnet": "0x294e44e1ec6993c6",
+      "mainnet": "0xd8a7e05a7ac670c0"
+    },
+    "uuid": {
+      "testnet": "A.294e44e1ec6993c6.CapabilityDelegator",
+      "mainnet": "A.d8a7e05a7ac670c0.CapabilityDelegator"
+    },
+    "name": "Capability Delegator Contract",
+    "metadata": {
+      "name": "Capability Delegator Contract",
+      "description": "CapabilityDelegator is a contract used to share Capabiltities to other accounts. It is used by the HybridCustody contract to allow more flexible sharing of Capabilities when an app wants to share things that aren't the NFT-standard interface types."
+    }
+  },
+  "CapabilityFactory": {
+    "address": {
+      "testnet": "0x294e44e1ec6993c6",
+      "mainnet": "0xd8a7e05a7ac670c0"
+    },
+    "uuid": {
+      "testnet": "A.294e44e1ec6993c6.CapabilityFactory",
+      "mainnet": "A.d8a7e05a7ac670c0.CapabilityFactory"
+    },
+    "name": "Capability Factory Contract",
+    "metadata": {
+      "name": "Capability Factory Contract",
+      "description": "This contract defines a Factory interface and a Manager resource to contain Factory implementations, as well as a Getter interface for retrieval of contained Factories. Constructs in this contract are used in HybridCustody to access capabilities from underlying linked accounts."
+    }
+  },
+  "CapabilityFilter": {
+    "address": {
+      "testnet": "0x294e44e1ec6993c6",
+      "mainnet": "0xd8a7e05a7ac670c0"
+    },
+    "uuid": {
+      "testnet": "A.294e44e1ec6993c6.CapabilityFilter",
+      "mainnet": "A.d8a7e05a7ac670c0.CapabilityFilter"
+    },
+    "name": "Capability Filter Contract",
+    "metadata": {
+      "name": "Capability Filter Contract",
+      "description": "CapabilityFilter defines `Filter` intended to determine if a given Capability type is allowed by the implementation. This contract was designed with the HybridCustody contract in mind, enabling child accounts to set up filters for the types of Capabilities that can be shared with parent accounts."
+    }
+  },
+
   // USDC
   "FiatToken": {
     "address": {
