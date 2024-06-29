@@ -161,7 +161,7 @@ export default function ContractPage() {
     <div className="gap-2 grid-cols-1 md:grid-cols-2">
       {contract && contract.name ? 
         <>
-        <div className="border rounded relative p-4 flex gap-3 align-center">
+        <div className="border rounded relative p-4 flex gap-3 align-center overflow-x-scroll">
           {/* <span className="absolute top-0 left-2 text-xs">FLOW CLI COMMAND</span> */}
             <Terminal className="text-muted-foreground"/>
           <span className="font-mono"><span className="opacity-70">
