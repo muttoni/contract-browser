@@ -21,6 +21,8 @@ export default function ContractPage() {
   const [contractCopied, setContractCopied] = useState(false)
   const [importCopied, setImportCopied] = useState(false)
   const [addressCopied, setAddressCopied] = useState(false)
+  const [contractMigrationInfo, setContractMigrationInfo] = useState({})
+
   const [editMode, setEditMode] = useState(false)
   const contractId = useParams().contractId as string
   const contract = useContract(contractId)
@@ -31,18 +33,25 @@ export default function ContractPage() {
   const [staged, setStaged] = useState(false);
 
   useEffect(() => {
+  
     if (error || !data.contracts) {
       return;
     }
     
     if(data.contracts.includes(contractId)) {
+      console.log("contract is staged")
       setStaged(true);
+
+      if(data.contractDetails[contractId]) {
+        setContractMigrationInfo(data.contractDetails[contractId])
+      }
     }
   }, [data])
 
   return (
     <>
-      {user?.addr === getContractAddress(contractId) && <div>
+      {(true || user?.addr === getContractAddress(contractId)) && <div>
+
       {contract && !staged && <Alert className="text-orange-500 bg-orange-50">
           <AlertTriangle className="h-4 w-4 !text-orange-500 me-5"></AlertTriangle>
           <AlertTitle className="font-bold">This contract has not been staged for Crescendo!</AlertTitle>
@@ -56,6 +65,14 @@ export default function ContractPage() {
           <AlertDescription>Please ensure all your other contracts are staged for Crescendo. <Link className="font-bold text-green-600" href="https://flow.com/upgrade/crescendo/migration" target="_blank">Learn more &rarr;</Link>
           </AlertDescription>
         </Alert>}
+
+      {contract && staged && contractMigrationInfo && contractMigrationInfo?.kind !== "contract-update-success" && <Alert className="text-orange-500 bg-orange-50 ">
+          <AlertTriangle className="h-4 w-4 !text-orange-500 me-5"></AlertTriangle>
+          <AlertTitle className="font-bold">Staging Issues:</AlertTitle>
+          <AlertDescription className="max-w-full">{contractMigrationInfo?.error} <Link className="font-bold text-orange-600" href="https://flow.com/upgrade/crescendo/migration" target="_blank">Learn more &rarr;</Link>
+          </AlertDescription>
+        </Alert>}
+
       </div>}
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
       {contract && contract.name ? 

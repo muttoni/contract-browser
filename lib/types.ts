@@ -91,3 +91,10 @@ export type FlipsideResponseItem = {
 }
 
 export type FlipsideResponse = FlipsideResponseItem[];
+
+export type DNZResponse = {
+  kind: string;
+  account_address: string;
+  contract_name: string;
+  error?: string | null;
+}[]
