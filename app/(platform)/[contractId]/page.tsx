@@ -9,7 +9,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { useContract } from "@/hooks/useContract"
 import { useParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { calculateStringSizeInBytes, formatStorageSize, getContractAddress, getNetworkFromAddress, sansPrefix } from "@/lib/utils";
+import { calculateStringSizeInBytes, formatStorageSize, getContractAddress, getNetworkFromAddress, sansPrefix, truncateLongWords } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton"
 import { useCurrentUser } from "@/hooks/useCurrentUser"
 import { CopyButton } from "@/components/ui/CopyButton"
@@ -21,7 +21,7 @@ export default function ContractPage() {
   const [contractCopied, setContractCopied] = useState(false)
   const [importCopied, setImportCopied] = useState(false)
   const [addressCopied, setAddressCopied] = useState(false)
-  const [contractMigrationInfo, setContractMigrationInfo] = useState({})
+  const [contractMigrationInfo, setContractMigrationInfo] = useState({} as any)
 
   const [editMode, setEditMode] = useState(false)
   const contractId = useParams().contractId as string
@@ -66,10 +66,15 @@ export default function ContractPage() {
           </AlertDescription>
         </Alert>}
 
-      {contract && staged && contractMigrationInfo && contractMigrationInfo?.kind !== "contract-update-success" && <Alert className="text-orange-500 bg-orange-50 ">
+      {contract && staged && contractMigrationInfo && contractMigrationInfo?.kind !== "contract-update-success" && <Alert className="text-orange-500 bg-orange-50 mt-2">
           <AlertTriangle className="h-4 w-4 !text-orange-500 me-5"></AlertTriangle>
           <AlertTitle className="font-bold">Staging Issues:</AlertTitle>
-          <AlertDescription className="max-w-full">{contractMigrationInfo?.error} <Link className="font-bold text-orange-600" href="https://flow.com/upgrade/crescendo/migration" target="_blank">Learn more &rarr;</Link>
+          <AlertDescription className="">
+            <div className="w-full">
+              {truncateLongWords(contractMigrationInfo?.error)} 
+              <br/>
+              <Link className="flex text-orange-400 text-xs justify-end" href="https://staging.dnz.dev" target="_blank">powered by staging.dnz.dev</Link>
+            </div>
           </AlertDescription>
         </Alert>}
 

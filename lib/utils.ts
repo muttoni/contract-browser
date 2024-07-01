@@ -248,3 +248,12 @@ export function generateMetadataObject(title? : string, description? : string) {
     description: `${description ? description + '. ' : ''}Contract browser is the best place to find, inspect and understand Cadence smart contracts on the Flow Blockchain. Search for contracts by name, address and code.`,
   }
 }
+
+export function truncateLongWords(input: string, maxLength: number = 25): string {
+  return input.split(' ').map(word => {
+    if (word.length > maxLength) {
+      return `${word.slice(0, maxLength)}...`;
+    }
+    return word;
+  }).join(' ');
+}
