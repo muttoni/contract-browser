@@ -7,7 +7,7 @@ export async function GET() {
     method: 'GET'
   };
 
-  const res = await fetch(`${process.env.FLIPSIDE_QUERY_URL}`, options)
+  const res = await fetch(`${process.env.FLIPSIDE_QUERY_URL}?=${Math.floor(Math.random()*10000)}`, options)
   const stagedContracts : FlipsideResponse = await res.json()
 
   return Response.json(stagedContracts)
