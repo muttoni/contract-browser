@@ -23,6 +23,7 @@ import ConnectionLight from "@/components/ui/ConnectionLight"
 import Link from "next/link"
 import { FileCode2, Hourglass, Trophy } from "lucide-react"
 import APIContractsTable from "@/components/tables/APIContractsTable"
+import { useMigration } from "@/contexts/MigrationContext"
 
 export default function Page() {
   const [ status, setStatus ] = useState(null as unknown as StatusResponseType | null | undefined)
@@ -118,6 +119,9 @@ export default function Page() {
 }
 
 function Dashboard({ network, status, updatedStart, contractStats }) {
+
+  const { data, error } = useMigration();
+
   return (
     <>
     <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
@@ -205,6 +209,22 @@ function Dashboard({ network, status, updatedStart, contractStats }) {
         </CardContent>
       </Card>
     </div>
+      <Card className=" border-green-500">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium capitalize">
+            Staged Contracts on {network}
+          </CardTitle>
+          <svg className="h-4 w-4 me-2 text-green-500" viewBox="0 0 113 113" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fillRule="evenodd" clipRule="evenodd" d="M34.319 8.75L26.103 17.5L58.729 17.764C81.918 17.951 91.765 18.368 92.773 19.204C93.955 20.185 94.135 25.806 93.858 53.19C93.676 71.236 93.783 86.001 94.096 86.001C94.409 86 98.572 82.008 103.346 77.129L112.027 68.258V35.329C112.027 11.051 111.712 2.085 110.827 1.2C109.941 0.314001 100.839 0 76.081 0H42.536L34.319 8.75ZM5.229 38.295L0 43.59L0.263 77.545L0.527 111.5L34.548 111.763L68.57 112.026L73.833 106.697L79.096 101.367L78.811 89.934L78.527 78.5L71.782 84.769L65.036 91.038L42.782 90.769L20.527 90.5L20.256 69.656L19.986 48.813L27.68 40.906L35.374 33H22.916H10.459L5.229 38.295ZM50.262 48.264L38.027 60.529V67.264V74H44.291H50.556L63.291 61.236L76.027 48.472V42.236V36H69.262H62.497L50.262 48.264Z" fill="currentColor"/>
+          </svg>
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold"><CountUp start={0} end={data[network+'StagedCount']} /></div>
+          <p className="text-xs text-muted-foreground">
+            staged contracts for Crescendo
+          </p>
+        </CardContent>
+      </Card>
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
       <Card className="md:col-span-3 overflow-auto border-none md:border-solid shadow-none md:shadow-sm"> {/* md:border-solid shadow-none md:shadow-sm */}
         <CardHeader className="px-0 md:px-4 pb-2 md:pb-2">

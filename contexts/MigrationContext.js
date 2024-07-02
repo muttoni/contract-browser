@@ -92,10 +92,8 @@ export const MigrationProvider = ({ children }) => {
             throw new Error('Network response was not ok');
           }
           
-          console.log("cleaning testnet")
           testnetData = cleanTestnet(response)
           
-          console.log("setting", testnetData)
           localStorage.setItem(fetchKey, JSON.stringify(testnetData));
           localStorage.setItem(lastFetchKey, new Date().toISOString());
         }
@@ -112,7 +110,9 @@ export const MigrationProvider = ({ children }) => {
             contracts: [].concat(mainnetData.contracts, testnetData.contracts),
             addresses: [].concat(mainnetData.addresses, testnetData.addresses),
             contractsByAddress: { ...mainnetData.contractsByAddress, ...testnetData.contractsByAddress},
-            contractDetails: testnetData.contractDetails
+            contractDetails: testnetData.contractDetails,
+            mainnetStagedCount: mainnetData.contracts.length,
+            testnetStagedCount: testnetData.contracts.length,
           }
           setData(finalData);
         }
