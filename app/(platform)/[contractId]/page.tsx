@@ -1,6 +1,6 @@
 "use client"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { Calendar, Copy, ListTree, ScrollText, Network, Check, Pencil, Terminal, AlertTriangle } from "lucide-react"
+import { Calendar, Copy, ListTree, ScrollText, Network, Check, Pencil, Terminal, AlertTriangle, Info } from "lucide-react"
 import CodeEditor from "@/components/CodeEditor"
 import CadenceEditor from "@/components/editor"
 import { useEffect, useState } from "react"
@@ -16,6 +16,7 @@ import { CopyButton } from "@/components/ui/CopyButton"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import Link from "next/link"
 import { useMigration } from "@/contexts/MigrationContext"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 export default function ContractPage() {
   const [contractCopied, setContractCopied] = useState(false)
@@ -189,6 +190,18 @@ export default function ContractPage() {
           <span className="font-mono"><span className="opacity-70">
             flow dependencies add </span> {getNetworkFromAddress(contract.address)}://{sansPrefix(contract.address)}.{contract.name}</span>
           <CopyButton text={`${getNetworkFromAddress(contract.address)}://${sansPrefix(contract.address)}.${contract.name}`} className="" />
+          <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <Link href="https://https://developers.flow.com/tools/flow-cli/dependency-manager" target="_blank" className="text-muted-foreground">
+                <Info className="h-4 w-4"/>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Click to learn more about the Flow CLI Dependency Manager</p>
+            </TooltipContent>
+          </Tooltip>
+          </TooltipProvider>
         </div>
         </>
       : <Skeleton className="flex h-16 w-full"></Skeleton>
