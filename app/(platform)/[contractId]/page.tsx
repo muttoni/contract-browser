@@ -193,7 +193,7 @@ export default function ContractPage() {
           <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <Link href="https://https://developers.flow.com/tools/flow-cli/dependency-manager" target="_blank" className="text-muted-foreground">
+              <Link href="https://developers.flow.com/tools/flow-cli/dependency-manager" target="_blank" className="text-muted-foreground">
                 <Info className="h-4 w-4"/>
               </Link>
             </TooltipTrigger>
