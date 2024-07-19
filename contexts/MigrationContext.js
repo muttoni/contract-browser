@@ -15,8 +15,30 @@ export const MigrationProvider = ({ children }) => {
   
   
   function cleanMainnet(result) {
-    const contracts = result.map(row => row.CONTRACT);
-    const addresses = result.map(row => getContractAddress(row.CONTRACT));
+    let contracts = result.map(row => row.CONTRACT);
+    contracts = contracts.concat([
+        "A.8624b52f9ddcd04a.FlowEpoch",
+        "A.8624b52f9ddcd04a.FlowIDTableStaking",
+        "A.8624b52f9ddcd04a.FlowEpoch",
+        "A.8624b52f9ddcd04a.FlowDKG",
+        "A.e467b9dd11fa00df.FlowServiceAccount",
+        "A.e467b9dd11fa00df.NodeVersionBeacon",
+        "A.e467b9dd11fa00df.RandomBeaconHistory",
+        "A.e467b9dd11fa00df.FlowStorageFees",
+        "A.8d0e87b65159ae63.FlowStakingCollection",
+        "A.62430cf28c26d095.StakingProxy",
+        "A.8d0e87b65159ae63.LockedTokens",
+        "A.f919ee77447b7497.FlowFees",
+        "A.1654653399040a61.FlowToken",
+        "A.f233dcee88fe0abe.FungibleTokenMetadataViews",
+        "A.f233dcee88fe0abe.FungibleToken",
+        "A.631e88ae7f1d7c20.NonFungibleToken",
+        "A.631e88ae7f1d7c20.MetadataViews",
+        "A.1d7e57aa55817448.ViewResolver",
+        "A.f233dcee88fe0abe.FungibleTokenSwitchboard",
+        "A.f233dcee88fe0abe.Burner"
+    ])
+      const addresses = result.map(row => getContractAddress(row.CONTRACT));
     
     // Reduce to create contractsByAddress
     const contractsByAddress = contracts.reduce((acc, contract, index) => {

@@ -22,7 +22,7 @@ export default function ContractBadge({ uuid, className, showMigrationState }: {
   const [staged, setStaged] = useState(false);
 
   useEffect(() => {
-    if (error || !data.contracts || (!showMigrationState && network === 'mainnet')) {
+    if (error || !data.contracts) {
       return;
     }
     
@@ -47,7 +47,7 @@ export default function ContractBadge({ uuid, className, showMigrationState }: {
           <p>{uuid} is deployed on {network}</p>
         </TooltipContent>
       </Tooltip>
-      {(network === "testnet" || showMigrationState) && <Tooltip>
+      {(true || showMigrationState) && <Tooltip>
         <TooltipTrigger>
           {staged 
           ? <Check className="h-4 w-4 text-green-400"/>
