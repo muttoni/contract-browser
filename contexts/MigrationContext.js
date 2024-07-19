@@ -33,7 +33,9 @@ export const MigrationProvider = ({ children }) => {
         "A.f233dcee88fe0abe.FungibleTokenMetadataViews",
         "A.f233dcee88fe0abe.FungibleToken",
         "A.631e88ae7f1d7c20.NonFungibleToken",
+        "A.1d7e57aa55817448.NonFungibleToken",
         "A.631e88ae7f1d7c20.MetadataViews",
+        "A.1d7e57aa55817448.MetadataViews",
         "A.1d7e57aa55817448.ViewResolver",
         "A.f233dcee88fe0abe.FungibleTokenSwitchboard",
         "A.f233dcee88fe0abe.Burner"
