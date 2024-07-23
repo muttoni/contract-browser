@@ -250,6 +250,7 @@ export function generateMetadataObject(title? : string, description? : string) {
 }
 
 export function truncateLongWords(input: string, maxLength: number = 25): string {
+  if(!input) return input;
   return input.split(' ').map(word => {
     if (word.length > maxLength) {
       return `${word.slice(0, maxLength)}...`;
