@@ -67,7 +67,7 @@ export default function ContractPage() {
           </AlertDescription>
         </Alert>}
 
-      {contract && staged && contractMigrationInfo && contractMigrationInfo?.kind !== "contract-update-success" && <Alert className="text-orange-500 bg-orange-50 mt-2">
+      {contract && staged && contractMigrationInfo && contractMigrationInfo?.kind !== "contract-update-success" && contractMigrationInfo?.error && <Alert className="text-orange-500 bg-orange-50 mt-2">
           <AlertTriangle className="h-4 w-4 !text-orange-500 me-5"></AlertTriangle>
           <AlertTitle className="font-bold">Staging Issues:</AlertTitle>
           <AlertDescription className="">
