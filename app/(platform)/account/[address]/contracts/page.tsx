@@ -26,7 +26,7 @@ export default function ContractsPage({  }) {
 
   return (
     <>
-      <UUIDContractTable contracts={convertToUUIDs(contracts)} loading={!account.contracts} showMigrationState={getNetworkFromAddress(address) === "testnet" || user?.addr === address} />
+      <UUIDContractTable contracts={convertToUUIDs(contracts)} loading={!account.contracts} />
       {contracts && contracts.length > 0 &&
         <p className="text-sm text-muted-foreground mt-4">There are {contracts.length} contracts deployed to this account. <br/><span className="text-xs">Note: If the number doesn&apos;t match with the items in the table, please contact us.</span></p>
       }

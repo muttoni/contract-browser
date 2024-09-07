@@ -15,43 +15,43 @@ import { useCurrentUser } from "@/hooks/useCurrentUser"
 import { CopyButton } from "@/components/ui/CopyButton"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import Link from "next/link"
-import { useMigration } from "@/contexts/MigrationContext"
+// import { useMigration } from "@/contexts/MigrationContext"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 export default function ContractPage() {
   const [contractCopied, setContractCopied] = useState(false)
   const [importCopied, setImportCopied] = useState(false)
   const [addressCopied, setAddressCopied] = useState(false)
-  const [contractMigrationInfo, setContractMigrationInfo] = useState({} as any)
+  // const [contractMigrationInfo, setContractMigrationInfo] = useState({} as any)
 
   const [editMode, setEditMode] = useState(false)
   const contractId = useParams().contractId as string
   const contract = useContract(contractId)
   const user = useCurrentUser()
 
-  const { data, error } = useMigration();
+  // const { data, error } = useMigration();
 
-  const [staged, setStaged] = useState(false);
+  // const [staged, setStaged] = useState(false);
 
-  useEffect(() => {
+  // useEffect(() => {
   
-    if (error || !data.contracts) {
-      return;
-    }
+  //   if (error || !data.contracts) {
+  //     return;
+  //   }
     
-    if(data.contracts.includes(contractId)) {
-      console.log("contract is staged")
-      setStaged(true);
+  //   if(data.contracts.includes(contractId)) {
+  //     console.log("contract is staged")
+  //     setStaged(true);
 
-      if(data.contractDetails[contractId]) {
-        setContractMigrationInfo(data.contractDetails[contractId])
-      }
-    }
-  }, [data])
+  //     if(data.contractDetails[contractId]) {
+  //       setContractMigrationInfo(data.contractDetails[contractId])
+  //     }
+  //   }
+  // }, [data])
 
   return (
     <>
-      {(true || user?.addr === getContractAddress(contractId)) && <div>
+      {/* {(true || user?.addr === getContractAddress(contractId)) && <div>
 
       {contract && !staged && <Alert className="text-orange-500 bg-orange-50">
           <AlertTriangle className="h-4 w-4 !text-orange-500 me-5"></AlertTriangle>
@@ -79,7 +79,7 @@ export default function ContractPage() {
           </AlertDescription>
         </Alert>}
 
-      </div>}
+      </div>} */}
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
       {contract && contract.name ? 
       <>

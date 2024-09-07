@@ -21,19 +21,19 @@ export default function AccountPageLayout({ children }) {
   const network = getNetworkFromAddress(address)
   const account = useAccount(address)
 
-  const { data, error } = useMigration();
+  // const { data, error } = useMigration();
 
-  const [staged, setStaged] = useState(false);
+  //const [staged, setStaged] = useState(false);
 
-  useEffect(() => {
-    if (error || !data.contracts) {
-      return;
-    }
+  // useEffect(() => {
+  //   if (error || !data.contracts) {
+  //     return;
+  //   }
     
-    if(data.contractsByAddress[address]?.length > 0) {
-      setStaged(true);
-    }
-  }, [data])
+  //   if(data.contractsByAddress[address]?.length > 0) {
+  //     setStaged(true);
+  //   }
+  // }, [data])
 
   const sidebarNavItems = [
     {
@@ -79,7 +79,7 @@ export default function AccountPageLayout({ children }) {
           }
         </p>
       </div>
-      {user?.addr === address && <div>
+      {/* {user?.addr === address && <div>
         {staged && Object.keys(account.contracts || {}).length > 0 &&
         <Alert className="text-green-500 bg-green-50">
           <Check className="h-4 w-4 !text-green-500 me-5"></Check>
@@ -96,7 +96,7 @@ export default function AccountPageLayout({ children }) {
           </AlertDescription>
         </Alert>
         }
-      </div>}
+      </div>} */}
       <Separator className="my-6" />
       <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
         <aside className="lg:mx-0 lg:w-1/5">

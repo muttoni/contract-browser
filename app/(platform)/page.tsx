@@ -23,7 +23,7 @@ import ConnectionLight from "@/components/ui/ConnectionLight"
 import Link from "next/link"
 import { FileCode2, Hourglass, Trophy } from "lucide-react"
 import APIContractsTable from "@/components/tables/APIContractsTable"
-import { useMigration } from "@/contexts/MigrationContext"
+//import { useMigration } from "@/contexts/MigrationContext"
 
 export default function Page() {
   const [ status, setStatus ] = useState(null as unknown as StatusResponseType | null | undefined)
@@ -120,7 +120,7 @@ export default function Page() {
 
 function Dashboard({ network, status, updatedStart, contractStats }) {
 
-  const { data, error } = useMigration();
+  //const { data, error } = useMigration();
 
   return (
     <>
@@ -209,7 +209,7 @@ function Dashboard({ network, status, updatedStart, contractStats }) {
         </CardContent>
       </Card>
     </div>
-      <Card className=" border-green-500">
+      {/* <Card className=" border-green-500">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium capitalize">
             Staged Contracts on {network}
@@ -224,7 +224,7 @@ function Dashboard({ network, status, updatedStart, contractStats }) {
             staged contracts for Crescendo
           </p>
         </CardContent>
-      </Card>
+      </Card> */}
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
       <Card className="md:col-span-3 overflow-auto border-none md:border-solid shadow-none md:shadow-sm"> {/* md:border-solid shadow-none md:shadow-sm */}
         <CardHeader className="px-0 md:px-4 pb-2 md:pb-2">

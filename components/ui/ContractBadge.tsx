@@ -17,19 +17,19 @@ export default function ContractBadge({ uuid, className, showMigrationState }: {
   const contractName = getContractName(uuid)
   const network = getNetworkFromAddress(address)
 
-  const { data, error } = useMigration();
+  // const { data, error } = useMigration();
 
-  const [staged, setStaged] = useState(false);
+  // const [staged, setStaged] = useState(false);
 
-  useEffect(() => {
-    if (error || !data.contracts) {
-      return;
-    }
+  // useEffect(() => {
+  //   if (error || !data.contracts) {
+  //     return;
+  //   }
     
-    if(data.contracts.includes(uuid)) {
-      setStaged(true);
-    }
-  }, [data])
+  //   if(data.contracts.includes(uuid)) {
+  //     setStaged(true);
+  //   }
+  // }, [data])
 
   return (
     <div className="flex align-center">
@@ -47,7 +47,7 @@ export default function ContractBadge({ uuid, className, showMigrationState }: {
           <p>{uuid} is deployed on {network}</p>
         </TooltipContent>
       </Tooltip>
-      {(true || showMigrationState) && <Tooltip>
+      {/* {(true || showMigrationState) && <Tooltip>
         <TooltipTrigger>
           {staged 
           ? <Check className="h-4 w-4 text-green-400"/>
@@ -57,7 +57,7 @@ export default function ContractBadge({ uuid, className, showMigrationState }: {
         <TooltipContent className={ staged ? 'bg-green-400 border-green-500 text-green-800' : 'bg-orange-400 border-orange-500' }>
           <p><strong>{contractName}</strong> has {!staged && " NOT "} been staged for Crescendo. <br/>Please click on the contract to learn more.</p>
         </TooltipContent>
-      </Tooltip>}
+      </Tooltip>} */}
     </TooltipProvider>
     </div>
   )
