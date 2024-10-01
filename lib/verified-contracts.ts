@@ -300,6 +300,83 @@ export const VERIFIED_CONTRACTS = {
     }
   },
 
+  // FLOW REWARDS
+  "FlowRewards": {
+    "address": {
+      "testnet": "0x2e7cfb413f04382f",
+      "mainnet": "0xa45ead1cf1ca9eda"
+    },
+    "uuid": {
+      "testnet": "A.2e7cfb413f04382f.FlowRewards",
+      "mainnet": "A.a45ead1cf1ca9eda.FlowRewards"
+    },
+    "name": "Flow Rewards NFT Contract",
+    "metadata": {
+      "name": "Flow Rewards NFT Contract",
+      "description": "The official Flow Rewards NFT contract enabling the locking and claiming FLOW rewards and more."
+    }
+  },
+  "FlowRewardsMetadataViews": {
+    "address": {
+      "testnet": "0x2e7cfb413f04382f",
+      "mainnet": "0xa45ead1cf1ca9eda"
+    },
+    "uuid": {
+      "testnet": "A.2e7cfb413f04382f.FlowRewardsMetadataViews",
+      "mainnet": "A.a45ead1cf1ca9eda.FlowRewardsMetadataViews"
+    },
+    "name": "Flow Rewards NFT Metadata Views Contract",
+    "metadata": {
+      "name": "Flow Rewards NFT Metadata Views Contract",
+      "description": "Supporting metadata views and data structures for the Flow Rewards NFT Contract"
+    }
+  },
+  "FlowRewardsRegistry": {
+    "address": {
+      "testnet": "0x2e7cfb413f04382f",
+      "mainnet": "0xa45ead1cf1ca9eda"
+    },
+    "uuid": {
+      "testnet": "A.2e7cfb413f04382f.FlowRewardsRegistry",
+      "mainnet": "A.a45ead1cf1ca9eda.FlowRewardsRegistry"
+    },
+    "name": "Flow Rewards Registry",
+    "metadata": {
+      "name": "Flow Rewards Registry",
+      "description": "Constructs to support storage of Flow Rewards NFT lockup data and summaries."
+    }
+  },
+  "FlowRewardsModels": {
+    "address": {
+      "testnet": "0x2e7cfb413f04382f",
+      "mainnet": "0xa45ead1cf1ca9eda"
+    },
+    "uuid": {
+      "testnet": "A.2e7cfb413f04382f.FlowRewardsModels",
+      "mainnet": "A.a45ead1cf1ca9eda.FlowRewardsModels"
+    },
+    "name": "Flow Rewards Models",
+    "metadata": {
+      "name": "Flow Rewards Models",
+      "description": "Supporting reward and distribution models for the Flow Rewards NFT Contract"
+    }
+  },
+  "FlowRewardsValets": {
+    "address": {
+      "testnet": "0x2e7cfb413f04382f",
+      "mainnet": "0xa45ead1cf1ca9eda"
+    },
+    "uuid": {
+      "testnet": "A.2e7cfb413f04382f.FlowRewardsValets",
+      "mainnet": "A.a45ead1cf1ca9eda.FlowRewardsValets"
+    },
+    "name": "Flow Rewards Valets",
+    "metadata": {
+      "name": "Flow Rewards Valets",
+      "description": "Reward distribution valets supporting claims and rewards for the Flow Rewards NFT Contract"
+    }
+  },
+
   // USDC
   "FiatToken": {
     "address": {
