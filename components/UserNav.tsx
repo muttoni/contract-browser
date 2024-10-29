@@ -200,6 +200,7 @@ export default function AccountNav({user, network, changeNetwork}) {
           <DropdownMenuRadioGroup value={network} onValueChange={changeNetwork}>
             <DropdownMenuRadioItem value={"mainnet"}>Mainnet</DropdownMenuRadioItem>
             <DropdownMenuRadioItem value={"testnet"}>Testnet</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value={"emulator"}>Emulator</DropdownMenuRadioItem>
           </DropdownMenuRadioGroup>
           </DropdownMenuSubContent>
         </DropdownMenuPortal>
