@@ -308,7 +308,7 @@ export function Search() {
               EVM Input Detected
             </h2>
             <p className="mb-4 text-gray-700 dark:text-gray-300">
-              It looks like you've entered an EVM address or transaction hash.
+              It looks like you&apos;ve entered an EVM address or transaction hash.
               Flow supports both Cadence and EVM environments. To locate your
               address or transaction details, please use the appropriate EVM
               block explorer:
@@ -319,6 +319,7 @@ export function Search() {
                 <a
                   href="https://evm-testnet.flowscan.io/"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="text-blue-500 dark:text-blue-400 hover:underline"
                 >
                   EVM Testnet Explorer
@@ -329,6 +330,7 @@ export function Search() {
                 <a
                   href="https://www.flowscan.io/"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="text-blue-500 dark:text-blue-400 hover:underline"
                 >
                   EVM Mainnet Explorer
