@@ -14,7 +14,7 @@ access(all) fun main(addr: Address): {String: AnyStruct} {
   var ft : [{String:AnyStruct}] = []
 
   acct.forEachStored(fun (path: StoragePath, type: Type): Bool {
-    if !type.isRecovered || type.isSubtype(of: Type<@FungibleToken.Vault>()) {
+    if !type.isRecovered && type.isSubtype(of: Type<@FungibleToken.Vault>()) {
       var vault = acct.storage
         .borrow<&FungibleToken.Vault>(from:path)!
       ft.append({"path": path, "balance": vault.balance})
