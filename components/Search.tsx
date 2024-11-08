@@ -48,7 +48,6 @@ export function Search() {
 
   const pathName = usePathname();
 
-  const containerComponentRef = useRef();
   const handleOutsideClick = () => {
     setShowSearchWindow(false);
   };
@@ -61,10 +60,8 @@ export function Search() {
       setLoadingMainnetResults(true);
       setLoadingTestnetResults(true);
 
-      console.log("fetching search results");
-
       const reqMainnet = fetch(
-        `123/api/search/contracts?network=mainnet&query=${query}&offset=${offset}&limit=${limit}`
+        `api/search/contracts?network=mainnet&query=${query}&offset=${offset}&limit=${limit}`
       )
         .then((res) => res.json())
         .then((res) => {
@@ -73,7 +70,7 @@ export function Search() {
         });
 
       const reqTestnet = fetch(
-        `123/api/search/contracts?network=testnet&query=${query}&offset=${offset}&limit=${limit}`
+        `api/search/contracts?network=testnet&query=${query}&offset=${offset}&limit=${limit}`
       )
         .then((res) => res.json())
         .then((res) => {
