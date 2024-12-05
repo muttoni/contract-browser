@@ -188,8 +188,8 @@ export default function ContractPage() {
           {/* <span className="absolute top-0 left-2 text-xs">FLOW CLI COMMAND</span> */}
             <Terminal className="text-muted-foreground"/>
           <span className="font-mono"><span className="opacity-70">
-            flow dependencies add </span> {getNetworkFromAddress(contract.address)}://{sansPrefix(contract.address)}.{contract.name}</span>
-          <CopyButton text={`${getNetworkFromAddress(contract.address)}://${sansPrefix(contract.address)}.${contract.name}`} className="" />
+            flow dependencies install </span> {getNetworkFromAddress(contract.address)}://{sansPrefix(contract.address)}.{contract.name}</span>
+          <CopyButton text={`flow dependencies install ${getNetworkFromAddress(contract.address)}://${sansPrefix(contract.address)}.${contract.name}`} className="" />
           <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
