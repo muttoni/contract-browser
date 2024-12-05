@@ -12,7 +12,6 @@
     "dev:testnet:deploy": "flow project deploy --network=testnet --update && cross-env NEXT_PUBLIC_FLOW_NETWORK=testnet next dev",
     "dev:testnet:update": "flow project deploy --network=testnet --update --show-diff",
     "dev:mainnet": "cross-env NEXT_PUBLIC_FLOW_NETWORK=mainnet next dev",
-    "flow:dev": "flow dev",
     "flow:emulator": "flow emulator",
     "flow:dev-wallet": "flow dev-wallet",
     "test": "jest",
