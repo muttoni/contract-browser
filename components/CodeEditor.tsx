@@ -46,11 +46,11 @@ export default function CodeEditor ({ initialCode = '', mustBeAuthedToViewCode =
     [
       fcl.transaction`
       transaction(name: String, code: String) {
-        prepare(acct: AuthAccount) {
+        prepare(acct: auth(AddContract, UpdateContract) &Account) {
           if acct.contracts.get(name: name) == nil {
               acct.contracts.add(name: name, code: code.decodeHex())
             } else {
-              acct.contracts.update__experimental(name: name, code: code.decodeHex())
+              acct.contracts.update(name: name, code: code.decodeHex())
             }
           }
       }

@@ -22,7 +22,7 @@ export default function CadenceEditor({prefix="", type="", index=0, code = "", o
     // const docgen = await CadenceDocgen.create("cadence-docgen.wasm")
     // const docs = docgen.generate(`
     //   /// This is a simple function with a doc-comment.
-    //   pub fun hello() {
+    //   access(all) fun hello() {
     //   }
     // `)
     // console.log("DOCS", docs);
