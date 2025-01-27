@@ -325,7 +325,7 @@ export function Search() {
               <li>
                 Mainnet:{" "}
                 <a
-                  href="https://www.flowscan.io/"
+                  href="https://evm.flowscan.io/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-500 dark:text-blue-400 hover:underline"
